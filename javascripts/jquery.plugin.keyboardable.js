@@ -38,7 +38,13 @@
       return this;
     };
     KeyboardNavigation.prototype.next = function() {
-      this.index || this.index === 0 ? this.index++ : (this.index = 0);
+      if (this.index || this.index === 0) {
+        if (this.index < this.objects.length - 1) {
+          this.index++;
+        }
+      } else {
+        this.index = 0;
+      }
       return this.activate(this.index);
     };
     KeyboardNavigation.prototype.previous = function() {

@@ -26,7 +26,10 @@ jQuery.fn.keyboardable: (options) ->
          $(document).bind('keydown', settings.key_previous, => @previous())
          $(document).bind('keydown', settings.key_click, => @select())
       next: ->
-         if @index or @index == 0 then @index++ else @index = 0
+         if @index or @index == 0
+            @index++ if @index < @objects.length-1
+         else 
+            @index = 0
          @activate(@index)
       previous: ->
          @index-- if @index and @index > 0
