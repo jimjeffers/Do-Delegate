@@ -187,6 +187,10 @@ strong {
    background-color: rgb(220,220,220);
 }
 
+.send #send,
+.move #move,
+.today #today,
+.delete #delete,
 #header ul li.active a {
    background-color: rgb(220,220,220);
 }
@@ -197,8 +201,9 @@ strong {
 }
 
 #content ul li {
+   border: 1px solid rgb(255,255,255);
    display: block;
-   margin: 0 0 1px 0;
+   margin: 0;
 }
 
 #content ul li a {
@@ -209,6 +214,10 @@ strong {
 
 #content ul li a:hover {
    background-color: rgb(220,220,220);
+}
+
+#content ul li.active {
+   border: 1px solid rgb(220,0,0);
 }
 
 #content ul li a span {

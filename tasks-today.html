@@ -14,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="styles/screen.css" media="screen" />
   
 </head>
-<body>
+<body class="today">
   
   
   <div id="header" class="column-full">
@@ -22,19 +22,19 @@
     <section id="add">
       
       <ul>
-        <li><a href="index.html">Back</a></li>
+        <li><a href="index.html" id="back">Back</a></li>
       </ul>
       
     </section>
     
     <section id="edit">
       
-      <ul>
-        <li><a href="tasks-delete.html">Delete</a></li>
-        <li><a href="tasks-move.html">Move</a></li>
-        <li><a href="tasks-send.html">Send</a></li>
-        <li class="active"><a href="tasks.html">Today</a></li>
-      </ul>
+       <ul>
+         <li><a href="tasks-delete.html" id="delete">Delete</a></li>
+         <li><a href="tasks-move.html" id="move">Move</a></li>
+         <li><a href="tasks-send.html" id="send">Send</a></li>
+         <li><a href="tasks-today.html" id="today">Today</a></li>
+       </ul>
       
     </section>
     
@@ -76,6 +76,11 @@
     
   </div>
   
-  
+  <script type="text/javascript" charset="utf-8" src="javascripts/modernizr-1.5.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="javascripts/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="javascripts/jquery.hotkeys.js"></script>
+  <script type="text/javascript" charset="utf-8" src="javascripts/jquery.plugin.keyboardable.js"></script>
+  <script type="text/javascript" charset="utf-8" src="javascripts/jquery.plugin.clickable.js"></script>
+  <script type="text/javascript" charset="utf-8" src="javascripts/ready.js"></script>
 </body>
 </html>
