@@ -1,15 +1,15 @@
 require 'rubygems'
 require 'directory_watcher'
-require 'asset_build/coffee_bundler'
+require "yui/compressor"
 
 puts "Auto-regenerating enabled."
 
 # Build the javascript with coffee bundler.
 def build
   puts "Bundling coffee files."
-  puts File.join(Dir.pwd,'javascripts')
-  coffee_bundler = CoffeeBundler.new(File.join(Dir.pwd,'javascripts/coffee/*.coffee'))
-  File.open('./javascripts/app.js','w') {|f| f.write coffee_bundler.compressed }
+  File.open('./javascripts/app.js','w'){|f| f.write Dir.glob(File.join(Dir.pwd,'javascripts/coffee/*.coffee')).map{ |path| File.open(path,'r').lines }.join(" ") }
+  javascript = %x(coffee -p #{'./javascripts/app.js'})
+  File.open('./javascripts/app.js','w') {|f| f.write YUI::JavaScriptCompressor.new().compress(javascript) }
 end
 
 # Watch for build.
