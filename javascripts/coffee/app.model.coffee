@@ -8,15 +8,26 @@ class Model
    data: ->
       storage: localStorage.getItem @table_name
       try
-         @items: JSON.parse(storage)
+         items: JSON.parse(storage)
       catch error
          alert error
-         @items: {idx:0}
-      @items
+         items: {}
+      items
    
    # Converts JSON data to string and saves to local storage.
    commit: (table) ->
       localStorage.setItem(@table_name, JSON.stringify(table))
+   
+   _increment: ->
+      localStorage.setItem("${@table_name}_idx",this._index()+1)
+      return this._index();
+      
+   _index: ->
+      index: localStorage.getItem("${@table_name}_idx")
+      if !index?
+         localStorage.setItem("${@table_name}_idx",1)
+         index: 1
+      return parseInt index
    
    # Will create or update the current object as a JSON object 
    # provided an index is passed or not.
@@ -28,8 +39,7 @@ class Model
       console.log "Index is currently set to ${@idx}"
       if @idx == "false" || !@idx
          console.log "New record."
-         @idx: table.idx+1
-         table.idx: @idx
+         @idx: this._increment()
       table[@idx]: item
       console.log "Attempted to save item at index: ${@idx}"
       this.commit table
@@ -38,7 +48,9 @@ class Model
    # Removes the current object from the JSON object.
    destroy: ->
       table: this.data()
-      #delete table[@idx]
+      console.log @idx
+      console.log(table[@idx])
+      delete table[@idx]
       this.commit table
          
    # Finds a specific json object at the requested index.
@@ -49,6 +61,7 @@ class Model
          attributes: {}
          for attribute, default_value of @attributes
             if attribute == "idx"
+               console.log("Setting index to: ${idx}")
                attributes[attribute]: idx
             else   
                attributes[attribute]: item[attribute]

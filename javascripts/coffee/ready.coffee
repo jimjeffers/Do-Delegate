@@ -18,9 +18,6 @@ $(document).ready( ->
          window.location: $(selector).attr("href") if $(selector).length > 0
       )
    
-   # Initialize a blank Todo object.
-   todo: new Todo()
-   
    # Setup a todos controller and bind it to the inline form on the page.
    todo_controller: new TodosController()
    todo_controller.set_form(".edit-area form")

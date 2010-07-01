@@ -25,16 +25,17 @@ class TodosController extends Controller
    # rendered as cells.
    build_cell: (idx,item) ->
       super(idx,item)
-      if item.pending
-         @cell.addClass("selected")
-      else
-         @cell.removeClass("selected")
-      @cell.click( (event) =>
-         if @list.hasClass("delete")
-            this.destroy_cell(idx)
+      if item?
+         if item.pending
+            @cell.addClass("selected")
          else
-            this.check_cell(idx)
-         false
+            @cell.removeClass("selected")
+         @cell.click( (event) =>
+            if @list.hasClass("delete")
+               this.destroy_cell(idx)
+            else
+               this.check_cell(idx)
+            false
       )
       console.log "Cell successfuly created!"
    
@@ -67,6 +68,7 @@ class TodosController extends Controller
       @item: super event
       if @item.save()
          this.set_item this.new_item()
+      this.index()
       false
    
    # Destroys a cell.

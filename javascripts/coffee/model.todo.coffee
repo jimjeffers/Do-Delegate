@@ -9,18 +9,22 @@ class Todo extends Model
       # Declare the attributes for this object here in an hash.
       # Keys are the properties and values are their defaults.
       @attributes: {
-         name:    ''
-         status:  'normal'
-         link:    false
-         pending: false
-         idx:     false
+         name:       ''
+         status:     'normal'
+         link:       false
+         completed:  false
+         idx:        false
       }
       
       # The model object will now build us something nice with
       # the properties we've just set.
       super params
    
-   # These callbacks are
+   # These callbacks are just hooks to the super class. You need
+   # to have these declared in order to get this behavior from
+   # the current object. But luckily, if you wanted to do something
+   # extra before or after the core event fires you can add your
+   # own logic to these functions here.
    data: ->
       super()
       

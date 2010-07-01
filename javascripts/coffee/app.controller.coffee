@@ -10,6 +10,7 @@ class Controller
    
    index: (items) ->
       @cell: @cell.clone()
+      @cell.show()
       @list.find(@cell_selector).remove()
       for idx, item of items
          this.build_cell(idx,item)
@@ -41,7 +42,9 @@ class Controller
    set_cell: (selector) ->
       if @list?
          if $(selector).length > 0
-            @cell: $($(selector).first())
+            cell: $($(selector).first())
+            @cell: cell.clone()
+            cell.remove()
             @cell_selector: selector
          else
             console.log("${@class_name} controller could not find cells with: ${selector}")
@@ -62,11 +65,11 @@ class Controller
    parse_id: (id) ->
       id.split("_")[1]
    
-   destroy_cell: (id) ->
-      cell: @list.find("#${id}")
+   destroy_cell: (idx) ->
+      cell: @list.find("#${@class_name.toLowerCase()}_${idx}")
       if cell.length > 0
-         @item.find(this.parse_id(cell.attr("id")))
-         @item.destroy()
+         item: @item.find(idx)
+         item.destroy()
          cell.remove()
       else
          console.log "Could not find item to delete with id: ${id}."

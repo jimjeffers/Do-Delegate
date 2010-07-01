@@ -24,6 +24,7 @@
   Controller.prototype.index = function(items) {
     var _a, _b, idx, item;
     this.cell = this.cell.clone();
+    this.cell.show();
     this.list.find(this.cell_selector).remove();
     _a = []; _b = items;
     for (idx in _b) { if (__hasProp.call(_b, idx)) {
@@ -72,10 +73,12 @@
     }
   };
   Controller.prototype.set_cell = function(selector) {
-    var _a;
+    var _a, cell;
     if ((typeof (_a = this.list) !== "undefined" && _a !== null)) {
       if ($(selector).length > 0) {
-        this.cell = $($(selector).first());
+        cell = $($(selector).first());
+        this.cell = cell.clone();
+        cell.remove();
         this.cell_selector = selector;
         return this.cell_selector;
       } else {
@@ -107,12 +110,12 @@
   Controller.prototype.parse_id = function(id) {
     return id.split("_")[1];
   };
-  Controller.prototype.destroy_cell = function(id) {
-    var cell;
-    cell = this.list.find(("#" + (id)));
+  Controller.prototype.destroy_cell = function(idx) {
+    var cell, item;
+    cell = this.list.find(("#" + (this.class_name.toLowerCase()) + "_" + (idx)));
     if (cell.length > 0) {
-      this.item.find(this.parse_id(cell.attr("id")));
-      this.item.destroy();
+      item = this.item.find(idx);
+      item.destroy();
       return cell.remove();
     } else {
       return console.log(("Could not find item to delete with id: " + (id) + "."));
@@ -133,21 +136,32 @@
   };
   // Grabs and parses JSON data from local storage.
   Model.prototype.data = function() {
-    var storage;
+    var items, storage;
     storage = localStorage.getItem(this.table_name);
     try {
-      this.items = JSON.parse(storage);
+      items = JSON.parse(storage);
     } catch (error) {
       alert(error);
-      this.items = {
-        idx: 0
-      };
+      items = {};
     }
-    return this.items;
+    return items;
   };
   // Converts JSON data to string and saves to local storage.
   Model.prototype.commit = function(table) {
     return localStorage.setItem(this.table_name, JSON.stringify(table));
+  };
+  Model.prototype._increment = function() {
+    localStorage.setItem(("" + (this.table_name) + "_idx"), this._index() + 1);
+    return this._index();
+  };
+  Model.prototype._index = function() {
+    var index;
+    index = localStorage.getItem(("" + (this.table_name) + "_idx"));
+    if (!(typeof index !== "undefined" && index !== null)) {
+      localStorage.setItem(("" + (this.table_name) + "_idx"), 1);
+      index = 1;
+    }
+    return parseInt(index);
   };
   // Will create or update the current object as a JSON object
   // provided an index is passed or not.
@@ -163,8 +177,7 @@
     console.log(("Index is currently set to " + (this.idx)));
     if (this.idx === "false" || !this.idx) {
       console.log("New record.");
-      this.idx = table.idx + 1;
-      table.idx = this.idx;
+      this.idx = this._increment();
     }
     table[this.idx] = item;
     console.log(("Attempted to save item at index: " + (this.idx)));
@@ -175,7 +188,9 @@
   Model.prototype.destroy = function() {
     var table;
     table = this.data();
-    //delete table[@idx]
+    console.log(this.idx);
+    console.log(table[this.idx]);
+    delete table[this.idx];
     return this.commit(table);
   };
   // Finds a specific json object at the requested index.
@@ -188,7 +203,12 @@
       _a = this.attributes;
       for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
         default_value = _a[attribute];
-        attribute === "idx" ? (attributes[attribute] = idx) : (attributes[attribute] = item[attribute]);
+        if (attribute === "idx") {
+          console.log(("Setting index to: " + (idx)));
+          attributes[attribute] = idx;
+        } else {
+          attributes[attribute] = item[attribute];
+        }
       }}
       return eval(("new " + (this.class_name) + "(attributes)"));
     } else {
@@ -225,11 +245,13 @@
   // rendered as cells.
   TodosController.prototype.build_cell = function(idx, item) {
     TodosController.__superClass__.build_cell.call(this, idx, item);
-    item.pending ? this.cell.addClass("selected") : this.cell.removeClass("selected");
-    this.cell.click(__bind(function(event) {
-        this.list.hasClass("delete") ? this.destroy_cell(idx) : this.check_cell(idx);
-        return false;
-      }, this));
+    if ((typeof item !== "undefined" && item !== null)) {
+      item.pending ? this.cell.addClass("selected") : this.cell.removeClass("selected");
+      this.cell.click(__bind(function(event) {
+          this.list.hasClass("delete") ? this.destroy_cell(idx) : this.check_cell(idx);
+          return false;
+        }, this));
+    }
     return console.log("Cell successfuly created!");
   };
   // Pass a css selector to grab the form object you want to bind
@@ -260,6 +282,7 @@
   TodosController.prototype.process_form = function(event) {
     this.item = TodosController.__superClass__.process_form.call(this, event);
     this.item.save() ? this.set_item(this.new_item()) : null;
+    this.index();
     return false;
   };
   // Destroys a cell.
@@ -430,7 +453,7 @@
       name: '',
       status: 'normal',
       link: false,
-      pending: false,
+      completed: false,
       idx: false
     };
     // The model object will now build us something nice with
@@ -439,7 +462,11 @@
     return this;
   };
   __extends(Todo, Model);
-  // These callbacks are
+  // These callbacks are just hooks to the super class. You need
+  // to have these declared in order to get this behavior from
+  // the current object. But luckily, if you wanted to do something
+  // extra before or after the core event fires you can add your
+  // own logic to these functions here.
   Todo.prototype.data = function() {
     return Todo.__superClass__.data.call(this);
   };
@@ -457,7 +484,7 @@
   };
 
   $(document).ready(function() {
-    var _a, key, key_actions, selector, todo, todo_controller;
+    var _a, key, key_actions, selector, todo_controller;
     // Bind keyboard navigation.
     $("#content section > ul > li").keyboardable().clickable();
     // Handle specific task actions.
@@ -482,8 +509,6 @@
         });
       })();
     }}
-    // Initialize a blank Todo object.
-    todo = new Todo();
     // Setup a todos controller and bind it to the inline form on the page.
     todo_controller = new TodosController();
     todo_controller.set_form(".edit-area form");
