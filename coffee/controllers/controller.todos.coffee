@@ -17,28 +17,6 @@ class TodosController extends Controller
       # for inherited functionality.
       super()
    
-   # Renders a list of the controllers element.
-   index: () ->
-      super @item.all()
-   
-   # Use this to override or add additional behavior to how items are
-   # rendered as cells.
-   build_cell: (idx,item) ->
-      super(idx,item)
-      if item?
-         if item.pending
-            @cell.addClass("selected")
-         else
-            @cell.removeClass("selected")
-         @cell.click( (event) =>
-            if @list.hasClass("delete")
-               this.destroy_cell(idx)
-            else
-               this.check_cell(idx)
-            false
-      )
-      console.log "Cell successfuly created!"
-   
    # Pass a css selector to grab the form object you want to bind
    # the controller to.
    set_form: (selector) ->
@@ -63,17 +41,27 @@ class TodosController extends Controller
    new_item: (attributes) ->
       super attributes
    
-   # Saves or updates the controller's item
-   process_form: (event) ->
-      @item: super event
-      if @item.save()
-         this.set_item this.new_item()
-      this.index()
-      false
-   
-   # Destroys a cell.
-   destroy_cell: (idx) ->
-      super idx
+   # Renders a list of the controllers element.
+   index: () ->
+      super @item.all()
+      
+   # Use this to override or add additional behavior to how items are
+   # rendered as cells.
+   build_cell: (idx,item) ->
+      super(idx,item)
+      if item?
+         if item.pending
+            @cell.addClass("selected")
+         else
+            @cell.removeClass("selected")
+         @cell.click( (event) =>
+            if @list.hasClass("delete")
+               this.destroy_cell(idx)
+            else
+               this.check_cell(idx)
+            false
+      )
+      console.log "Cell successfuly created!"
    
    # Marks a cell as pending.
    check_cell: (idx) ->
@@ -87,3 +75,15 @@ class TodosController extends Controller
          item.pending: false
          @list.find("#todo_${idx}").removeClass('selected')
       item.save()
+      
+   # Saves or updates the controller's item
+   process_form: (event) ->
+      @item: super event
+      if @item.save()
+         this.set_item this.new_item()
+      this.index()
+      false
+   
+   # Destroys a cell.
+   destroy_cell: (idx) ->
+      super idx

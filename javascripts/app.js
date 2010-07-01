@@ -237,23 +237,6 @@
     return this;
   };
   __extends(TodosController, Controller);
-  // Renders a list of the controllers element.
-  TodosController.prototype.index = function() {
-    return TodosController.__superClass__.index.call(this, this.item.all());
-  };
-  // Use this to override or add additional behavior to how items are
-  // rendered as cells.
-  TodosController.prototype.build_cell = function(idx, item) {
-    TodosController.__superClass__.build_cell.call(this, idx, item);
-    if ((typeof item !== "undefined" && item !== null)) {
-      item.pending ? this.cell.addClass("selected") : this.cell.removeClass("selected");
-      this.cell.click(__bind(function(event) {
-          this.list.hasClass("delete") ? this.destroy_cell(idx) : this.check_cell(idx);
-          return false;
-        }, this));
-    }
-    return console.log("Cell successfuly created!");
-  };
   // Pass a css selector to grab the form object you want to bind
   // the controller to.
   TodosController.prototype.set_form = function(selector) {
@@ -278,16 +261,22 @@
   TodosController.prototype.new_item = function(attributes) {
     return TodosController.__superClass__.new_item.call(this, attributes);
   };
-  // Saves or updates the controller's item
-  TodosController.prototype.process_form = function(event) {
-    this.item = TodosController.__superClass__.process_form.call(this, event);
-    this.item.save() ? this.set_item(this.new_item()) : null;
-    this.index();
-    return false;
+  // Renders a list of the controllers element.
+  TodosController.prototype.index = function() {
+    return TodosController.__superClass__.index.call(this, this.item.all());
   };
-  // Destroys a cell.
-  TodosController.prototype.destroy_cell = function(idx) {
-    return TodosController.__superClass__.destroy_cell.call(this, idx);
+  // Use this to override or add additional behavior to how items are
+  // rendered as cells.
+  TodosController.prototype.build_cell = function(idx, item) {
+    TodosController.__superClass__.build_cell.call(this, idx, item);
+    if ((typeof item !== "undefined" && item !== null)) {
+      item.pending ? this.cell.addClass("selected") : this.cell.removeClass("selected");
+      this.cell.click(__bind(function(event) {
+          this.list.hasClass("delete") ? this.destroy_cell(idx) : this.check_cell(idx);
+          return false;
+        }, this));
+    }
+    return console.log("Cell successfuly created!");
   };
   // Marks a cell as pending.
   TodosController.prototype.check_cell = function(idx) {
@@ -303,6 +292,87 @@
       this.list.find(("#todo_" + (idx))).removeClass('selected');
     }
     return item.save();
+  };
+  // Saves or updates the controller's item
+  TodosController.prototype.process_form = function(event) {
+    this.item = TodosController.__superClass__.process_form.call(this, event);
+    this.item.save() ? this.set_item(this.new_item()) : null;
+    this.index();
+    return false;
+  };
+  // Destroys a cell.
+  TodosController.prototype.destroy_cell = function(idx) {
+    return TodosController.__superClass__.destroy_cell.call(this, idx);
+  };
+
+  Category = function(params) {
+    // Maybe there is a way to do this with metaprogramming
+    // but for now we'll need to specify the name of the object
+    // and the table like this.
+    this.class_name = 'Category';
+    this.table_name = 'categories';
+    // Declare the attributes for this object here in an hash.
+    // Keys are the properties and values are their defaults.
+    this.attributes = {
+      name: '',
+      idx: false
+    };
+    // The model object will now build us something nice with
+    // the properties we've just set.
+    Category.__superClass__.constructor.call(this, params);
+    return this;
+  };
+  __extends(Category, Model);
+  Category.prototype.data = function() {
+    return Category.__superClass__.data.call(this, this.table_name);
+  };
+  Category.prototype.save = function() {
+    return Category.__superClass__.save.call(this, this.idx);
+  };
+  Category.prototype.find = function(idx) {
+    return Category.__superClass__.find.call(this, idx);
+  };
+
+  Todo = function(params) {
+    // Maybe there is a way to do this with metaprogramming
+    // but for now we'll need to specify the name of the object
+    // and the table like this.
+    this.class_name = 'Todo';
+    this.table_name = 'todos';
+    // Declare the attributes for this object here in an hash.
+    // Keys are the properties and values are their defaults.
+    this.attributes = {
+      name: '',
+      status: 'normal',
+      link: false,
+      completed: false,
+      idx: false
+    };
+    // The model object will now build us something nice with
+    // the properties we've just set.
+    Todo.__superClass__.constructor.call(this, params);
+    return this;
+  };
+  __extends(Todo, Model);
+  // These callbacks are just hooks to the super class. You need
+  // to have these declared in order to get this behavior from
+  // the current object. But luckily, if you wanted to do something
+  // extra before or after the core event fires you can add your
+  // own logic to these functions here.
+  Todo.prototype.data = function() {
+    return Todo.__superClass__.data.call(this);
+  };
+  Todo.prototype.save = function() {
+    return Todo.__superClass__.save.call(this);
+  };
+  Todo.prototype.find = function(idx) {
+    return Todo.__superClass__.find.call(this, idx);
+  };
+  Todo.prototype.all = function() {
+    return Todo.__superClass__.all.call(this);
+  };
+  Todo.prototype.destroy = function() {
+    return Todo.__superClass__.destroy.call(this);
   };
 
   jQuery.fn.clickable = function(options) {
@@ -413,76 +483,6 @@
     // when using it in jquery.
     return this;
   };
-  Category = function(params) {
-    // Maybe there is a way to do this with metaprogramming
-    // but for now we'll need to specify the name of the object
-    // and the table like this.
-    this.class_name = 'Category';
-    this.table_name = 'categories';
-    // Declare the attributes for this object here in an hash.
-    // Keys are the properties and values are their defaults.
-    this.attributes = {
-      name: '',
-      idx: false
-    };
-    // The model object will now build us something nice with
-    // the properties we've just set.
-    Category.__superClass__.constructor.call(this, params);
-    return this;
-  };
-  __extends(Category, Model);
-  Category.prototype.data = function() {
-    return Category.__superClass__.data.call(this, this.table_name);
-  };
-  Category.prototype.save = function() {
-    return Category.__superClass__.save.call(this, this.idx);
-  };
-  Category.prototype.find = function(idx) {
-    return Category.__superClass__.find.call(this, idx);
-  };
-
-  Todo = function(params) {
-    // Maybe there is a way to do this with metaprogramming
-    // but for now we'll need to specify the name of the object
-    // and the table like this.
-    this.class_name = 'Todo';
-    this.table_name = 'todos';
-    // Declare the attributes for this object here in an hash.
-    // Keys are the properties and values are their defaults.
-    this.attributes = {
-      name: '',
-      status: 'normal',
-      link: false,
-      completed: false,
-      idx: false
-    };
-    // The model object will now build us something nice with
-    // the properties we've just set.
-    Todo.__superClass__.constructor.call(this, params);
-    return this;
-  };
-  __extends(Todo, Model);
-  // These callbacks are just hooks to the super class. You need
-  // to have these declared in order to get this behavior from
-  // the current object. But luckily, if you wanted to do something
-  // extra before or after the core event fires you can add your
-  // own logic to these functions here.
-  Todo.prototype.data = function() {
-    return Todo.__superClass__.data.call(this);
-  };
-  Todo.prototype.save = function() {
-    return Todo.__superClass__.save.call(this);
-  };
-  Todo.prototype.find = function(idx) {
-    return Todo.__superClass__.find.call(this, idx);
-  };
-  Todo.prototype.all = function() {
-    return Todo.__superClass__.all.call(this);
-  };
-  Todo.prototype.destroy = function() {
-    return Todo.__superClass__.destroy.call(this);
-  };
-
   $(document).ready(function() {
     var _a, key, key_actions, selector, todo_controller;
     // Bind keyboard navigation.
