@@ -20,6 +20,20 @@ class Todo extends Model
       # the properties we've just set.
       super params
    
+   # Custom behaviors should go in this area.
+   # ------------------------------------------------------------
+   
+   # Toggle the current item from the completed state.
+   complete: ->
+      if !@completed
+         @completed: true
+      else
+         @completed: false
+      this.save()
+      return @completed
+   
+   # Callbacks/Overrides should go in this area.
+   # ------------------------------------------------------------
    # These callbacks are just hooks to the super class. You need
    # to have these declared in order to get this behavior from
    # the current object. But luckily, if you wanted to do something

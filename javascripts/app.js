@@ -282,16 +282,13 @@
   TodosController.prototype.check_cell = function(idx) {
     var item;
     item = this.item.find(idx);
-    if (!item.pending) {
+    if (item.complete()) {
       console.log('Enabled item.');
-      item.pending = true;
-      this.list.find(("#todo_" + (idx))).addClass('selected');
+      return this.list.find(("#todo_" + (idx))).addClass('selected');
     } else {
       console.log('Disabled item.');
-      item.pending = false;
-      this.list.find(("#todo_" + (idx))).removeClass('selected');
+      return this.list.find(("#todo_" + (idx))).removeClass('selected');
     }
-    return item.save();
   };
   // Saves or updates the controller's item
   TodosController.prototype.process_form = function(event) {
@@ -323,14 +320,32 @@
     return this;
   };
   __extends(Category, Model);
+  // Custom behaviors should go in this area.
+  // ------------------------------------------------------------
+  // # Some description of this behavior.
+  // some_special_behavior: ->
+  //   console.log 'Do something cool.'
+  // Callbacks/Overrides should go in this area.
+  // ------------------------------------------------------------
+  // These callbacks are just hooks to the super class. You need
+  // to have these declared in order to get this behavior from
+  // the current object. But luckily, if you wanted to do something
+  // extra before or after the core event fires you can add your
+  // own logic to these functions here.
   Category.prototype.data = function() {
-    return Category.__superClass__.data.call(this, this.table_name);
+    return Category.__superClass__.data.call(this);
   };
   Category.prototype.save = function() {
-    return Category.__superClass__.save.call(this, this.idx);
+    return Category.__superClass__.save.call(this);
   };
   Category.prototype.find = function(idx) {
     return Category.__superClass__.find.call(this, idx);
+  };
+  Category.prototype.all = function() {
+    return Category.__superClass__.all.call(this);
+  };
+  Category.prototype.destroy = function() {
+    return Category.__superClass__.destroy.call(this);
   };
 
   Todo = function(params) {
@@ -354,6 +369,16 @@
     return this;
   };
   __extends(Todo, Model);
+  // Custom behaviors should go in this area.
+  // ------------------------------------------------------------
+  // Toggle the current item from the completed state.
+  Todo.prototype.complete = function() {
+    !this.completed ? (this.completed = true) : (this.completed = false);
+    this.save();
+    return this.completed;
+  };
+  // Callbacks/Overrides should go in this area.
+  // ------------------------------------------------------------
   // These callbacks are just hooks to the super class. You need
   // to have these declared in order to get this behavior from
   // the current object. But luckily, if you wanted to do something

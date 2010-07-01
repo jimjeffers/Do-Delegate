@@ -66,15 +66,12 @@ class TodosController extends Controller
    # Marks a cell as pending.
    check_cell: (idx) ->
       item: @item.find(idx)
-      if !item.pending
+      if item.complete()
          console.log('Enabled item.')
-         item.pending: true
          @list.find("#todo_${idx}").addClass('selected')
       else
          console.log('Disabled item.')
-         item.pending: false
          @list.find("#todo_${idx}").removeClass('selected')
-      item.save()
       
    # Saves or updates the controller's item
    process_form: (event) ->
