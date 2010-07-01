@@ -3,22 +3,28 @@ $(document).ready( ->
    $("#content section > ul > li").keyboardable().clickable()
    
    # Handle specific task actions.
-   $(document).bind('keydown', "d", ->
-      window.location: $("a#delete").attr("href") if $("a#delete").length > 0
-   )
-   $(document).bind('keydown', "t", ->
-      window.location: $("a#today").attr("href") if $("a#today").length > 0
-   )
-   $(document).bind('keydown', "m", ->
-      window.location: $("a#move").attr("href") if $("a#move").length > 0
-   )
-   $(document).bind('keydown', "s", ->
-      window.location: $("a#send").attr("href") if $("a#send").length > 0
-   )
-   $(document).bind('keydown', "h", ->
-      window.location: $("a#back").attr("href") if $("a#back").length > 0
-   )
-   $(document).bind('keydown', "b", ->
-      window.location: $("a#back").attr("href") if $("a#back").length > 0
-   )
+   key_actions: {
+      'a#delete': 'd'
+      'a#today':  't'
+      'a#move':   'm'
+      'a#send':   's'
+      'a#back':   'h'
+      'a#back':   'b'
+   }
+   
+   # Bind html objects to key codes.
+   for selector, key of key_actions
+      $(document).bind('keydown', key, ->
+         window.location: $(selector).attr("href") if $(selector).length > 0
+      )
+   
+   # Initialize a blank Todo object.
+   todo: new Todo()
+   
+   # Setup a todos controller and bind it to the inline form on the page.
+   todo_controller: new TodosController()
+   todo_controller.set_form(".edit-area form")
+   todo_controller.set_list(".tasks")
+   todo_controller.set_cell(".todo")
+   todo_controller.index()
 )
