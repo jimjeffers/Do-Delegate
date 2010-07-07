@@ -6,7 +6,7 @@ class Category extends Model
       @class_name: 'Category'
       @table_name: 'categories'
       
-      # Declare the attributes for this object here in an hash.
+      # Declare the attributes for this object here in a hash.
       # Keys are the properties and values are their defaults.
       @attributes: {
          name:    ''

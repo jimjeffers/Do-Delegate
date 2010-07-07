@@ -1,27 +1,21 @@
 $(document).ready( ->
-   # Bind keyboard navigation.
-   $("#content section > ul > li").keyboardable().clickable()
+   # Setup a todos list controller to display current todos.
+   todos_list: new TodosListController({
+      list_selector: "ul.tasks"
+      cell_selector: "li.todo"
+   })
    
-   # Handle specific task actions.
-   key_actions: {
-      'a#delete': 'd'
-      'a#today':  't'
-      'a#move':   'm'
-      'a#send':   's'
-      'a#back':   'h'
-      'a#back':   'b'
-   }
+   # Setup a todo form and bind it to the inline form on the page.
+   todo_form: new TodoFormController({
+      form_selector:    "#task_form"
+      list_controller:  todos_list
+   })
    
-   # Bind html objects to key codes.
-   for selector, key of key_actions
-      $(document).bind('keydown', key, ->
-         window.location: $(selector).attr("href") if $(selector).length > 0
-      )
-   
-   # Setup a todos controller and bind it to the inline form on the page.
-   todo_controller: new TodosController()
-   todo_controller.set_form(".edit-area form")
-   todo_controller.set_list(".tasks")
-   todo_controller.set_cell(".todo")
-   todo_controller.index()
+   # Setup a navigation controller to mimick navigation.
+   todo_edit_nav: new EditNavigationController({
+      navigation_selector: "section#edit"
+      target_selector:     "body, ul.tasks"
+      list_controller:     todos_list
+      default_item:        "do"
+   })
 )

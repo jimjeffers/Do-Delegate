@@ -1,54 +1,59 @@
 (function(){
-  var Category, Controller, Model, Todo, TodosController;
-  var __slice = Array.prototype.slice, __bind = function(func, obj, args) {
+  var Category, Controller, EditNavigationController, FormController, ListController, Model, NavigationController, Todo, TodoFormController, TodosListController;
+  var __hasProp = Object.prototype.hasOwnProperty, __slice = Array.prototype.slice, __bind = function(func, obj, args) {
     return function() {
       return func.apply(obj || {}, args ? args.concat(__slice.call(arguments, 0)) : arguments);
     };
-  }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  }, __extends = function(child, parent) {
     var ctor = function(){ };
     ctor.prototype = parent.prototype;
     child.__superClass__ = parent.prototype;
     child.prototype = new ctor();
     child.prototype.constructor = child;
   };
-  Controller = function() {
-    this.class_name = this.item.class_name;
-    console.log(("Initiated " + (this.class_name) + " controller."));
+  Controller = function(params) {
+    var _a, _b, attribute, default_value;
+    // Bind any attributes.
+    if (!(typeof params !== "undefined" && params !== null)) {
+      params = {};
+    }
+    _a = this.attributes;
+    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
+      default_value = _a[attribute];
+      this[attribute] = params[attribute] || default_value;
+    }}
+    if ((typeof (_b = this.item) !== "undefined" && _b !== null)) {
+      this.class_name = this.item.class_name;
+      console.log(("Initiated " + (this.controller_type) + " Controller for " + (this.class_name) + " Model."));
+    } else {
+      console.log(("Initiated " + (this.controller_type) + " Controller but it is not bound to a Model.."));
+    }
     return this;
   };
-  Controller.prototype.set_form = function(controller) {
+  Controller.prototype.new_item = function(attributes) {
+    return eval(("new " + (this.class_name) + "(attributes)"));
+  };
+
+  FormController = function(params) {
+    var _a;
+    this.controller_type = "Form";
+    this.attributes = jQuery.extend({
+      form_selector: null,
+      form: null,
+      list_controller: null
+    }, this.attributes);
+    FormController.__superClass__.constructor.call(this, params);
+    (typeof (_a = this.form_selector) !== "undefined" && _a !== null) ? this.set_form(this.form_selector) : null;
+    return this;
+  };
+  __extends(FormController, Controller);
+  FormController.prototype.set_form = function(selector) {
+    this.form = $(selector);
     return this.form.submit(__bind(function(event) {
         return this.process_form(event);
       }, this));
   };
-  Controller.prototype.index = function(items) {
-    var _a, _b, idx, item;
-    this.cell = this.cell.clone();
-    this.cell.show();
-    this.list.find(this.cell_selector).remove();
-    _a = []; _b = items;
-    for (idx in _b) { if (__hasProp.call(_b, idx)) {
-      item = _b[idx];
-      _a.push((function() {
-        this.build_cell(idx, item);
-        this.list.append(this.cell);
-        this.cell = this.cell.clone();
-        return this.cell;
-      }).call(this));
-    }}
-    return _a;
-  };
-  Controller.prototype.build_cell = function(idx, item) {
-    var _a, attribute, binding, value;
-    _a = item;
-    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
-      value = _a[attribute];
-      binding = this.cell.find(("." + (attribute)));
-      binding.length > 0 ? binding.html(value) : null;
-    }}
-    return this.cell.attr("id", ("" + (this.class_name.toLowerCase()) + "_" + (idx)));
-  };
-  Controller.prototype.set_item = function(item) {
+  FormController.prototype.set_item = function(item) {
     var _a, _b, attribute, default_value, field;
     this.item = item;
     this.form.find("input[name='idx']").length < 1 ? this.form.append("<input name='idx' type='hidden' value='false'/>") : null;
@@ -64,31 +69,7 @@
     }}
     return _a;
   };
-  Controller.prototype.set_list = function(selector) {
-    if ($(selector).length > 0) {
-      this.list = $(selector);
-      return this.list;
-    } else {
-      return console.log(("" + (this.class_name) + " controller could not find list with: " + (selector)));
-    }
-  };
-  Controller.prototype.set_cell = function(selector) {
-    var _a, cell;
-    if ((typeof (_a = this.list) !== "undefined" && _a !== null)) {
-      if ($(selector).length > 0) {
-        cell = $($(selector).first());
-        this.cell = cell.clone();
-        cell.remove();
-        this.cell_selector = selector;
-        return this.cell_selector;
-      } else {
-        return console.log(("" + (this.class_name) + " controller could not find cells with: " + (selector)));
-      }
-    } else {
-      return console.log(("" + (this.class_name) + " controller could not find cells because no list has been set."));
-    }
-  };
-  Controller.prototype.process_form = function(event) {
+  FormController.prototype.process_form = function(event) {
     var _a, _b, attribute, attributes, default_value, field;
     if (!(typeof (_a = this.item) !== "undefined" && _a !== null)) {
       this.item = this.new_item();
@@ -104,13 +85,121 @@
     }}
     return this.new_item(attributes);
   };
-  Controller.prototype.new_item = function(attributes) {
-    return eval(("new " + (this.class_name) + "(attributes)"));
+  // Sets a list controller to the form object.
+  FormController.prototype.set_list_controller = function(list_controller) {
+    this.list_controller = list_controller;
+    return this.list_controller;
   };
-  Controller.prototype.parse_id = function(id) {
-    return id.split("_")[1];
+  // Callbacks for inherited methods from Controller.
+  // ------------------------------------------------------------
+  FormController.prototype.new_item = function(attributes) {
+    return FormController.__superClass__.new_item.call(this, attributes);
   };
-  Controller.prototype.destroy_cell = function(idx) {
+
+  ListController = function(params) {
+    var _a, _b;
+    this.controller_type = "List";
+    this.attributes = jQuery.extend({
+      list_selector: null,
+      cell_selector: null,
+      list: null,
+      cell: null,
+      selected_class: "selected",
+      blacklist: []
+    }, this.attributes);
+    ListController.__superClass__.constructor.call(this, params);
+    (typeof (_a = this.list_selector) !== "undefined" && _a !== null) ? this.set_list(this.list_selector) : null;
+    (typeof (_b = this.cell_selector) !== "undefined" && _b !== null) ? this.set_cell(this.cell_selector) : null;
+    return this;
+  };
+  __extends(ListController, Controller);
+  ListController.prototype.index = function(items) {
+    var _a, idx, item;
+    this.cell = this.cell.clone();
+    this.cell.show();
+    this.list.find(this.cell_selector).remove();
+    _a = items;
+    for (idx in _a) { if (__hasProp.call(_a, idx)) {
+      item = _a[idx];
+      this.build_cell(idx, item);
+      if (!(this.blacklisted(idx))) {
+        this.list.append(this.cell);
+      }
+      this.cell = this.cell.clone();
+    }}
+    return this.clear_blacklist();
+  };
+  ListController.prototype.build_cell = function(idx, item) {
+    var _a, _b, _c, _d, _e, attribute, binding, children, data_binding, value;
+    _a = item;
+    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
+      value = _a[attribute];
+      binding = this.cell.find(("." + (attribute)));
+      if (binding.length > 0) {
+        if ((typeof (_e = binding.attr('data-bindings')) !== "undefined" && _e !== null)) {
+          _c = binding.attr('data-bindings').split(' ');
+          for (_b = 0, _d = _c.length; _b < _d; _b++) {
+            data_binding = _c[_b];
+            data_binding = data_binding.split(':');
+            binding.attr(data_binding[1], item[data_binding[0]]);
+          }
+        }
+        children = binding.children();
+        binding.html(value);
+        binding.append(children);
+      }
+    }}
+    this.cell.attr("id", ("" + (this.class_name.toLowerCase()) + "_" + (idx)));
+    return console.log(("Created cell with ID: " + (this.cell.attr("id"))));
+  };
+  ListController.prototype.do_not_index = function(idx) {
+    return this.blacklist.push(idx);
+  };
+  ListController.prototype.blacklisted = function(idx) {
+    var _a, _b, _c, item;
+    _b = this.blacklist;
+    for (_a = 0, _c = _b.length; _a < _c; _a++) {
+      item = _b[_a];
+      if (item === idx) {
+        return true;
+      }
+    }
+    return false;
+  };
+  ListController.prototype.clear_blacklist = function() {
+    this.blacklist = [];
+    return this.blacklist;
+  };
+  ListController.prototype.set_list = function(selector) {
+    var _a;
+    if ($(selector).length > 0) {
+      this.list = $(selector);
+      if ((typeof (_a = this.cell) !== "undefined" && _a !== null)) {
+        return this.index();
+      }
+    } else {
+      return console.log(("" + (this.class_name) + " Controller could not find list with: " + (selector)));
+    }
+  };
+  ListController.prototype.set_cell = function(selector) {
+    var _a, _b, cell;
+    if ((typeof (_b = this.list) !== "undefined" && _b !== null)) {
+      if ($(selector).length > 0) {
+        cell = $($(selector).first());
+        this.cell = cell.clone();
+        cell.remove();
+        this.cell_selector = selector;
+        if ((typeof (_a = this.list) !== "undefined" && _a !== null)) {
+          return this.index();
+        }
+      } else {
+        return console.log(("" + (this.class_name) + " Controller could not find cells with: " + (selector)));
+      }
+    } else {
+      return console.log(("" + (this.class_name) + " Controller could not find cells because no list has been set."));
+    }
+  };
+  ListController.prototype.destroy_cell = function(idx) {
     var cell, item;
     cell = this.list.find(("#" + (this.class_name.toLowerCase()) + "_" + (idx)));
     if (cell.length > 0) {
@@ -120,6 +209,85 @@
     } else {
       return console.log(("Could not find item to delete with id: " + (id) + "."));
     }
+  };
+  // Callbacks for inherited methods from Controller.
+  // ------------------------------------------------------------
+  ListController.prototype.new_item = function(attributes) {
+    return ListController.__superClass__.new_item.call(this, attributes);
+  };
+
+  NavigationController = function(params) {
+    var _a, _b, _c, _d, _e, _f;
+    this.controller_type = "Navigation";
+    this.attributes = jQuery.extend({
+      navigation_selector: null,
+      button_selector: 'a',
+      target_selector: 'body',
+      button_attribute: 'id',
+      navigation: null,
+      button: null,
+      target: null,
+      selected: null,
+      previous: null,
+      list_controller: null,
+      default_item: null
+    }, this.attributes);
+    NavigationController.__superClass__.constructor.call(this, params);
+    (typeof (_a = this.navigation_selector) !== "undefined" && _a !== null) ? this.set_navigation(this.navigation_selector) : null;
+    (typeof (_b = this.button_selector) !== "undefined" && _b !== null) ? this.set_button(this.button_selector) : null;
+    (typeof (_c = this.target_selector) !== "undefined" && _c !== null) ? this.set_target(this.target_selector) : null;
+    (typeof (_d = this.default_item) !== "undefined" && _d !== null) && (typeof (_e = this.navigation) !== "undefined" && _e !== null) && (typeof (_f = this.target) !== "undefined" && _f !== null) ? this.navigation.find(("#" + (this.default_item))).click() : null;
+    return this;
+  };
+  __extends(NavigationController, Controller);
+  NavigationController.prototype.set_navigation = function(selector) {
+    if ((typeof selector !== "undefined" && selector !== null)) {
+      this.navigation = $(selector);
+      return this.navigation;
+    }
+  };
+  NavigationController.prototype.set_button = function(selector) {
+    var _a;
+    if ((typeof selector !== "undefined" && selector !== null)) {
+      if ((typeof (_a = this.navigation) !== "undefined" && _a !== null)) {
+        this.button = this.navigation.find(selector);
+        return this.button.click(__bind(function(event) {
+            this.select(event);
+            return false;
+          }, this));
+      }
+    }
+  };
+  NavigationController.prototype.set_target = function(selector) {
+    if ((typeof selector !== "undefined" && selector !== null)) {
+      this.target = $(selector);
+      return this.target;
+    }
+  };
+  NavigationController.prototype.select = function(event) {
+    var _a, _b, _c;
+    if (!(!this.before_change())) {
+      this.selected = $(event.target).attr(this.button_attribute);
+      if (!(typeof (_c = this.previous) !== "undefined" && _c !== null) || this.previous !== this.selected) {
+        if ((typeof (_a = this.previous) !== "undefined" && _a !== null)) {
+          this.target.removeClass(this.previous);
+        }
+        this.target.addClass(this.selected);
+        if ((typeof (_b = this.list_controller) !== "undefined" && _b !== null)) {
+          this.list_controller.index();
+        }
+        this.previous = this.selected;
+        return this.previous;
+      }
+    }
+  };
+  NavigationController.prototype.before_change = function() {
+    return true;
+  };
+  // Callbacks for inherited methods from Controller.
+  // ------------------------------------------------------------
+  NavigationController.prototype.new_item = function(attributes) {
+    return NavigationController.__superClass__.new_item.call(this, attributes);
   };
 
   Model = function(params) {
@@ -220,86 +388,234 @@
     return this.data();
   };
 
-  TodosController = function() {
+  EditNavigationController = function(params) {
+    this.attributes = {
+      edit_form_controller: null
+    };
+    EditNavigationController.__superClass__.constructor.call(this, params);
+    return this;
+  };
+  __extends(EditNavigationController, NavigationController);
+  // Custom behaviors can be added here.
+  // ------------------------------------------------------------
+  // Adds a form controller that can be referenced by the
+  // navigation controller.
+  EditNavigationController.prototype.edit_form_controller = function(form_controller) {
+    if ((typeof form_controller !== "undefined" && form_controller !== null)) {
+      this.edit_form_controller = form_controller;
+      return this.edit_form_controller;
+    }
+  };
+  // Callbacks for inherited methods from NavigationController.
+  // Feel free to override or add your own
+  // ------------------------------------------------------------
+  EditNavigationController.prototype.set_navigation = function(selector) {
+    return EditNavigationController.__superClass__.set_navigation.call(this, selector);
+  };
+  EditNavigationController.prototype.set_button = function(selector) {
+    return EditNavigationController.__superClass__.set_button.call(this, selector);
+  };
+  EditNavigationController.prototype.set_target = function(selector) {
+    return EditNavigationController.__superClass__.set_target.call(this, selector);
+  };
+  EditNavigationController.prototype.select = function(event) {
+    return EditNavigationController.__superClass__.select.call(this, event);
+  };
+  EditNavigationController.prototype.before_change = function() {
+    if (this.list_controller.modified()) {
+      if (confirm("You have made changed would you like to discard them?")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+  EditNavigationController.prototype.new_item = function(attributes) {
+    return EditNavigationController.__superClass__.new_item.call(this, attributes);
+  };
+
+  TodoFormController = function(params) {
     // We set the item for the type of object the controller maintains
     // by storing an instance of that model as a property of the
     // controller.
     this.item = new Todo();
-    // The form property stores a jQuerytized instance of our form
-    // object embedded on the page.
-    this.form = false;
-    // The cell object stores a representation of a cell node we use
-    // to render that object.
-    this.cell = false;
     // We call the controller super method to setup any simple bindings
     // for inherited functionality.
-    TodosController.__superClass__.constructor.call(this);
+    TodoFormController.__superClass__.constructor.call(this, params);
     return this;
   };
-  __extends(TodosController, Controller);
+  __extends(TodoFormController, FormController);
+  // Custom behaviors can be added here.
+  // ------------------------------------------------------------
+  // Callbacks for inherited methods from ListController.
+  // Feel free to override or add your own
+  // ------------------------------------------------------------
   // Pass a css selector to grab the form object you want to bind
   // the controller to.
-  TodosController.prototype.set_form = function(selector) {
-    this.form = $(selector);
-    return TodosController.__superClass__.set_form.call(this);
-  };
-  // Sets a list object for the controller.
-  TodosController.prototype.set_list = function(selector) {
-    return TodosController.__superClass__.set_list.call(this, selector);
-  };
-  // Sets an HTML object to be used as a cell for displaying instances of the item.
-  TodosController.prototype.set_cell = function(selector) {
-    return TodosController.__superClass__.set_cell.call(this, selector);
+  TodoFormController.prototype.set_form = function(selector) {
+    return TodoFormController.__superClass__.set_form.call(this, selector);
   };
   // Sets the passed item as the current item property of the class.
   // Additionally, this binds that specific item to the controllers form.
-  TodosController.prototype.set_item = function(item) {
-    return TodosController.__superClass__.set_item.call(this, item);
+  TodoFormController.prototype.set_item = function(item) {
+    return TodoFormController.__superClass__.set_item.call(this, item);
+  };
+  // Sets a list controller to the form object.
+  TodoFormController.prototype.set_list_controller = function(list_controller) {
+    return TodoFormController.__superClass__.set_list_controller.call(this, list_controller);
+  };
+  // Saves or updates the controller's item
+  TodoFormController.prototype.process_form = function(event) {
+    // Comment out super event if you do not want to edit or create a record.
+    // @item: super event
+    // Stop the form event from propogating.
+    return false;
+  };
+
+  TodoFormController = function(params) {
+    // We set the item for the type of object the controller maintains
+    // by storing an instance of that model as a property of the
+    // controller.
+    this.item = new Todo();
+    // We call the controller super method to setup any simple bindings
+    // for inherited functionality.
+    TodoFormController.__superClass__.constructor.call(this, params);
+    return this;
+  };
+  __extends(TodoFormController, FormController);
+  // Custom behaviors can be added here.
+  // ------------------------------------------------------------
+  // Callbacks for inherited methods from ListController.
+  // Feel free to override or add your own
+  // ------------------------------------------------------------
+  // Pass a css selector to grab the form object you want to bind
+  // the controller to.
+  TodoFormController.prototype.set_form = function(selector) {
+    return TodoFormController.__superClass__.set_form.call(this, selector);
+  };
+  // Sets the passed item as the current item property of the class.
+  // Additionally, this binds that specific item to the controllers form.
+  TodoFormController.prototype.set_item = function(item) {
+    return TodoFormController.__superClass__.set_item.call(this, item);
+  };
+  // Sets a list controller to the form object.
+  TodoFormController.prototype.set_list_controller = function(list_controller) {
+    return TodoFormController.__superClass__.set_list_controller.call(this, list_controller);
+  };
+  // Saves or updates the controller's item
+  TodoFormController.prototype.process_form = function(event) {
+    var _a;
+    this.item = TodoFormController.__superClass__.process_form.call(this, event);
+    if (this.item.save()) {
+      this.set_item(this.new_item());
+      if ((typeof (_a = this.list_controller) !== "undefined" && _a !== null)) {
+        this.list_controller.index();
+        // Stop the form event from propogating.
+      }
+    }
+    return false;
+  };
+
+  TodosListController = function(params) {
+    // We set the item for the type of object the controller maintains
+    // by storing an instance of that model as a property of the
+    // controller.
+    this.item = new Todo();
+    // Custom attributes.
+    this.attributes = {
+      mod_modes: ["delete", "move", "send", "today"]
+    };
+    // We call the controller super method to setup any simple bindings
+    // for inherited functionality.
+    TodosListController.__superClass__.constructor.call(this, params);
+    return this;
+  };
+  __extends(TodosListController, ListController);
+  // Custom behaviors can be added here.
+  // ------------------------------------------------------------
+  // Marks a cell as pending.
+  TodosListController.prototype.check_cell = function(idx) {
+    var item;
+    item = this.item.find(idx);
+    if (!(this.is_modifying())) {
+      if (item.complete()) {
+        console.log('Enabled item.');
+        return this.list.find(("#todo_" + (idx))).addClass(this.selected_class);
+      } else {
+        console.log('Disabled item.');
+        return this.list.find(("#todo_" + (idx))).removeClass(this.selected_class);
+      }
+    } else {
+      return this.list.find(("#todo_" + (idx))).toggleClass(this.selected_class);
+    }
+  };
+  // Returns a cache of modified cells.
+  TodosListController.prototype.is_modifying = function() {
+    var _a, _b, _c, mode;
+    _b = this.mod_modes;
+    for (_a = 0, _c = _b.length; _a < _c; _a++) {
+      mode = _b[_a];
+      if (this.list.hasClass(mode)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  TodosListController.prototype.modified = function() {
+    if (this.list.find(("." + (this.selected_class))).length > 0 && this.is_modifying()) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  // Callbacks for inherited methods from ListController.
+  // Feel free to override or add your own
+  // ------------------------------------------------------------
+  // Sets a list object for the controller.
+  TodosListController.prototype.set_list = function(selector) {
+    return TodosListController.__superClass__.set_list.call(this, selector);
+  };
+  // Sets an HTML object to be used as a cell for displaying instances of the item.
+  TodosListController.prototype.set_cell = function(selector) {
+    return TodosListController.__superClass__.set_cell.call(this, selector);
+  };
+  // Sets the passed item as the current item property of the class.
+  // Additionally, this binds that specific item to the controllers form.
+  TodosListController.prototype.set_item = function(item) {
+    return TodosListController.__superClass__.set_item.call(this, item);
   };
   // This is just a callback to implement functionality from the
   // controller superclass.
-  TodosController.prototype.new_item = function(attributes) {
-    return TodosController.__superClass__.new_item.call(this, attributes);
+  TodosListController.prototype.new_item = function(attributes) {
+    return TodosListController.__superClass__.new_item.call(this, attributes);
   };
   // Renders a list of the controllers element.
-  TodosController.prototype.index = function() {
-    return TodosController.__superClass__.index.call(this, this.item.all());
+  TodosListController.prototype.index = function() {
+    return TodosListController.__superClass__.index.call(this, this.item.all());
   };
   // Use this to override or add additional behavior to how items are
   // rendered as cells.
-  TodosController.prototype.build_cell = function(idx, item) {
-    TodosController.__superClass__.build_cell.call(this, idx, item);
+  TodosListController.prototype.build_cell = function(idx, item) {
+    TodosListController.__superClass__.build_cell.call(this, idx, item);
     if ((typeof item !== "undefined" && item !== null)) {
-      item.pending ? this.cell.addClass("selected") : this.cell.removeClass("selected");
-      this.cell.click(__bind(function(event) {
-          this.list.hasClass("delete") ? this.destroy_cell(idx) : this.check_cell(idx);
+      if (item.completed && this.is_modifying()) {
+        this.do_not_index(idx);
+      } else if (item.completed) {
+        this.cell.addClass(this.selected_class);
+      } else {
+        this.cell.removeClass(this.selected_class);
+      }
+      return this.cell.click(__bind(function(event) {
+          this.check_cell(idx);
           return false;
         }, this));
     }
-    return console.log("Cell successfuly created!");
-  };
-  // Marks a cell as pending.
-  TodosController.prototype.check_cell = function(idx) {
-    var item;
-    item = this.item.find(idx);
-    if (item.complete()) {
-      console.log('Enabled item.');
-      return this.list.find(("#todo_" + (idx))).addClass('selected');
-    } else {
-      console.log('Disabled item.');
-      return this.list.find(("#todo_" + (idx))).removeClass('selected');
-    }
-  };
-  // Saves or updates the controller's item
-  TodosController.prototype.process_form = function(event) {
-    this.item = TodosController.__superClass__.process_form.call(this, event);
-    this.item.save() ? this.set_item(this.new_item()) : null;
-    this.index();
-    return false;
   };
   // Destroys a cell.
-  TodosController.prototype.destroy_cell = function(idx) {
-    return TodosController.__superClass__.destroy_cell.call(this, idx);
+  TodosListController.prototype.destroy_cell = function(idx) {
+    return TodosListController.__superClass__.destroy_cell.call(this, idx);
   };
 
   Category = function(params) {
@@ -308,7 +624,7 @@
     // and the table like this.
     this.class_name = 'Category';
     this.table_name = 'categories';
-    // Declare the attributes for this object here in an hash.
+    // Declare the attributes for this object here in a hash.
     // Keys are the properties and values are their defaults.
     this.attributes = {
       name: '',
@@ -354,14 +670,15 @@
     // and the table like this.
     this.class_name = 'Todo';
     this.table_name = 'todos';
-    // Declare the attributes for this object here in an hash.
+    // Declare the attributes for this object here in a hash.
     // Keys are the properties and values are their defaults.
     this.attributes = {
       name: '',
       status: 'normal',
-      link: false,
+      link: null,
       completed: false,
-      idx: false
+      today: false,
+      idx: null
     };
     // The model object will now build us something nice with
     // the properties we've just set.
@@ -509,36 +826,24 @@
     return this;
   };
   $(document).ready(function() {
-    var _a, key, key_actions, selector, todo_controller;
-    // Bind keyboard navigation.
-    $("#content section > ul > li").keyboardable().clickable();
-    // Handle specific task actions.
-    key_actions = {
-      'a#delete': 'd',
-      'a#today': 't',
-      'a#move': 'm',
-      'a#send': 's',
-      'a#back': 'h',
-      'a#back': 'b'
-    };
-    // Bind html objects to key codes.
-    _a = key_actions;
-    for (selector in _a) { if (__hasProp.call(_a, selector)) {
-      key = _a[selector];
-      (function() {
-        return $(document).bind('keydown', key, function() {
-          if ($(selector).length > 0) {
-            window.location = $(selector).attr("href");
-            return window.location;
-          }
-        });
-      })();
-    }}
-    // Setup a todos controller and bind it to the inline form on the page.
-    todo_controller = new TodosController();
-    todo_controller.set_form(".edit-area form");
-    todo_controller.set_list(".tasks");
-    todo_controller.set_cell(".todo");
-    return todo_controller.index();
+    var todo_edit_nav, todo_form, todos_list;
+    // Setup a todos list controller to display current todos.
+    todos_list = new TodosListController({
+      list_selector: "ul.tasks",
+      cell_selector: "li.todo"
+    });
+    // Setup a todo form and bind it to the inline form on the page.
+    todo_form = new TodoFormController({
+      form_selector: "#task_form",
+      list_controller: todos_list
+    });
+    // Setup a navigation controller to mimick navigation.
+    todo_edit_nav = new EditNavigationController({
+      navigation_selector: "section#edit",
+      target_selector: "body, ul.tasks",
+      list_controller: todos_list,
+      default_item: "do"
+    });
+    return todo_edit_nav;
   });
 })();

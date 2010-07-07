@@ -18,56 +18,51 @@
   
   
   <div id="header" class="column-full">
-    
     <section id="add">
-      
       <ul>
         <li><a href="index.html" id="back">Back</a></li>
       </ul>
-      
     </section>
     
     <section id="edit">
-      
       <ul>
-        <li><a href="tasks-delete.html" id="delete">Delete</a></li>
-        <li><a href="tasks-move.html" id="move">Move</a></li>
-        <li><a href="tasks-send.html" id="send">Send</a></li>
-        <li><a href="tasks-today.html" id="today">Today</a></li>
+        <li><a href="#"                   id="do">Do</a></li>
+        <li><a href="tasks-delete.html"   id="delete">Delete</a></li>
+        <li><a href="tasks-move.html"     id="move">Move</a></li>
+        <li><a href="tasks-send.html"     id="send">Send</a></li>
+        <li><a href="tasks-today.html"    id="today">Today</a></li>
       </ul>
-      
     </section>
     
     <section id="title">
-      
       <p><strong>Performable</strong></p>
-      
     </section>
-    
   </div>
   
   
   <div id="content" class="column-full">
   
     <section id="content-main">
-      
       <div class="edit-area">
-        
-        <form action="index.html" method="get" accept-charset="utf-8">
-          <label>Task Title: </label>
-          <input type="text" name="name" value="" id="">
-          <input type="submit" value="Add Task">
+        <form action="" method="get" accept-charset="utf-8" id="task_form">
+          <label>Task Title:</label>
+          <input type="text"     name="name" value="" id="">
+          <input type="submit"   value="Add Task">
         </form>
         
+        <form action="" method="get" accept-charset="utf-8" id="modification_form">
+          <label>You are deleting <strong>4</strong> tasks</label>
+          <input type="submit" value="Delete Tasks">
+        </form>
       </div>
       
-      <ul class="tasks delete">
-        <li class="todo"><a href="" class="name"></a></li>
+      <ul class="tasks">
+        <li class="todo"><a href="" class="name" data-bindings="link:href idx:id"><span class="status"></span></a></li>
       </ul>
-      
     </section>
     
   </div>
+   
    <script type="text/javascript" charset="utf-8" src="javascripts/modernizr-1.5.min.js"></script>
    <script type="text/javascript" charset="utf-8" src="javascripts/jquery-1.4.2.min.js"></script>
    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.hotkeys.js"></script>

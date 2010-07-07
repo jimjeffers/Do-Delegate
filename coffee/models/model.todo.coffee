@@ -6,14 +6,15 @@ class Todo extends Model
       @class_name: 'Todo'
       @table_name: 'todos'
       
-      # Declare the attributes for this object here in an hash.
+      # Declare the attributes for this object here in a hash.
       # Keys are the properties and values are their defaults.
       @attributes: {
          name:       ''
          status:     'normal'
-         link:       false
+         link:       null
          completed:  false
-         idx:        false
+         today:      false
+         idx:        null
       }
       
       # The model object will now build us something nice with

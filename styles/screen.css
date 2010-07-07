@@ -1,5 +1,4 @@
 /*
-
    KEEP CSS CLEAN
    
    1. Only put one selector per line for a block of rules that apply to 
@@ -34,7 +33,6 @@
 
 /* Reset
 ================================================================================ */
-
 
 html,
 body,
@@ -187,6 +185,7 @@ strong {
    background-color: rgb(220,220,220);
 }
 
+.do #do,
 .send #send,
 .move #move,
 .today #today,
@@ -238,17 +237,17 @@ strong {
 #content ul.tasks li a { background-image: url(../images/done-off.png); }
 #content ul.tasks li.selected a { background-image: url(../images/done.png); }
 
-#content ul.delete li a { background-image: url(../images/delete-off.png); }
-#content ul.delete li.selected a { background-image: url(../images/delete.png); }
+.delete #content ul.tasks li a { background-image: url(../images/delete-off.png); }
+.delete #content ul.tasks li.selected a { background-image: url(../images/delete.png); }
+ 
+.move #content ul.tasks li a { background-image: url(../images/move-off.png); }
+.move #content ul.tasks li.selected a { background-image: url(../images/move.png); }
 
-#content ul.move li a { background-image: url(../images/move-off.png); }
-#content ul.move li.selected a { background-image: url(../images/move.png); }
+.send #content ul.tasks li a { background-image: url(../images/send-off.png); }
+.send #content ul.tasks li.selected a { background-image: url(../images/send.png); }
 
-#content ul.send li a { background-image: url(../images/send-off.png); }
-#content ul.send li.selected a { background-image: url(../images/send.png); }
-
-#content ul.today li a { background-image: url(../images/today-off.png); }
-#content ul.today li.selected a { background-image: url(../images/today.png); }
+.today #content ul.tasks li a { background-image: url(../images/today-off.png); }
+.today #content ul.tasks li.selected a { background-image: url(../images/today.png); }
 
 #content .edit-area {
    padding: 0 10px 1px 10px;
@@ -257,4 +256,20 @@ strong {
 #content .edit-area form {
    background-color: rgb(200,200,200);
    padding: 10px;
+}
+
+.do #task_form,
+#modification_form {
+   display: block;
+}
+
+.do #modification_form {
+   display: none;
+}
+
+.move #task_form,
+.delete #task_form,
+.send #task_form,
+.today #task_form {
+   display: none;
 }
