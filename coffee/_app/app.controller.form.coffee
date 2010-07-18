@@ -10,12 +10,16 @@ class FormController extends Controller
       if @form_selector?
          this.set_form(@form_selector)
    
+   # Takes a CSS selector to bind a form to the
+   # the current instance of the controller.
    set_form: (selector) ->
       @form: $(selector)   
       @form.submit( (event) =>
          this.process_form(event)
       )
-
+   
+   # Takes a new item and binds it's values to the
+   # form bound to this controller.
    set_item: (item) ->
       @item: item
       if @form.find("input[name='idx']").length < 1
@@ -24,7 +28,9 @@ class FormController extends Controller
          field: @form.find("input[name='${attribute}']")
          if field.length > 0
             field.val(@item[attribute])
-
+   
+   # Processes the form and returns a new item with the given attributes
+   # from the values passed in from the form.
    process_form: (event) ->
       @item: this.new_item() if !@item?
       attributes: {}
@@ -36,8 +42,3 @@ class FormController extends Controller
    # Sets a list controller to the form object.
    set_list_controller: (list_controller) ->
       @list_controller: list_controller
-   
-   # Callbacks for inherited methods from Controller.
-   # ------------------------------------------------------------
-   new_item: (attributes) ->
-      super attributes

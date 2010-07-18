@@ -49,7 +49,8 @@ class ListController extends Controller
    
    clear_blacklist: ->
       @blacklist: []
-   
+      
+   # Sets a list object for the controller.
    set_list: (selector) ->
       if $(selector).length > 0
          @list: $(selector)
@@ -70,6 +71,9 @@ class ListController extends Controller
       else
          console.log("${@class_name} Controller could not find cells because no list has been set.")
 
+   selected_count: ->
+      return @list.find(".${@selected_class}").length if @list?
+   
    destroy_cell: (idx) ->
       cell: @list.find("#${@class_name.toLowerCase()}_${idx}")
       if cell.length > 0
@@ -78,8 +82,3 @@ class ListController extends Controller
          cell.remove()
       else
          console.log "Could not find item to delete with id: ${id}."
-   
-   # Callbacks for inherited methods from Controller.
-   # ------------------------------------------------------------
-   new_item: (attributes) ->
-      super attributes

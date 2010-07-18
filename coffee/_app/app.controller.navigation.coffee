@@ -52,8 +52,3 @@ class NavigationController extends Controller
    
    before_change: ->
       true
-   
-   # Callbacks for inherited methods from Controller.
-   # ------------------------------------------------------------
-   new_item: (attributes) ->
-      super attributes

@@ -3,11 +3,7 @@ class EditNavigationController extends NavigationController
       @attributes: {
          edit_form_controller: null
       }
-      
       super params
-   
-   # Custom behaviors can be added here.
-   # ------------------------------------------------------------
 
    # Adds a form controller that can be referenced by the
    # navigation controller.
@@ -15,21 +11,11 @@ class EditNavigationController extends NavigationController
       if form_controller?
          @edit_form_controller: form_controller
    
-   # Callbacks for inherited methods from NavigationController.
-   # Feel free to override or add your own
-   # ------------------------------------------------------------
-   set_navigation: (selector) ->
-      super selector
-   
-   set_button: (selector) ->
-      super selector
-   
-   set_target: (selector) ->
-      super selector
-   
-   select: (event) ->
-      super event
-   
+   # Overides the hook method in the super class to only return true if
+   # the list controller isn't being modified. By returning false
+   # we intercept the click event and prevent it from firing. This is to
+   # prompt the user in order to prevent them from losing any unsaved 
+   # changes.
    before_change: ->
       if @list_controller.modified()
          if confirm("You have made changed would you like to discard them?")
@@ -38,6 +24,3 @@ class EditNavigationController extends NavigationController
             return false
       else
          return true
-   
-   new_item: (attributes) ->
-      super attributes

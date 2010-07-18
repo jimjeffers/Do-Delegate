@@ -18,4 +18,13 @@ $(document).ready( ->
       list_controller:     todos_list
       default_item:        "do"
    })
+   
+   # Setup a modification form controller to track modifications.
+   modify_todos_list_form: new ModifyFormController({
+      form_selector: "#modification_form"
+      navigation_controller: todo_edit_nav
+      list_controller: todos_list
+      mode_selector: ".mode"
+      count_selector: ".count"
+   })
 )

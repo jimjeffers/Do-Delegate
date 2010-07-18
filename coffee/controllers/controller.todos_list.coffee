@@ -1,23 +1,19 @@
+# The Todos List Controller is a ListController that is bound to a
+# Todo model. Custom attributes include:
+#
+# *@mod_modes:* An array containing class names that signify the
+# list is currently in a modification mode.
 class TodosListController extends ListController
    constructor: (params) ->
-      # We set the item for the type of object the controller maintains
-      # by storing an instance of that model as a property of the
-      # controller.
       @item: new Todo()
-      
-      # Custom attributes.
       @attributes: {
          mod_modes: ["delete","move","send","today"]
       }
-      
-      # We call the controller super method to setup any simple bindings
-      # for inherited functionality.
       super params
    
-   # Custom behaviors can be added here.
-   # ------------------------------------------------------------
-      
-   # Marks a cell as pending.
+   # When modifying, this method toggles a cell with the selected class.
+   # When not modifying, this method toggles a cells completed status and
+   # updates the database.
    check_cell: (idx) ->
       item: @item.find(idx)
       unless this.is_modifying()
@@ -30,41 +26,22 @@ class TodosListController extends ListController
       else
          @list.find("#todo_${idx}").toggleClass(@selected_class)
    
-   # Returns a cache of modified cells.
+   # Returns true if the HTML element has a class signalling it is in
+   # modification mode.
    is_modifying: () ->
       for mode in @mod_modes
          return true if @list.hasClass(mode)
       false
    
+   # Queries the HTML element bound to the list to see if any elements have the
+   # selected class status signifying modifications have been made.
    modified: ->
       if @list.find(".${@selected_class}").length > 0 and this.is_modifying()
          return true
       else
          return false
    
-   # Callbacks for inherited methods from ListController.
-   # Feel free to override or add your own
-   # ------------------------------------------------------------
-   
-   # Sets a list object for the controller.
-   set_list: (selector) ->
-      super selector
-   
-   # Sets an HTML object to be used as a cell for displaying instances of the item.
-   set_cell: (selector) ->
-      super selector
-      
-   # Sets the passed item as the current item property of the class.
-   # Additionally, this binds that specific item to the controllers form.
-   set_item: (item) ->
-      super item
-   
-   # This is just a callback to implement functionality from the 
-   # controller superclass.
-   new_item: (attributes) ->
-      super attributes
-   
-   # Renders a list of the controllers element.
+   # Renders a list of all items that belong to the controllers.
    index: () ->
       super @item.all()
       
@@ -83,7 +60,3 @@ class TodosListController extends ListController
             this.check_cell(idx)
             false
       )
-         
-   # Destroys a cell.
-   destroy_cell: (idx) ->
-      super idx

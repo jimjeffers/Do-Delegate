@@ -11,6 +11,7 @@ def build
   javascript_path = './javascripts/app.js'
   File.open(coffee_path,'w') {|f| f.write Dir.glob(File.join(Dir.pwd,'coffee/**/*.coffee')).map{ |path| %x(cat #{path}) }.join("\n") }
   javascript = %x(coffee -p #{coffee_path})
+  `docco ./coffee/**/*`
   File.delete(coffee_path)
   #File.open(javascript_path,'w') {|f| f.write YUI::JavaScriptCompressor.new().compress(javascript) }
   File.open(javascript_path,'w') {|f| f.write javascript }
