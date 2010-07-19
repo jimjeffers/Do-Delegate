@@ -1,26 +1,20 @@
-<h1>Listing todos</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Aasm state</th>
-    <th>Project</th>
-    <th>User</th>
-  </tr>
-
-<% @todos.each do |todo| %>
-  <tr>
-    <td><%=h todo.name %></td>
-    <td><%=h todo.aasm_state %></td>
-    <td><%=h todo.project_id %></td>
-    <td><%=h todo.user_id %></td>
-    <td><%= link_to 'Show', todo %></td>
-    <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
-    <td><%= link_to 'Destroy', todo, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New todo', new_todo_path %>
+<section id="content-main">
+  <div class="edit-area">
+    <form action="" method="get" accept-charset="utf-8" id="task_form">
+      <label>Task Title:</label>
+      <input type="text"     name="name" value="" id="">
+      <input type="submit"   value="Add Task">
+    </form>
+    
+    <form action="" method="get" accept-charset="utf-8" id="modification_form">
+      <label>You are <span class="mode">deleting</span> <strong class="count">4</strong> tasks</label>
+      <input type="submit" value="Delete Tasks">
+    </form>
+  </div>
+  
+  <ul class="tasks">
+    <% @todos.each do |todo| %>
+    <li class="todo"><a href="<%= complete_todo_path(todo) %>" class="name" data-bindings="link:href"></a></li>
+    <% end %>
+  </ul>
+</section>

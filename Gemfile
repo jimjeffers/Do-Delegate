@@ -13,6 +13,9 @@ gem "exception_notification"
 gem "fastercsv"
 gem "aasm"
 
+gem "directory_watcher"
+gem "yui-compressor", :require => "yui/compressor"
+
 group :development do
   # bundler requires these gems in development
   gem "rails-footnotes"
