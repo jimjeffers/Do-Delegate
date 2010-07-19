@@ -31,15 +31,3 @@
    width: 100%;
    clear: both;
 }
-
-#header #add {
-   position: absolute;
-   top: 0;
-   left: 0;
-}
-
-#header #edit {
-   position: absolute;
-   top: 0;
-   right: 0;
-}

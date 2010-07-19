@@ -27,45 +27,125 @@
 ================================================================================ */
 
 
+/*
+   
+   border-bottom-left-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      
+   border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      
+*/
+
 #header {
-   border-bottom: 1px solid rgb(220,220,220);
-   margin: 0 0 10px 0;
-}
-
-#header #title {
-   text-align: center;
-}
-
-#header #title p {
-   padding: 20px;
+   background-color: rgb(0,0,0);
+   position: fixed;
 }
 
 #header ul {
-   padding: 10px 10px 10px 0;
+   padding: 10px 10px 0 0;
 }
 
 #header ul li {
    float: left;
-   padding: 0 0 0 10px;
+   padding: 0 0 10px 10px;
 }
 
 #header ul li a {
    display: block;
    padding: 10px;
-   background-color: rgb(240,240,240);
+   background-color: rgb(200,200,200);
+   border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
 }
 
 #header ul li a:hover {
-   background-color: rgb(220,220,220);
+   background-color: rgb(255,255,255);
 }
 
-.do #do,
-.send #send,
-.move #move,
-.today #today,
-.delete #delete,
-#header ul li.active a {
-   background-color: rgb(220,220,220);
+#header ul li a img {
+   display: block;
+}
+
+#header ul li.active a.tasks {
+   background-color: rgb(255,255,255);
+}
+
+#header ul li.active a.delete {
+   background-color: rgb(200,0,0);
+}
+
+#header ul li.active a.move {
+   background-color: rgb(50,100,255);
+}
+
+#header ul li.active a.send {
+   background-color: rgb(50,155,0);
+}
+
+#header ul li.active a.focus {
+   background-color: rgb(255,225,0);
+}
+
+#header #nav {
+   float: left;
+}
+
+#header #edit {
+   float: right;
+}
+
+#header #edit-area {
+   padding: 0 0 0 0;
+   clear: both;
+}
+
+#header #edit-area form {
+   background-color: rgb(200,200,200);
+   padding: 10px;
+   margin: 0;
+}
+
+#header #edit-area form.delete { background-color: rgb(200,0,0); color: rgb(255,200,200); }
+#header #edit-area form.delete strong { color: rgb(255,255,255); }
+
+#header #edit-area form.move { background-color: rgb(50,100,255); color: rgb(200,215,255); }
+#header #edit-area form.move strong { color: rgb(255,255,255);}
+
+#header #edit-area form.send { background-color: rgb(0,155,0); color: rgb(205,230,190); }
+#header #edit-area form.send strong { color: rgb(255,255,255); }
+
+#header #edit-area form.focus { background-color: rgb(255,225,0); color: rgb(155,125,0); }
+#header #edit-area form.focus strong { color: rgb(0,0,0); }
+
+#header #edit-area form label {
+   display: inline;
+   padding: 0;
+   margin: 0 5px 0 0;
+}
+
+#header #edit-area form input,
+#header #edit-area form select {
+   margin: 0;
+}
+
+#content {
+   padding: 100px 0 0 0;
+}
+
+#content h2 {
+   border-top: 1px solid rgb(150,150,150);
+   margin: 0 20px;
+   padding: 10px 0;
+}
+
+#content p.cat-title {
+   padding: 20px 20px 20px 20px;
+   font-weight: bold;
+   text-align: center;
 }
 
 #content ul {
@@ -74,76 +154,167 @@
 }
 
 #content ul li {
-   border: 1px solid rgb(255,255,255);
    display: block;
-   margin: 0;
+   margin: 0 0 1px 0;
 }
 
 #content ul li a {
    display: block;
-   padding: 10px;
-   background-color: rgb(240,240,240);
-}
-
-#content ul li a:hover {
-   background-color: rgb(220,220,220);
-}
-
-#content ul li.active {
-   border: 1px solid rgb(220,0,0);
+   padding: 10px 10px 10px 10px;
+   background-color: rgb(235,235,235);
 }
 
 #content ul li a span {
+   font-size: 11px;
+   color: rgb(150,150,150);
+}
+
+#content ul li a span.focus,
+#content ul li a span.total,
+#content ul li a span.send,
+#content ul li a span.move {
    float: right;
-   margin: 0 0 0 20px;
+   color: rgb(0,0,0);
+   border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+   display: inline-block;
+   padding: 0 5px;
+   margin: 0 0 0 5px;
+}
+
+#content ul li a span.focus {
+   background-color: rgb(255,225,0);
+}
+
+#content ul li a span.move {
+   background-color: rgb(50,100,255);
+   color: rgb(255,255,255);
+}
+
+#content ul li a span.send {
+   background-color: rgb(0,155,0);
+   color: rgb(255,255,255);
+}
+
+#content ul li a span.total {
+   background-color: rgb(200,200,200);
+}
+
+#content ul.system li:first-child a,
+#content ul.projects li:first-child a {
+   border-top-left-radius: 3px;
+      -moz-border-radius-topleft: 3px;
+      -webkit-border-top-left-radius: 3px;
+   border-top-right-radius: 3px;
+      -moz-border-radius-topright: 3px;
+      -webkit-border-top-right-radius: 3px;
+}
+
+#content ul.system li:last-child a,
+#content ul.projects li:last-child a {
+   border-bottom-left-radius: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+   border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+}
+
+#content ul.system {
+   padding: 10px 10px 0 10px;
+}
+
+#content ul.tasks {
+   padding: 0;
+   margin: 0 10px 10px 10px;
+   border-bottom-left-radius: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+   border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+}
+
+#content ul.tasks li,
+#content ul.delete li,
+#content ul.move li,
+#content ul.send li,
+#content ul.focus li {
+   margin: 0 0 5px 0;
+   box-shadow: 0px 1px 2px #ccc;
+     -moz-box-shadow: 0px 1px 2px #ccc;
+     -webkit-box-shadow: 0px 1px 2px #ccc;
+   border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
 }
 
 #content ul.tasks li a,
 #content ul.delete li a,
 #content ul.move li a,
 #content ul.send li a,
-#content ul.today li a {
+#content ul.focus li a {
+   border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+}
+
+#content ul.tasks li a {
    padding: 10px 10px 10px 40px;
    background-repeat: no-repeat;
    background-position: 12px 50%;
 }
 
-#content ul.tasks li a { background-image: url(../images/done-off.png); }
-#content ul.tasks li.selected a { background-image: url(../images/done.png); }
+#content ul.tasks li a { background-image: url(../images/done-off.svg); }
+#content ul.tasks li.focus a { background-image: url(../images/done-focus.svg); }
+#content ul.tasks li.selected a { background-image: url(../images/done-on.svg); background-color: rgb(250,250,250); color: rgb(150,150,150); }
 
-.delete #content ul.tasks li a { background-image: url(../images/delete-off.png); }
-.delete #content ul.tasks li.selected a { background-image: url(../images/delete.png); }
- 
-.move #content ul.tasks li a { background-image: url(../images/move-off.png); }
-.move #content ul.tasks li.selected a { background-image: url(../images/move.png); }
-
-.send #content ul.tasks li a { background-image: url(../images/send-off.png); }
-.send #content ul.tasks li.selected a { background-image: url(../images/send.png); }
-
-.today #content ul.tasks li a { background-image: url(../images/today-off.png); }
-.today #content ul.tasks li.selected a { background-image: url(../images/today.png); }
-
-#content .edit-area {
-   padding: 0 10px 1px 10px;
+#content ul.delete li a,
+#content ul.move li a,
+#content ul.send li a,
+#content ul.focus li a {
+   padding: 10px 10px 10px 40px;
+   background-repeat: no-repeat;
+   background-position: 14px 50%;
 }
 
-#content .edit-area form {
-   background-color: rgb(200,200,200);
-   padding: 10px;
+#content ul.delete li a { background-image: url(../images/edit-off.svg); }
+#content ul.delete li.selected a { background-image: url(../images/edit-delete.svg); }
+
+#content ul.move li a { background-image: url(../images/edit-off.svg); }
+#content ul.move li.selected a { background-image: url(../images/edit-move.svg); }
+
+#content ul.send li a { background-image: url(../images/edit-off.svg); }
+#content ul.send li.selected a { background-image: url(../images/edit-send.svg); }
+
+#content ul.focus li a { background-image: url(../images/edit-off.svg); }
+#content ul.focus li.selected a { background-image: url(../images/edit-focus.svg); }
+
+#content ul.archive li a {
+   border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
 }
 
-.do #task_form,
-#modification_form {
-   display: block;
+#content ul.connections {
+   margin: 0 20px 10px 20px;
+   padding: 0;
 }
 
-.do #modification_form {
-   display: none;
+#content ul.connections li {
+   margin: 0;
+   border-top: 1px solid rgb(235,235,235);
+   padding: 5px 0;
 }
 
-.move #task_form,
-.delete #task_form,
-.send #task_form,
-.today #task_form {
-   display: none;
+#content ul.connections li span {
+   font-size: 11px;
+   color: rgb(150,150,150);
+}
+
+#content ul.connections li a {
+   display: inline;
+   padding: 0;
+   background-color: transparent;
 }

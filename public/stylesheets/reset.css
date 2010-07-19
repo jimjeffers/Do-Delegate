@@ -29,7 +29,6 @@
 html,
 body,
 ul,
-ol,
 li,
 form,
 fieldset,
@@ -41,29 +40,6 @@ legend {
 fieldset,
 img {
    border: 0;
-}
-
-ul, ol {
-   list-style: none;
-}
-
-table {
-   border-collapse: collapse;
-   border-spacing: 0;
-}
-
-caption,
-th,
-td {
-   text-align: left;
-   vertical-align: top;
-   font-weight: normal;
-}
-
-abbr,
-acronym {
-   border-bottom: 1px dotted;
-   cursor: help;
 }
 
 article,

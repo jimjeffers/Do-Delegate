@@ -28,35 +28,61 @@
 
 
 body {
-   font-family: "DejaVu Sans", "URW Gothic L", "Helvetica Neue", Helvetica,
-                Arial, "Microsoft Sans Serif", sans-serif;
-   background: rgb(255,255,255) url(../images/bg.gif) repeat-y top center;
+   font-family: "Helvetica Neue", Helvetica, sans-serif;
+   background-color: rgb(255,255,255);
    font-size: 14px;
    line-height: 20px;
+   color: rgb(0,0,0);
 }
 
 a:link,
 a:visited {
    text-decoration: none;
-   color: rgb(205,0,0);
+   color: rgb(0,0,0);
 }
 
 a:hover,
 a:active {
    text-decoration: none;
-   color: rgb(125,0,0);
+   color: rgb(0,0,0);
 }
 
-p, ul, ol, dl {
+p {
    padding: 0;
    margin: 0;
 }
 
-blockquote {
-   font-style: italic;
-   padding: 0 20px;
+ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
 }
 
-strong {
-   font-weight: bold;
+h1,
+h2,
+h3 {
+   padding: 0 20px;
+   font-size: 14px;
+   line-height: 20px;
+}
+
+form {
+   padding: 0 20px 0 20px;
+   margin: 0 0 20px 0;
+}
+
+input,
+select,
+textarea {
+   font-family: "Helvetica Neue", Helvetica, sans-serif;
+   margin: 0 0 10px 0;
+}
+
+input[type="submit"] {
+   margin: 0;
+}
+
+label {
+   display: block;
+   padding: 0 0 5px 0;
 }
