@@ -1,6 +1,28 @@
 class Todo < ActiveRecord::Base
   
-  # Handle state transitions.
+  # --------------------------------------------------------------
+  # Relationships
+  #
+  # A Todo belongs to a user and a project.
+  # It can also be bound to a user via a join
+  # model known as a deligation. The deligation model
+  # tracks a deligator and a deligatee. This is 
+  # used primarily to handle deligation of Todos
+  # from one user to another.
+  
+  belongs_to :user
+  has_many :delegations
+  
+  # --------------------------------------------------------------
+  # Validations
+  #
+  # In order to be valid, a Todo, at the very least,
+  # must have a name.
+  
+  validates_presence_of :name
+  
+  # --------------------------------------------------------------
+  # States and Transitions
   #
   # A Todo can be in one of two states:
   # 1. incomplete
@@ -20,6 +42,13 @@ class Todo < ActiveRecord::Base
     transitions :to => :incomplete, :from => [:completed]
   end
   
-  # End state management.
+  # --------------------------------------------------------------
+  # Scopes
+  
+  # --------------------------------------------------------------
+  # Class Methods
+  
+  # --------------------------------------------------------------
+  # Instance Methods
   
 end
