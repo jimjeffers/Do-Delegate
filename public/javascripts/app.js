@@ -1,10 +1,6 @@
 (function(){
   var Category, Controller, EditNavigationController, FormController, ListController, Model, ModifyFormController, NavigationController, Todo, TodoFormController, TodosListController;
-  var __hasProp = Object.prototype.hasOwnProperty, __slice = Array.prototype.slice, __bind = function(func, obj, args) {
-    return function() {
-      return func.apply(obj || {}, args ? args.concat(__slice.call(arguments, 0)) : arguments);
-    };
-  }, __extends = function(child, parent) {
+  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     var ctor = function(){ };
     ctor.prototype = parent.prototype;
     child.__superClass__ = parent.prototype;
@@ -14,7 +10,6 @@
   Controller = function(params) {
     var _a, _b, attribute, default_value;
     this.type = "controller";
-    // Bind any attributes.
     if (!(typeof params !== "undefined" && params !== null)) {
       params = {};
     }
@@ -31,7 +26,6 @@
     }
     return this;
   };
-  // Generates a new instance of the item tied to this controller.
   Controller.prototype.new_item = function(attributes) {
     return eval(("new " + (this.class_name) + "(attributes)"));
   };
@@ -49,16 +43,17 @@
     return this;
   };
   __extends(FormController, Controller);
-  // Takes a CSS selector to bind a form to the
-  // the current instance of the controller.
   FormController.prototype.set_form = function(selector) {
     this.form = $(selector);
-    return this.form.submit(__bind(function(event) {
+    return this.form.submit((function(__this) {
+      var __func = function(event) {
         return this.process_form(event);
-      }, this));
+      };
+      return (function() {
+        return __func.apply(__this, arguments);
+      });
+    })(this));
   };
-  // Takes a new item and binds it's values to the
-  // form bound to this controller.
   FormController.prototype.set_item = function(item) {
     var _a, _b, attribute, default_value, field;
     this.item = item;
@@ -68,15 +63,11 @@
       default_value = _b[attribute];
       _a.push((function() {
         field = this.form.find(("input[name='" + (attribute) + "']"));
-        if (field.length > 0) {
-          return field.val(this.item[attribute]);
-        }
+        return field.length > 0 ? field.val(this.item[attribute]) : null;
       }).call(this));
     }}
     return _a;
   };
-  // Processes the form and returns a new item with the given attributes
-  // from the values passed in from the form.
   FormController.prototype.process_form = function(event) {
     var _a, _b, attribute, attributes, default_value, field;
     if (!(typeof (_a = this.item) !== "undefined" && _a !== null)) {
@@ -93,7 +84,6 @@
     }}
     return this.new_item(attributes);
   };
-  // Sets a list controller to the form object.
   FormController.prototype.set_list_controller = function(list_controller) {
     this.list_controller = list_controller;
     return this.list_controller;
@@ -173,7 +163,6 @@
     this.blacklist = [];
     return this.blacklist;
   };
-  // Sets a list object for the controller.
   ListController.prototype.set_list = function(selector) {
     var _a;
     if ($(selector).length > 0) {
@@ -246,28 +235,27 @@
   };
   __extends(NavigationController, Controller);
   NavigationController.prototype.set_navigation = function(selector) {
-    if ((typeof selector !== "undefined" && selector !== null)) {
-      this.navigation = $(selector);
-      return this.navigation;
-    }
+    return (typeof selector !== "undefined" && selector !== null) ? (this.navigation = $(selector)) : null;
   };
   NavigationController.prototype.set_button = function(selector) {
     var _a;
-    if ((typeof selector !== "undefined" && selector !== null)) {
+    if (typeof selector !== "undefined" && selector !== null) {
       if ((typeof (_a = this.navigation) !== "undefined" && _a !== null)) {
         this.button = this.navigation.find(selector);
-        return this.button.click(__bind(function(event) {
+        return this.button.click((function(__this) {
+          var __func = function(event) {
             this.select(event);
             return false;
-          }, this));
+          };
+          return (function() {
+            return __func.apply(__this, arguments);
+          });
+        })(this));
       }
     }
   };
   NavigationController.prototype.set_target = function(selector) {
-    if ((typeof selector !== "undefined" && selector !== null)) {
-      this.target = $(selector);
-      return this.target;
-    }
+    return (typeof selector !== "undefined" && selector !== null) ? (this.target = $(selector)) : null;
   };
   NavigationController.prototype.select = function(event) {
     var _a, _b, _c;
@@ -313,12 +301,9 @@
       return this.parent_model_class_name;
     }
   };
-  // An alias for to make _data() accessible to the public API.
   Model.prototype.all = function() {
     return this._data();
   };
-  // Create or updates the current object as a JSON object
-  // provided an index is passed or not.
   Model.prototype.save = function() {
     var _a, _b, attribute, default_value, item, table;
     table = this._data();
@@ -338,8 +323,6 @@
     this._commit(table);
     return true;
   };
-  // Removes the current object from the JSON object and commits
-  // the changes to local storage.
   Model.prototype.destroy = function() {
     var table;
     table = this._data();
@@ -348,14 +331,13 @@
     delete table[this.idx];
     return this._commit(table);
   };
-  // Finds a specific JSON object at the requested index.
   Model.prototype.find = function(query) {
     var _a, _b, _c, _d, attribute, attributes, default_value, idx, item, record, table, value;
     table = this._data();
-    if ((typeof query !== "undefined" && query !== null)) {
+    if (typeof query !== "undefined" && query !== null) {
       if (typeof (query) === "string") {
         item = table[query];
-        if ((typeof item !== "undefined" && item !== null)) {
+        if (typeof item !== "undefined" && item !== null) {
           attributes = {};
           _a = this.attributes;
           for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
@@ -390,10 +372,6 @@
       return null;
     }
   };
-  // Returns a JSON object parsed from a string stored in
-  // the web browsers local storage. The key used to reference
-  // this object is stored in the @table_name attribute in a
-  // model.
   Model.prototype._data = function() {
     var items, storage;
     storage = localStorage.getItem(this.table_name);
@@ -405,20 +383,13 @@
     }
     return items;
   };
-  // Stringifies a JSON object and stores it by creating or
-  // overwriting a string assigned to the key specified in
-  // @table_name for the given model.
   Model.prototype._commit = function(table) {
     return localStorage.setItem(this.table_name, JSON.stringify(table));
   };
-  // Increments the current index value.
   Model.prototype._increment = function() {
     localStorage.setItem(("" + (this.table_name) + "_idx"), this._index() + 1);
     return this._index();
   };
-  // Returns the current index value stored in a separate local
-  // storage string under the value #{@table_name}_idx for example:
-  // "users_idx" for a class with @table_name: "users"
   Model.prototype._index = function() {
     var index;
     index = localStorage.getItem(("" + (this.table_name) + "_idx"));
@@ -437,19 +408,9 @@
     return this;
   };
   __extends(EditNavigationController, NavigationController);
-  // Adds a form controller that can be referenced by the
-  // navigation controller.
   EditNavigationController.prototype.edit_form_controller = function(form_controller) {
-    if ((typeof form_controller !== "undefined" && form_controller !== null)) {
-      this.edit_form_controller = form_controller;
-      return this.edit_form_controller;
-    }
+    return (typeof form_controller !== "undefined" && form_controller !== null) ? (this.edit_form_controller = form_controller) : null;
   };
-  // Overides the hook method in the super class to only return true if
-  // the list controller isn't being modified. By returning false
-  // we intercept the click event and prevent it from firing. This is to
-  // prompt the user in order to prevent them from losing any unsaved
-  // changes.
   EditNavigationController.prototype.before_change = function() {
     if (this.list_controller.modified()) {
       if (confirm("You have made changed would you like to discard them?")) {
@@ -459,21 +420,6 @@
       }
     } else {
       return true;
-      // Handles an intermediary form that is used to process pending
-      // elements depending on the given mode it's navigation controller
-      // is set in. On that note. This controller depends on both a
-      // navigation controller and a list controller. These can be set
-      // during instantiation with the following parameters:
-      // * *@navigation_controller:* Stores a reference to an instance of a
-      //   navigation controller which is used to determine the current mode
-      //   by checking the controller's selected value.
-      // * *@list_controller:* Stores a reference to an instance of a list
-      //   controller. This list controller will be inadvertantly called
-      //   to run modifications based on the current mode.
-      // * *@mode_selector:* A css selector to reference an element
-      //   displaying the current mode on the form.
-      // * *@count_selector:* A css selector to select the element that
-      //   displays the count of objects changed in the form.
     }
   };
 
@@ -492,23 +438,12 @@
     return this;
   };
   __extends(ModifyFormController, FormController);
-  // Sets the navigation_controller attribute.
   ModifyFormController.prototype.set_navigation_controller = function(navigation_controller) {
-    if ((typeof navigation_controller !== "undefined" && navigation_controller !== null)) {
-      this.navigation_controller = navigation_controller;
-      return this.navigation_controller;
-    }
+    return (typeof navigation_controller !== "undefined" && navigation_controller !== null) ? (this.navigation_controller = navigation_controller) : null;
   };
-  // Sets the list_controller attribute.
   ModifyFormController.prototype.set_list_controller = function(list_controller) {
-    if ((typeof list_controller !== "undefined" && list_controller !== null)) {
-      this.navigation_controller = list_controller;
-      return this.navigation_controller;
-    }
+    return (typeof list_controller !== "undefined" && list_controller !== null) ? (this.navigation_controller = list_controller) : null;
   };
-  // Sets the *mode_selector* attribute. Then sets a separate
-  // *@mode_label* attribute to the element returned by jquery
-  // from that selector.
   ModifyFormController.prototype.set_mode_selector = function(mode_selector) {
     var _a, _b, _c;
     (typeof mode_selector !== "undefined" && mode_selector !== null) ? (this.mode_selector = mode_selector) : null;
@@ -522,9 +457,6 @@
       return this.mode_label;
     }
   };
-  // Sets the *count_selector* attribute. Then sets a separate
-  // *@count_label* attribute to the element returned by jquery
-  // from that selector.
   ModifyFormController.prototype.set_count_selector = function(count_selector) {
     var _a, _b;
     (typeof count_selector !== "undefined" && count_selector !== null) ? (this.count_selector = count_selector) : null;
@@ -538,8 +470,6 @@
       return this.count_label;
     }
   };
-  // Extend the inherited set form method to set the mode and count selectors if
-  // they were set prior to the form being established.
   ModifyFormController.prototype.set_form = function(selector) {
     ModifyFormController.__superClass__.set_form.call(this, selector);
     this.set_mode_selector();
@@ -552,8 +482,6 @@
     return this;
   };
   __extends(TodoFormController, FormController);
-  // Saves or updates the controller's item. Returns false to stop
-  // the form submission from propogating.
   TodoFormController.prototype.process_form = function(event) {
     var _a;
     this.item = TodoFormController.__superClass__.process_form.call(this, event);
@@ -562,10 +490,6 @@
       (typeof (_a = this.list_controller) !== "undefined" && _a !== null) ? this.list_controller.index() : null;
     }
     return false;
-    // The Todos List Controller is a ListController that is bound to a
-    // Todo model. Custom attributes include:
-    // *@mod_modes:* An array containing class names that signify the
-    // list is currently in a modification mode.
   };
 
   TodosListController = function(params) {
@@ -577,9 +501,6 @@
     return this;
   };
   __extends(TodosListController, ListController);
-  // When modifying, this method toggles a cell with the selected class.
-  // When not modifying, this method toggles a cells completed status and
-  // updates the database.
   TodosListController.prototype.check_cell = function(idx) {
     var item;
     item = this.item.find(idx);
@@ -595,8 +516,6 @@
       return this.list.find(("#todo_" + (idx))).toggleClass(this.selected_class);
     }
   };
-  // Returns true if the HTML element has a class signalling it is in
-  // modification mode.
   TodosListController.prototype.is_modifying = function() {
     var _a, _b, _c, mode;
     _b = this.mod_modes;
@@ -608,8 +527,6 @@
     }
     return false;
   };
-  // Queries the HTML element bound to the list to see if any elements have the
-  // selected class status signifying modifications have been made.
   TodosListController.prototype.modified = function() {
     if (this.list.find(("." + (this.selected_class))).length > 0 && this.is_modifying()) {
       return true;
@@ -617,15 +534,12 @@
       return false;
     }
   };
-  // Renders a list of all items that belong to the controllers.
   TodosListController.prototype.index = function() {
     return TodosListController.__superClass__.index.call(this, this.item.all());
   };
-  // Use this to override or add additional behavior to how items are
-  // rendered as cells.
   TodosListController.prototype.build_cell = function(idx, item) {
     TodosListController.__superClass__.build_cell.call(this, idx, item);
-    if ((typeof item !== "undefined" && item !== null)) {
+    if (typeof item !== "undefined" && item !== null) {
       if (item.completed && this.is_modifying()) {
         this.do_not_index(idx);
       } else if (item.completed) {
@@ -633,10 +547,15 @@
       } else {
         this.cell.removeClass(this.selected_class);
       }
-      return this.cell.click(__bind(function(event) {
+      return this.cell.click((function(__this) {
+        var __func = function(event) {
           this.check_cell(idx);
           return false;
-        }, this));
+        };
+        return (function() {
+          return __func.apply(__this, arguments);
+        });
+      })(this));
     }
   };
 
@@ -666,7 +585,6 @@
     return this;
   };
   __extends(Todo, Model);
-  // Toggle the current item from the completed state.
   Todo.prototype.complete = function() {
     !this.completed ? (this.completed = true) : (this.completed = false);
     this.save();
@@ -675,15 +593,11 @@
 
   jQuery.fn.clickable = function(options) {
     var defaults, settings;
-    // Take in some basic defaults to allow for an override of the class we toggle
-    // to mark the object as selected.
     defaults = {
       class_selected: "selected",
       selector: "a"
     };
     settings = jQuery.extend(defaults, options);
-    // Add a click event to each item. Toggle the on class on or off and then fire
-    // a click action on the first link we find inside of that object.
     return $(this).each(function() {
       return $(this).click(function(event) {
         var item, link;
@@ -704,10 +618,6 @@
   };
   jQuery.fn.keyboardable = function(options) {
     var KeyboardNavigation, _a, defaults, keyboard_navigation, settings;
-    // Take in some basic defaults. I'm using the jquery.hotkeys module to allow us
-    // to define keys in plain english instead of by keyCode. So we can say "return"
-    // instead of "13". It makes life easier and allows us to use combinators easily
-    // so we could say "shift+up" or "ctrl+up" rather than "up".
     defaults = {
       class_active: "active",
       key_next: "down",
@@ -715,24 +625,34 @@
       key_click: "space"
     };
     settings = jQuery.extend(defaults, options);
-    // KeyboardNavigation class stores the objects passed to the plugin. It stores
-    // the current item and marks items as selected or deselected as you traverse
-    // through them with the keyboard.
     KeyboardNavigation = function(objects) {
       this.objects = objects;
       this.index = false;
       this.active = false;
-      // Here we bind the key events to the document so that they have a
-      // global effect on the user's keyboard input.
-      $(document).bind('keydown', settings.key_next, __bind(function() {
+      $(document).bind('keydown', settings.key_next, (function(__this) {
+        var __func = function() {
           return this.next();
-        }, this));
-      $(document).bind('keydown', settings.key_previous, __bind(function() {
+        };
+        return (function() {
+          return __func.apply(__this, arguments);
+        });
+      })(this));
+      $(document).bind('keydown', settings.key_previous, (function(__this) {
+        var __func = function() {
           return this.previous();
-        }, this));
-      $(document).bind('keydown', settings.key_click, __bind(function() {
+        };
+        return (function() {
+          return __func.apply(__this, arguments);
+        });
+      })(this));
+      $(document).bind('keydown', settings.key_click, (function(__this) {
+        var __func = function() {
           return this.select();
-        }, this));
+        };
+        return (function() {
+          return __func.apply(__this, arguments);
+        });
+      })(this));
       return this;
     };
     KeyboardNavigation.prototype.next = function() {
@@ -764,12 +684,7 @@
       }
     };
 
-    // Store the keyboard navigation object as a global property so that
-    // it doesn't get declared multiple times. We only want one instance of this
-    // object. In the future we may want to develop a way to append more objects
-    // or flush the current list of objects from the navigation. This could be
-    // useful if we load in a new list via ajax, etc. etc.
-    if ((typeof window !== "undefined" && window !== null)) {
+    if (typeof window !== "undefined" && window !== null) {
       if ((typeof (_a = window.keyboard_navigation) !== "undefined" && _a !== null)) {
         keyboard_navigation = window.keyboard_navigation;
       } else {
@@ -777,30 +692,24 @@
         window.keyboard_navigation = keyboard_navigation;
       }
     }
-    // Follow the convention of returning 'this' so that the plugin is chainable
-    // when using it in jquery.
     return this;
   };
   $(document).ready(function() {
     var modify_todos_list_form, todo_edit_nav, todo_form, todos_list;
-    // Setup a todos list controller to display current todos.
     todos_list = new TodosListController({
       list_selector: "ul.tasks",
       cell_selector: "li.todo"
     });
-    // Setup a todo form and bind it to the inline form on the page.
     todo_form = new TodoFormController({
       form_selector: "#task_form",
       list_controller: todos_list
     });
-    // Setup a navigation controller to mimick navigation.
     todo_edit_nav = new EditNavigationController({
       navigation_selector: "section#edit",
       target_selector: "body, ul.tasks",
       list_controller: todos_list,
       default_item: "do"
     });
-    // Setup a modification form controller to track modifications.
     modify_todos_list_form = new ModifyFormController({
       form_selector: "#modification_form",
       navigation_controller: todo_edit_nav,
