@@ -1,0 +1,433 @@
+/*
+
+	KEEP CSS CLEAN
+	
+	1. Only put one selector per line for a block of rules that apply to 
+	   multiple selectors.
+	2. Indent your rules and only use one rule per line.
+	3. Indent proprietary properties twice. Keep these properties directly 
+	   below the proposed property.
+	4. Place a space between a property and it's value.
+	
+	(exceptions for large blocks of repetetive and easily identifiable CSS)
+	
+	EXAMPLE:
+	
+	element#id,
+	element.class {
+		rule1: value;
+			-webkit-rule1: value;
+			-moz-rule1: value;
+		rule2: value;
+		rule3: value;
+	}
+	
+	TABLE OF CONTENTS:
+	
+	Reset
+	Common
+	Structure
+	Style
+	
+*/
+
+
+/* Reset
+================================================================================ */
+
+
+html,
+body,
+ul,
+li,
+form,
+fieldset,
+legend {
+	margin: 0;
+	padding: 0;
+}
+
+fieldset,
+img {
+	border: 0;
+}
+
+article,
+footer,
+header,
+nav,
+section { 
+	display:block;
+}
+
+
+/* Common
+================================================================================ */
+
+
+body {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	background-color: rgb(255,255,255);
+	font-size: 14px;
+	line-height: 20px;
+	color: rgb(0,0,0);
+}
+
+a:link,
+a:visited {
+	text-decoration: none;
+	color: rgb(0,0,0);
+}
+
+a:hover,
+a:active {
+	text-decoration: none;
+	color: rgb(0,0,0);
+}
+
+p {
+	padding: 0;
+	margin: 0;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+h1,
+h2,
+h3 {
+	padding: 0 20px;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+form {
+	padding: 0 20px 0 20px;
+	margin: 0 0 20px 0;
+}
+
+input,
+select,
+textarea {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	margin: 0 0 10px 0;
+}
+
+input[type="submit"] {
+	margin: 0;
+}
+
+label {
+	display: block;
+	padding: 0 0 5px 0;
+}
+
+/* Structure
+================================================================================ */
+
+
+.column-full {
+	float: left;
+	width: 100%;
+	clear: both;
+}
+
+
+/* Style
+================================================================================ */
+
+
+/*
+	
+	border-bottom-left-radius: 5px;
+		-webkit-border-bottom-left-radius: 5px;
+		-moz-border-radius-bottomleft: 5px;
+		
+	border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		
+*/
+
+#header {
+	background-color: rgb(0,0,0);
+	position: fixed;
+}
+
+#header ul {
+	padding: 10px 10px 0 0;
+}
+
+#header ul li {
+	float: left;
+	padding: 0 0 10px 10px;
+}
+
+#header ul li a {
+	display: block;
+	padding: 10px;
+	background-color: rgb(200,200,200);
+	border-radius: 3px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+}
+
+#header ul li a:hover {
+	background-color: rgb(255,255,255);
+}
+
+#header ul li a img {
+	display: block;
+}
+
+#header ul li.active a.tasks {
+	background-color: rgb(255,255,255);
+}
+
+#header ul li.active a.delete {
+	background-color: rgb(200,0,0);
+}
+
+#header ul li.active a.move {
+	background-color: rgb(50,100,255);
+}
+
+#header ul li.active a.send {
+	background-color: rgb(50,155,0);
+}
+
+#header ul li.active a.focus {
+	background-color: rgb(255,225,0);
+}
+
+#header #nav {
+	float: left;
+}
+
+#header #edit {
+	float: right;
+}
+
+#header #edit-area {
+	padding: 0 0 0 0;
+	clear: both;
+}
+
+#header #edit-area form {
+	background-color: rgb(200,200,200);
+	padding: 10px;
+	margin: 0;
+}
+
+#header #edit-area form.delete { background-color: rgb(200,0,0); color: rgb(255,200,200); }
+#header #edit-area form.delete strong { color: rgb(255,255,255); }
+
+#header #edit-area form.move { background-color: rgb(50,100,255); color: rgb(200,215,255); }
+#header #edit-area form.move strong { color: rgb(255,255,255);}
+
+#header #edit-area form.send { background-color: rgb(0,155,0); color: rgb(205,230,190); }
+#header #edit-area form.send strong { color: rgb(255,255,255); }
+
+#header #edit-area form.focus { background-color: rgb(255,225,0); color: rgb(155,125,0); }
+#header #edit-area form.focus strong { color: rgb(0,0,0); }
+
+#header #edit-area form label {
+	display: inline;
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+
+#header #edit-area form input,
+#header #edit-area form select {
+	margin: 0;
+}
+
+#content {
+	padding: 100px 0 0 0;
+}
+
+#content h2 {
+	border-top: 1px solid rgb(150,150,150);
+	margin: 0 20px;
+	padding: 10px 0;
+}
+
+#content p.cat-title {
+	padding: 20px 20px 20px 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#content ul {
+	margin: 0 0 10px 0;
+	padding: 0 10px;
+}
+
+#content ul li {
+	display: block;
+	margin: 0 0 1px 0;
+}
+
+#content ul li a {
+	display: block;
+	padding: 10px 10px 10px 10px;
+	background-color: rgb(235,235,235);
+}
+
+#content ul li a span {
+	font-size: 11px;
+	color: rgb(150,150,150);
+}
+
+#content ul li a span.focus,
+#content ul li a span.total,
+#content ul li a span.send,
+#content ul li a span.move {
+	float: right;
+	color: rgb(0,0,0);
+	border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+	display: inline-block;
+	padding: 0 5px;
+	margin: 0 0 0 5px;
+}
+
+#content ul li a span.focus {
+	background-color: rgb(255,225,0);
+}
+
+#content ul li a span.move {
+	background-color: rgb(50,100,255);
+	color: rgb(255,255,255);
+}
+
+#content ul li a span.send {
+	background-color: rgb(0,155,0);
+	color: rgb(255,255,255);
+}
+
+#content ul li a span.total {
+	background-color: rgb(200,200,200);
+}
+
+#content ul.system li:first-child a,
+#content ul.projects li:first-child a {
+	border-top-left-radius: 3px;
+		-moz-border-radius-topleft: 3px;
+		-webkit-border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+		-moz-border-radius-topright: 3px;
+		-webkit-border-top-right-radius: 3px;
+}
+
+#content ul.system li:last-child a,
+#content ul.projects li:last-child a {
+	border-bottom-left-radius: 3px;
+		-moz-border-radius-bottomleft: 3px;
+		-webkit-border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+		-moz-border-radius-bottomright: 3px;
+		-webkit-border-bottom-right-radius: 3px;
+}
+
+#content ul.system {
+	padding: 10px 10px 0 10px;
+}
+
+#content ul.tasks {
+	padding: 0;
+	margin: 0 10px 10px 10px;
+	border-bottom-left-radius: 3px;
+		-moz-border-radius-bottomleft: 3px;
+		-webkit-border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+		-moz-border-radius-bottomright: 3px;
+		-webkit-border-bottom-right-radius: 3px;
+}
+
+#content ul.tasks li,
+#content ul.delete li,
+#content ul.move li,
+#content ul.send li,
+#content ul.focus li {
+	margin: 0 0 5px 0;
+	box-shadow: 0px 1px 2px #ccc;
+	  -moz-box-shadow: 0px 1px 2px #ccc;
+	  -webkit-box-shadow: 0px 1px 2px #ccc;
+	border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+}
+
+#content ul.tasks li a,
+#content ul.delete li a,
+#content ul.move li a,
+#content ul.send li a,
+#content ul.focus li a {
+	border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+}
+
+#content ul.tasks li a {
+	padding: 10px 10px 10px 40px;
+	background-repeat: no-repeat;
+	background-position: 12px 50%;
+}
+
+#content ul.tasks li a { background-image: url(../images/done-off.svg); }
+#content ul.tasks li.focus a { background-image: url(../images/done-focus.svg); }
+#content ul.tasks li.selected a { background-image: url(../images/done-on.svg); background-color: rgb(250,250,250); color: rgb(150,150,150); }
+
+#content ul.delete li a,
+#content ul.move li a,
+#content ul.send li a,
+#content ul.focus li a {
+	padding: 10px 10px 10px 40px;
+	background-repeat: no-repeat;
+	background-position: 14px 50%;
+}
+
+#content ul.delete li a { background-image: url(../images/edit-off.svg); }
+#content ul.delete li.selected a { background-image: url(../images/edit-delete.svg); }
+
+#content ul.move li a { background-image: url(../images/edit-off.svg); }
+#content ul.move li.selected a { background-image: url(../images/edit-move.svg); }
+
+#content ul.send li a { background-image: url(../images/edit-off.svg); }
+#content ul.send li.selected a { background-image: url(../images/edit-send.svg); }
+
+#content ul.focus li a { background-image: url(../images/edit-off.svg); }
+#content ul.focus li.selected a { background-image: url(../images/edit-focus.svg); }
+
+#content ul.archive li a {
+	border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+}
+
+#content ul.connections {
+	margin: 0 20px 10px 20px;
+	padding: 0;
+}
+
+#content ul.connections li {
+	margin: 0;
+	border-top: 1px solid rgb(235,235,235);
+	padding: 5px 0;
+}
+
+#content ul.connections li span {
+	font-size: 11px;
+	color: rgb(150,150,150);
+}
+
+#content ul.connections li a {
+	display: inline;
+	padding: 0;
+	background-color: transparent;
+}
