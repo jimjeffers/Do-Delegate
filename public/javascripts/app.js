@@ -1,5 +1,5 @@
 (function(){
-  var Category, Controller, EditNavigationController, FormController, ListController, Model, ModifyFormController, NavigationController, Todo, TodoFormController, TodosListController;
+  var Category, Controller, EditNavigationController, FormController, ListController, Model, ModifyFormController, NavigationController, Todo, TodoFormController, TodosListController, WebModel;
   var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     var ctor = function(){ };
     ctor.prototype = parent.prototype;
@@ -398,6 +398,27 @@
       index = 1;
     }
     return parseInt(index);
+  };
+
+  WebModel = function(params) {
+    WebModel.__superClass__.constructor.call(this, params);
+    return this;
+  };
+  __extends(WebModel, Model);
+  WebModel.prototype.save = function(parent) {
+    return null;
+  };
+  WebModel.prototype.destroy = function(parent) {
+    return null;
+  };
+  WebModel.prototype.find = function(query) {
+    var results;
+    results = null;
+    jQuery.getJSON(("/" + (this.table_name) + "/" + (query)), function(data) {
+      results = data;
+      return results;
+    });
+    return results;
   };
 
   EditNavigationController = function(params) {

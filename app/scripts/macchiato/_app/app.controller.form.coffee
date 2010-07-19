@@ -1,3 +1,7 @@
+# A form controller binds itself to an HTML form. Performs databinding
+# based on a form's input element's name attributes. Form controllers
+# can be subclassed to control submission to web services or to add
+# in richer interactions.
 class FormController extends Controller
    constructor: (params)->
       @controller_type: "Form"

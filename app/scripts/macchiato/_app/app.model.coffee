@@ -1,3 +1,7 @@
+# A model represents a data object. It utilizes HTML5 LocalStorage to fake
+# a database object utilizing a giant JSON object that is stringified and 
+# parsed on the fly. With this method we don't need to utilize a true database
+# whether it be SQLite or IndexDB.
 class Model
    constructor: (params) ->
       @type: "model"
@@ -8,6 +12,7 @@ class Model
       for attribute, default_value of @attributes
          this[attribute]: params[attribute] || default_value
    
+   # Defines a parent relationship to the model.
    belongs_to: (model) ->
       if model.type == "model"
          @parent_model: model
