@@ -1,0 +1,16 @@
+Script started on Sun Jul 18 10:46:16 2010
+No such file or directory - features (Errno::ENOENT)
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/feature_file.rb:56:in `initialize'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/feature_file.rb:56:in `open'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/feature_file.rb:56:in `source'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/feature_file.rb:37:in `parse'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/step_mother.rb:62:in `load_plain_text_features'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/step_mother.rb:60:in `each'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/step_mother.rb:60:in `load_plain_text_features'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/cli/main.rb:55:in `execute!'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/../lib/cucumber/cli/main.rb:25:in `execute'
+/Library/Ruby/Gems/1.8/gems/cucumber-0.8.3/bin/cucumber:8
+/usr/bin/cucumber:19:in `load'
+/usr/bin/cucumber:19
+
+Script done on Sun Jul 18 10:46:17 2010
