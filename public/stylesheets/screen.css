@@ -1,0 +1,275 @@
+/*
+   KEEP CSS CLEAN
+   
+   1. Only put one selector per line for a block of rules that apply to 
+      multiple selectors.
+   2. Indent your rules and only use one rule per line.
+   3. Indent proprietary properties twice. Keep these properties directly 
+      below the proposed property.
+   4. Place a space between a property and it's value.
+   
+   (exceptions for large blocks of repetetive and easily identifiable CSS)
+   
+   EXAMPLE:
+   
+   element#id,
+   element.class {
+      rule1: value;
+         -webkit-rule1: value;
+         -moz-rule1: value;
+      rule2: value;
+      rule3: value;
+   }
+   
+   TABLE OF CONTENTS:
+   
+   Reset
+   Common
+   Structure
+   Style
+   
+*/
+
+
+/* Reset
+================================================================================ */
+
+html,
+body,
+ul,
+ol,
+li,
+form,
+fieldset,
+legend {
+   margin: 0;
+   padding: 0;
+}
+
+fieldset,
+img {
+   border: 0;
+}
+
+ul, ol {
+   list-style: none;
+}
+
+table {
+   border-collapse: collapse;
+   border-spacing: 0;
+}
+
+caption,
+th,
+td {
+   text-align: left;
+   vertical-align: top;
+   font-weight: normal;
+}
+
+abbr,
+acronym {
+   border-bottom: 1px dotted;
+   cursor: help;
+}
+
+article,
+aside,
+dialog,
+figure,
+footer,
+header, 
+hgroup,
+nav,
+section { 
+   display:block;
+}
+
+
+/* Common
+================================================================================ */
+
+
+body {
+   font-family: "DejaVu Sans", "URW Gothic L", "Helvetica Neue", Helvetica,
+                Arial, "Microsoft Sans Serif", sans-serif;
+   background: rgb(255,255,255) url(../images/bg.gif) repeat-y top center;
+   font-size: 14px;
+   line-height: 20px;
+}
+
+a:link,
+a:visited {
+   text-decoration: none;
+   color: rgb(205,0,0);
+}
+
+a:hover,
+a:active {
+   text-decoration: none;
+   color: rgb(125,0,0);
+}
+
+p, ul, ol, dl {
+   padding: 0;
+   margin: 0;
+}
+
+blockquote {
+   font-style: italic;
+   padding: 0 20px;
+}
+
+strong {
+   font-weight: bold;
+}
+
+
+/* Structure
+================================================================================ */
+
+
+.column-full {
+   float: left;
+   width: 100%;
+   clear: both;
+}
+
+#header #add {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+#header #edit {
+   position: absolute;
+   top: 0;
+   right: 0;
+}
+
+
+/* Style
+================================================================================ */
+
+
+#header {
+   border-bottom: 1px solid rgb(220,220,220);
+   margin: 0 0 10px 0;
+}
+
+#header #title {
+   text-align: center;
+}
+
+#header #title p {
+   padding: 20px;
+}
+
+#header ul {
+   padding: 10px 10px 10px 0;
+}
+
+#header ul li {
+   float: left;
+   padding: 0 0 0 10px;
+}
+
+#header ul li a {
+   display: block;
+   padding: 10px;
+   background-color: rgb(240,240,240);
+}
+
+#header ul li a:hover {
+   background-color: rgb(220,220,220);
+}
+
+.do #do,
+.send #send,
+.move #move,
+.today #today,
+.delete #delete,
+#header ul li.active a {
+   background-color: rgb(220,220,220);
+}
+
+#content ul {
+   margin: 0 0 10px 0;
+   padding: 0 10px;
+}
+
+#content ul li {
+   border: 1px solid rgb(255,255,255);
+   display: block;
+   margin: 0;
+}
+
+#content ul li a {
+   display: block;
+   padding: 10px;
+   background-color: rgb(240,240,240);
+}
+
+#content ul li a:hover {
+   background-color: rgb(220,220,220);
+}
+
+#content ul li.active {
+   border: 1px solid rgb(220,0,0);
+}
+
+#content ul li a span {
+   float: right;
+   margin: 0 0 0 20px;
+}
+
+#content ul.tasks li a,
+#content ul.delete li a,
+#content ul.move li a,
+#content ul.send li a,
+#content ul.today li a {
+   padding: 10px 10px 10px 40px;
+   background-repeat: no-repeat;
+   background-position: 12px 50%;
+}
+
+#content ul.tasks li a { background-image: url(../images/done-off.png); }
+#content ul.tasks li.selected a { background-image: url(../images/done.png); }
+
+.delete #content ul.tasks li a { background-image: url(../images/delete-off.png); }
+.delete #content ul.tasks li.selected a { background-image: url(../images/delete.png); }
+ 
+.move #content ul.tasks li a { background-image: url(../images/move-off.png); }
+.move #content ul.tasks li.selected a { background-image: url(../images/move.png); }
+
+.send #content ul.tasks li a { background-image: url(../images/send-off.png); }
+.send #content ul.tasks li.selected a { background-image: url(../images/send.png); }
+
+.today #content ul.tasks li a { background-image: url(../images/today-off.png); }
+.today #content ul.tasks li.selected a { background-image: url(../images/today.png); }
+
+#content .edit-area {
+   padding: 0 10px 1px 10px;
+}
+
+#content .edit-area form {
+   background-color: rgb(200,200,200);
+   padding: 10px;
+}
+
+.do #task_form,
+#modification_form {
+   display: block;
+}
+
+.do #modification_form {
+   display: none;
+}
+
+.move #task_form,
+.delete #task_form,
+.send #task_form,
+.today #task_form {
+   display: none;
+}
