@@ -26,7 +26,6 @@
 	
 	Reset
 	Common
-	Structure
 	Style
 	
 */
@@ -67,22 +66,22 @@ section {
 
 body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	background-color: rgb(255,255,255);
+	background-color: rgb(220,220,220);
 	font-size: 14px;
 	line-height: 20px;
-	color: rgb(0,0,0);
+	color: rgb(100,100,100);
 }
 
 a:link,
 a:visited {
 	text-decoration: none;
-	color: rgb(0,0,0);
+	color: rgb(100,100,100);
 }
 
 a:hover,
 a:active {
 	text-decoration: none;
-	color: rgb(0,0,0);
+	color: rgb(100,100,100);
 }
 
 p {
@@ -102,6 +101,7 @@ h3 {
 	padding: 0 20px;
 	font-size: 14px;
 	line-height: 20px;
+	text-shadow: 0 1px 0 rgb(245,245,245);
 }
 
 form {
@@ -125,10 +125,6 @@ label {
 	padding: 0 0 5px 0;
 }
 
-/* Structure
-================================================================================ */
-
-
 .column-full {
 	float: left;
 	width: 100%;
@@ -140,21 +136,10 @@ label {
 ================================================================================ */
 
 
-/*
-	
-	border-bottom-left-radius: 5px;
-		-webkit-border-bottom-left-radius: 5px;
-		-moz-border-radius-bottomleft: 5px;
-		
-	border-radius: 5px;
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		
-*/
-
 #header {
-	background-color: rgb(0,0,0);
 	position: fixed;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
+	-webkit-box-shadow: 0 0 5px rgb(50,50,50);
 }
 
 #header ul {
@@ -167,20 +152,23 @@ label {
 }
 
 #header ul li a {
+	-webkit-border-radius: 3px;
 	display: block;
 	padding: 10px;
-	background-color: rgb(200,200,200);
-	border-radius: 3px;
-		-webkit-border-radius: 3px;
-		-moz-border-radius: 3px;
+	-webkit-box-shadow: 0 0 2px rgb(200,200,200);
 }
 
 #header ul li a:hover {
 	background-color: rgb(255,255,255);
 }
 
+#header ul li a:active {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(235,235,235)), color-stop(1, rgb(255,255,255)));
+}
+
 #header ul li a img {
 	display: block;
+	opacity: .5;
 }
 
 #header ul li.active a.tasks {
@@ -189,18 +177,22 @@ label {
 
 #header ul li.active a.delete {
 	background-color: rgb(200,0,0);
+	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
 }
 
 #header ul li.active a.move {
 	background-color: rgb(50,100,255);
+	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
 }
 
 #header ul li.active a.send {
 	background-color: rgb(50,155,0);
+	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
 }
 
 #header ul li.active a.focus {
 	background-color: rgb(255,225,0);
+	-webkit-box-shadow: 0 0 2px rgb(150,150,150);
 }
 
 #header #nav {
@@ -217,22 +209,47 @@ label {
 }
 
 #header #edit-area form {
-	background-color: rgb(200,200,200);
+	border-top: 1px solid rgb(230,230,230);
 	padding: 10px;
 	margin: 0;
 }
 
-#header #edit-area form.delete { background-color: rgb(200,0,0); color: rgb(255,200,200); }
-#header #edit-area form.delete strong { color: rgb(255,255,255); }
+#header #edit-area form.delete { 
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(200,0,0)), color-stop(1, rgb(180,0,0)));
+	color: rgb(255,200,200);
+}
 
-#header #edit-area form.move { background-color: rgb(50,100,255); color: rgb(200,215,255); }
-#header #edit-area form.move strong { color: rgb(255,255,255);}
+#header #edit-area form.delete strong {
+	color: rgb(255,255,255);
+}
 
-#header #edit-area form.send { background-color: rgb(0,155,0); color: rgb(205,230,190); }
-#header #edit-area form.send strong { color: rgb(255,255,255); }
+#header #edit-area form.move {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(50,100,255)), color-stop(1, rgb(30,80,235)));
+	background-color: rgb(50,100,255);
+	color: rgb(200,215,255);
+}
 
-#header #edit-area form.focus { background-color: rgb(255,225,0); color: rgb(155,125,0); }
-#header #edit-area form.focus strong { color: rgb(0,0,0); }
+#header #edit-area form.move strong {
+	color: rgb(255,255,255);
+}
+
+#header #edit-area form.send {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(0,155,0)), color-stop(1, rgb(0,135,0)));
+	color: rgb(205,230,190);
+}
+
+#header #edit-area form.send strong {
+	color: rgb(255,255,255);
+}
+
+#header #edit-area form.focus {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(255,225,0)), color-stop(1, rgb(235,205,0)));
+	color: rgb(155,125,0);
+}
+
+#header #edit-area form.focus strong {
+	color: rgb(0,0,0);
+}
 
 #header #edit-area form label {
 	display: inline;
@@ -246,19 +263,19 @@ label {
 }
 
 #content {
-	padding: 100px 0 0 0;
+	padding: 102px 0 0 0;
 }
 
 #content h2 {
-	border-top: 1px solid rgb(150,150,150);
+	border-top: 1px solid rgb(175,175,175);
 	margin: 0 20px;
 	padding: 10px 0;
 }
 
 #content p.cat-title {
 	padding: 20px 20px 20px 20px;
-	font-weight: bold;
 	text-align: center;
+	text-shadow: 0 1px 0 rgb(245,245,245);
 }
 
 #content ul {
@@ -274,7 +291,7 @@ label {
 #content ul li a {
 	display: block;
 	padding: 10px 10px 10px 10px;
-	background-color: rgb(235,235,235);
+	background: rgb(255,255,255);
 }
 
 #content ul li a span {
@@ -287,10 +304,7 @@ label {
 #content ul li a span.send,
 #content ul li a span.move {
 	float: right;
-	color: rgb(0,0,0);
-	border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	display: inline-block;
 	padding: 0 5px;
 	margin: 0 0 0 5px;
@@ -298,55 +312,51 @@ label {
 
 #content ul li a span.focus {
 	background-color: rgb(255,225,0);
+	-webkit-box-shadow: inset 0 0 3px rgb(205,205,0);
 }
 
 #content ul li a span.move {
 	background-color: rgb(50,100,255);
 	color: rgb(255,255,255);
+	-webkit-box-shadow: inset 0 0 3px rgb(0,50,205);
 }
 
 #content ul li a span.send {
 	background-color: rgb(0,155,0);
 	color: rgb(255,255,255);
+	-webkit-box-shadow: inset 0 0 3px rgb(0,105,0);
 }
 
 #content ul li a span.total {
-	background-color: rgb(200,200,200);
+	background-color: rgb(240,240,240);
+	-webkit-box-shadow: inset 0 0 3px rgb(200,200,200);
 }
 
 #content ul.system li:first-child a,
-#content ul.projects li:first-child a {
-	border-top-left-radius: 3px;
-		-moz-border-radius-topleft: 3px;
-		-webkit-border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-		-moz-border-radius-topright: 3px;
-		-webkit-border-top-right-radius: 3px;
+#content ul.projects li:first-child a,
+#content ul.projects-delete li:first-child a {
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
 }
 
 #content ul.system li:last-child a,
-#content ul.projects li:last-child a {
-	border-bottom-left-radius: 3px;
-		-moz-border-radius-bottomleft: 3px;
-		-webkit-border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-		-moz-border-radius-bottomright: 3px;
-		-webkit-border-bottom-right-radius: 3px;
+#content ul.projects li:last-child a,
+#content ul.projects-delete li:last-child a {
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+
+#content ul.projects-delete a {
+	background: rgb(255,255,255) url(../images/edit-off.svg) no-repeat 12px 50%;
+	padding: 10px 10px 10px 40px;
+}
+
+#content ul.projects-delete li.selected a {
+	background: rgb(255,255,255) url(../images/edit-delete.svg) no-repeat 12px 50%;
 }
 
 #content ul.system {
 	padding: 10px 10px 0 10px;
-}
-
-#content ul.tasks {
-	padding: 0;
-	margin: 0 10px 10px 10px;
-	border-bottom-left-radius: 3px;
-		-moz-border-radius-bottomleft: 3px;
-		-webkit-border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-		-moz-border-radius-bottomright: 3px;
-		-webkit-border-bottom-right-radius: 3px;
 }
 
 #content ul.tasks li,
@@ -355,12 +365,9 @@ label {
 #content ul.send li,
 #content ul.focus li {
 	margin: 0 0 5px 0;
-	box-shadow: 0px 1px 2px #ccc;
-	  -moz-box-shadow: 0px 1px 2px #ccc;
-	  -webkit-box-shadow: 0px 1px 2px #ccc;
-	border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(235,235,235)));
+	-webkit-box-shadow: 0 1px 2px rgb(150,150,150);
+	-webkit-border-radius: 3px;
 }
 
 #content ul.tasks li a,
@@ -368,46 +375,64 @@ label {
 #content ul.move li a,
 #content ul.send li a,
 #content ul.focus li a {
-	border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 #content ul.tasks li a {
+	background: url(../images/done-off.svg) no-repeat 12px 50%;
 	padding: 10px 10px 10px 40px;
-	background-repeat: no-repeat;
-	background-position: 12px 50%;
 }
 
-#content ul.tasks li a { background-image: url(../images/done-off.svg); }
-#content ul.tasks li.focus a { background-image: url(../images/done-focus.svg); }
-#content ul.tasks li.selected a { background-image: url(../images/done-on.svg); background-color: rgb(250,250,250); color: rgb(150,150,150); }
+#content ul.tasks li.focus a {
+	background: url(../images/done-focus.svg) no-repeat 12px 50%;
+}
+
+#content ul.tasks li.selected a {
+	background: rgb(230,230,230) url(../images/done-on.svg) no-repeat 12px 50%;
+	color: rgb(150,150,150);
+}
 
 #content ul.delete li a,
 #content ul.move li a,
 #content ul.send li a,
 #content ul.focus li a {
 	padding: 10px 10px 10px 40px;
-	background-repeat: no-repeat;
-	background-position: 14px 50%;
 }
 
-#content ul.delete li a { background-image: url(../images/edit-off.svg); }
-#content ul.delete li.selected a { background-image: url(../images/edit-delete.svg); }
+#content ul.delete li a {
+	background: url(../images/edit-off.svg) no-repeat 12px 50%;
+}
 
-#content ul.move li a { background-image: url(../images/edit-off.svg); }
-#content ul.move li.selected a { background-image: url(../images/edit-move.svg); }
+#content ul.delete li.selected a {
+	background: url(../images/edit-delete.svg) no-repeat 12px 50%;
+}
 
-#content ul.send li a { background-image: url(../images/edit-off.svg); }
-#content ul.send li.selected a { background-image: url(../images/edit-send.svg); }
+#content ul.move li a {
+	background: url(../images/edit-off.svg) no-repeat 12px 50%;
+}
 
-#content ul.focus li a { background-image: url(../images/edit-off.svg); }
-#content ul.focus li.selected a { background-image: url(../images/edit-focus.svg); }
+#content ul.move li.selected a {
+	background: url(../images/edit-move.svg) no-repeat 12px 50%;
+}
+
+#content ul.send li a {
+	background: url(../images/edit-off.svg) no-repeat 12px 50%;
+}
+
+#content ul.send li.selected a {
+	background: url(../images/edit-send.svg) no-repeat 12px 50%;
+}
+
+#content ul.focus li a {
+	background: url(../images/edit-off.svg) no-repeat 12px 50%;
+}
+
+#content ul.focus li.selected a {
+	background: url(../images/edit-focus.svg) no-repeat 12px 50%;
+}
 
 #content ul.archive li a {
-	border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 #content ul.connections {
@@ -417,7 +442,7 @@ label {
 
 #content ul.connections li {
 	margin: 0;
-	border-top: 1px solid rgb(235,235,235);
+	border-top: 1px solid rgb(200,200,200);
 	padding: 5px 0;
 }
 
