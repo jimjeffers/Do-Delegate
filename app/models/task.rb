@@ -1,13 +1,13 @@
-class Todo < ActiveRecord::Base
+class Task < ActiveRecord::Base
   
   # --------------------------------------------------------------
   # Relationships
   #
-  # A Todo belongs to a user and a project.
+  # A Task belongs to a user and a project.
   # It can also be bound to a user via a join
   # model known as a deligation. The deligation model
   # tracks a deligator and a deligatee. This is 
-  # used primarily to handle deligation of Todos
+  # used primarily to handle deligation of Tasks
   # from one user to another.
   
   belongs_to :user
@@ -16,7 +16,7 @@ class Todo < ActiveRecord::Base
   # --------------------------------------------------------------
   # Validations
   #
-  # In order to be valid, a Todo, at the very least,
+  # In order to be valid, a Task, at the very least,
   # must have a name.
   
   validates_presence_of :name
@@ -24,7 +24,7 @@ class Todo < ActiveRecord::Base
   # --------------------------------------------------------------
   # States and Transitions
   #
-  # A Todo can be in one of two states:
+  # A Task can be in one of two states:
   # 1. incomplete
   # 2. complete
 

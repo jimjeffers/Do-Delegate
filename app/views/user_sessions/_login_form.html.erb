@@ -1,0 +1,16 @@
+<% form_for user_session do |f| -%>
+  <%= f.error_messages %>
+  <ul>
+    <li class="login">
+      <%= f.label :login, "Username" %>
+      <%= f.text_field :login %>
+    </li>
+    <li class="password">
+      <%= f.label :password, "Password" %>
+      <%= f.password_field :password %>
+    </li>
+    <li class="submit">
+      <%= f.submit "Login" %>
+    </li>
+  </ul>
+<% end -%>

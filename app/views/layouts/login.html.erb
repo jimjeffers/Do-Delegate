@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>do/delegate - login/register</title>
+  <link rel="Shortcut Icon" type="images/ico" href="/favicon.ico" />
+  
+  <!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  
+  <%= stylesheet_link_tag '/css/screen.min.css' %>
+</head>
+<body>
+  <div id="content" class="column-full">
+    <%= yield %>
+  </div>
+   <%= javascript_include_tag 'modernizr-1.5.min.js', 'jquery-1.4.2.min.js', 'jquery.hotkeys.js', 'app.js', :cache => "application" %>
+</body>
+</html>

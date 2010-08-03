@@ -6,12 +6,18 @@ class WebModel extends Model
 
    # Sends a JSON request via restful routing.
    save: (parent) ->
-      null
+      path: "/${@table_name}/${query}"
+      if parent?
+         path: "${parent.table_name}/${parent.id}/${@table_name}/${query}"
+      jQuery.getJSON(path, (data) ->
+         results = data
+      )
 
-   # Removes the current object from the JSON object and commits
-   # the changes to local storage.
+   # Sends a delete request via JSON and restful routing.
    destroy: (parent) ->
-      null
+      jQuery.getJSON("/${@table_name}/${query}", (data) ->
+         results = data
+      )
       
    # Finds a specific JSON object at the requested id.
    find: (query) ->
@@ -20,3 +26,6 @@ class WebModel extends Model
          results = data
       )
       return results
+   
+   path_for_parent: (parent) ->
+      

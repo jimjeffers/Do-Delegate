@@ -9,9 +9,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100718181740) do
+ActiveRecord::Schema.define(:version => 20100803061434) do
 
-  create_table "todos", :force => true do |t|
+  create_table "tasks", :force => true do |t|
     t.string   "name"
     t.string   "aasm_state"
     t.integer  "user_id"
@@ -20,7 +20,30 @@ ActiveRecord::Schema.define(:version => 20100718181740) do
     t.datetime "updated_at"
   end
 
-  add_index "todos", ["project_id"], :name => "index_todos_on_project_id"
-  add_index "todos", ["user_id"], :name => "index_todos_on_user_id"
+  add_index "tasks", ["project_id"], :name => "index_todos_on_project_id"
+  add_index "tasks", ["user_id"], :name => "index_todos_on_user_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "login",                              :null => false
+    t.string   "crypted_password",                   :null => false
+    t.string   "password_salt",                      :null => false
+    t.string   "persistence_token",                  :null => false
+    t.string   "single_access_token",                :null => false
+    t.string   "perishable_token",                   :null => false
+    t.integer  "login_count",         :default => 0, :null => false
+    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["crypted_password"], :name => "index_users_on_crypted_password"
+  add_index "users", ["login"], :name => "index_users_on_login"
+  add_index "users", ["password_salt"], :name => "index_users_on_password_salt"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
 end

@@ -44,3 +44,35 @@ Processing TodosController#index (for 127.0.0.1 at 2010-07-18 11:27:11) [GET]
 Rendering template within layouts/todos
 Rendering todos/index
 Completed in 8ms (View: 7, DB: 1) | 200 OK [http://www.example.com/todos]
+
+
+Processing TodosController#new (for 127.0.0.1 at 2010-08-02 21:09:38) [GET]
+Rendering template within layouts/todos
+Rendering todos/new
+Completed in 11ms (View: 8, DB: 0) | 200 OK [http://www.example.com/todos/new]
+
+
+Processing TodosController#create (for 127.0.0.1 at 2010-08-02 21:09:38) [POST]
+  Parameters: {"commit"=>"Create", "todo"=>{"name"=>"name 1", "aasm_state"=>"aasm_state 1", "project_id"=>"project_id 1", "user_id"=>"user_id 1"}}
+  [4;36;1mTodo Create (0.4ms)[0m   [0;1mINSERT INTO "todos" ("name", "created_at", "aasm_state", "project_id", "updated_at", "user_id") VALUES('name 1', '2010-08-03 04:09:38', 'aasm_state 1', 0, '2010-08-03 04:09:38', 0)[0m
+Redirected to http://www.example.com/todos/1
+Completed in 3ms (DB: 0) | 302 Found [http://www.example.com/todos]
+
+
+Processing TodosController#show (for 127.0.0.1 at 2010-08-02 21:09:38) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mTodo Load (0.1ms)[0m   [0mSELECT * FROM "todos" WHERE ("todos"."id" = 1) [0m
+Rendering template within layouts/todos
+Rendering todos/show
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://www.example.com/todos/1]
+  [4;36;1mTodo Create (0.3ms)[0m   [0;1mINSERT INTO "todos" ("name", "created_at", "aasm_state", "project_id", "updated_at", "user_id") VALUES('name 1', '2010-08-03 04:09:38', 'aasm_state 1', 0, '2010-08-03 04:09:38', 0)[0m
+  [4;35;1mTodo Create (0.1ms)[0m   [0mINSERT INTO "todos" ("name", "created_at", "aasm_state", "project_id", "updated_at", "user_id") VALUES('name 2', '2010-08-03 04:09:38', 'aasm_state 2', 0, '2010-08-03 04:09:38', 0)[0m
+  [4;36;1mTodo Create (0.1ms)[0m   [0;1mINSERT INTO "todos" ("name", "created_at", "aasm_state", "project_id", "updated_at", "user_id") VALUES('name 3', '2010-08-03 04:09:38', 'aasm_state 3', 0, '2010-08-03 04:09:38', 0)[0m
+  [4;35;1mTodo Create (0.1ms)[0m   [0mINSERT INTO "todos" ("name", "created_at", "aasm_state", "project_id", "updated_at", "user_id") VALUES('name 4', '2010-08-03 04:09:38', 'aasm_state 4', 0, '2010-08-03 04:09:38', 0)[0m
+
+
+Processing TodosController#index (for 127.0.0.1 at 2010-08-02 21:09:38) [GET]
+  [4;36;1mTodo Load (0.2ms)[0m   [0;1mSELECT * FROM "todos" [0m
+Rendering template within layouts/todos
+Rendering todos/index
+Completed in 3ms (View: 2, DB: 1) | 200 OK [http://www.example.com/todos]
