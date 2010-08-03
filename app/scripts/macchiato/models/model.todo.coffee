@@ -1,7 +1,7 @@
-class Todo extends Model
+class Todo extends WebModel
    constructor: (params) ->
-      @class_name: 'Todo'
-      @table_name: 'todos'
+      @class_name: 'Task'
+      @table_name: 'tasks'
       @attributes: {
          name:       ''
          status:     'normal'
@@ -15,8 +15,7 @@ class Todo extends Model
    # Toggle the current item from the completed state.
    complete: ->
       if !@completed
-         @completed: true
+         this.send_as('completed')
       else
-         @completed: false
-      this.save()
+         this.send_as('undo')
       return @completed

@@ -1,11 +1,12 @@
 (function(){
-  var Category, Controller, EditNavigationController, FormController, ListController, Model, ModifyFormController, NavigationController, Todo, TodoFormController, TodosListController, WebModel;
+  var Category, Controller, EditNavigationController, FormController, ListController, LocalModel, Model, ModifyFormController, NavigationController, Todo, TodoFormController, TodosListController, WebModel;
   var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     var ctor = function(){ };
     ctor.prototype = parent.prototype;
-    child.__superClass__ = parent.prototype;
     child.prototype = new ctor();
     child.prototype.constructor = child;
+    if (typeof parent.extended === "function") parent.extended(child);
+    child.__superClass__ = parent.prototype;
   };
   Controller = function(params) {
     var _a, _b, attribute, default_value;
@@ -14,10 +15,11 @@
       params = {};
     }
     _a = this.attributes;
-    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
+    for (attribute in _a) {
+      if (!__hasProp.call(_a, attribute)) continue;
       default_value = _a[attribute];
       this[attribute] = params[attribute] || default_value;
-    }}
+    }
     if ((typeof (_b = this.item) !== "undefined" && _b !== null)) {
       this.class_name = this.item.class_name;
       console.log(("Initiated " + (this.controller_type) + " Controller for " + (this.class_name) + " Model."));
@@ -29,7 +31,6 @@
   Controller.prototype.new_item = function(attributes) {
     return eval(("new " + (this.class_name) + "(attributes)"));
   };
-
   FormController = function(params) {
     var _a;
     this.controller_type = "Form";
@@ -59,13 +60,14 @@
     this.item = item;
     this.form.find("input[name='idx']").length < 1 ? this.form.append("<input name='idx' type='hidden' value='false'/>") : null;
     _a = []; _b = this.item.attributes;
-    for (attribute in _b) { if (__hasProp.call(_b, attribute)) {
+    for (attribute in _b) {
+      if (!__hasProp.call(_b, attribute)) continue;
       default_value = _b[attribute];
       _a.push((function() {
         field = this.form.find(("input[name='" + (attribute) + "']"));
         return field.length > 0 ? field.val(this.item[attribute]) : null;
       }).call(this));
-    }}
+    }
     return _a;
   };
   FormController.prototype.process_form = function(event) {
@@ -75,20 +77,20 @@
     }
     attributes = {};
     _b = this.item.attributes;
-    for (attribute in _b) { if (__hasProp.call(_b, attribute)) {
+    for (attribute in _b) {
+      if (!__hasProp.call(_b, attribute)) continue;
       default_value = _b[attribute];
       field = this.form.find(("input[name='" + (attribute) + "']"));
       if (field.length > 0) {
         attributes[attribute] = field.val();
       }
-    }}
+    }
     return this.new_item(attributes);
   };
   FormController.prototype.set_list_controller = function(list_controller) {
     this.list_controller = list_controller;
     return this.list_controller;
   };
-
   ListController = function(params) {
     var _a, _b;
     this.controller_type = "List";
@@ -112,20 +114,22 @@
     this.cell.show();
     this.list.find(this.cell_selector).remove();
     _a = items;
-    for (idx in _a) { if (__hasProp.call(_a, idx)) {
+    for (idx in _a) {
+      if (!__hasProp.call(_a, idx)) continue;
       item = _a[idx];
       this.build_cell(idx, item);
       if (!(this.blacklisted(idx))) {
         this.list.append(this.cell);
       }
       this.cell = this.cell.clone();
-    }}
+    }
     return this.clear_blacklist();
   };
   ListController.prototype.build_cell = function(idx, item) {
     var _a, _b, _c, _d, _e, attribute, binding, children, data_binding, value;
     _a = item;
-    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
+    for (attribute in _a) {
+      if (!__hasProp.call(_a, attribute)) continue;
       value = _a[attribute];
       binding = this.cell.find(("." + (attribute)));
       if (binding.length > 0) {
@@ -141,7 +145,7 @@
         binding.html(value);
         binding.append(children);
       }
-    }}
+    }
     this.cell.attr("id", ("" + (this.class_name.toLowerCase()) + "_" + (idx)));
     return console.log(("Created cell with ID: " + (this.cell.attr("id"))));
   };
@@ -209,7 +213,6 @@
       return console.log(("Could not find item to delete with id: " + (id) + "."));
     }
   };
-
   NavigationController = function(params) {
     var _a, _b, _c, _d, _e, _f;
     this.controller_type = "Navigation";
@@ -277,42 +280,24 @@
   NavigationController.prototype.before_change = function() {
     return true;
   };
-
-  Model = function(params) {
-    var _a, attribute, default_value;
-    this.type = "model";
-    if (!(typeof params !== "undefined" && params !== null)) {
-      params = {};
-    }
-    this.attributes = jQuery.extend({
-      idx: null
-    }, this.attributes);
-    _a = this.attributes;
-    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
-      default_value = _a[attribute];
-      this[attribute] = params[attribute] || default_value;
-    }}
+  LocalModel = function(params) {
+    LocalModel.__superClass__.constructor.call(this, params);
     return this;
   };
-  Model.prototype.belongs_to = function(model) {
-    if (model.type === "model") {
-      this.parent_model = model;
-      this.parent_model_class_name = model.class_name;
-      return this.parent_model_class_name;
-    }
-  };
-  Model.prototype.all = function() {
+  __extends(LocalModel, Model);
+  LocalModel.prototype.all = function() {
     return this._data();
   };
-  Model.prototype.save = function() {
+  LocalModel.prototype.save = function() {
     var _a, _b, attribute, default_value, item, table;
     table = this._data();
     item = {};
     _a = this.attributes;
-    for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
+    for (attribute in _a) {
+      if (!__hasProp.call(_a, attribute)) continue;
       default_value = _a[attribute];
       item[attribute] = this[attribute];
-    }}
+    }
     console.log(("Index is currently set to " + (this.idx)));
     if (!(typeof (_b = this.idx) !== "undefined" && _b !== null)) {
       console.log("New record.");
@@ -323,7 +308,7 @@
     this._commit(table);
     return true;
   };
-  Model.prototype.destroy = function() {
+  LocalModel.prototype.destroy = function() {
     var table;
     table = this._data();
     console.log(this.idx);
@@ -331,7 +316,7 @@
     delete table[this.idx];
     return this._commit(table);
   };
-  Model.prototype.find = function(query) {
+  LocalModel.prototype.find = function(query) {
     var _a, _b, _c, _d, attribute, attributes, default_value, idx, item, record, table, value;
     table = this._data();
     if (typeof query !== "undefined" && query !== null) {
@@ -340,7 +325,8 @@
         if (typeof item !== "undefined" && item !== null) {
           attributes = {};
           _a = this.attributes;
-          for (attribute in _a) { if (__hasProp.call(_a, attribute)) {
+          for (attribute in _a) {
+            if (!__hasProp.call(_a, attribute)) continue;
             default_value = _a[attribute];
             if (attribute === "idx") {
               console.log(("Setting index to: " + (query)));
@@ -348,31 +334,33 @@
             } else {
               attributes[attribute] = item[attribute];
             }
-          }}
+          }
           return eval(("new " + (this.class_name) + "(attributes)"));
         } else {
           return null;
         }
       } else if (typeof (query) === "object") {
         _b = table;
-        for (idx in _b) { if (__hasProp.call(_b, idx)) {
+        for (idx in _b) {
+          if (!__hasProp.call(_b, idx)) continue;
           record = _b[idx];
           _c = query;
-          for (attribute in _c) { if (__hasProp.call(_c, attribute)) {
+          for (attribute in _c) {
+            if (!__hasProp.call(_c, attribute)) continue;
             value = _c[attribute];
             if ((typeof (_d = record[attribute]) !== "undefined" && _d !== null) && record[attribute] !== value) {
               delete table[idx];
             }
             return null;
-          }}
-        }}
+          }
+        }
         return table;
       }
     } else {
       return null;
     }
   };
-  Model.prototype._data = function() {
+  LocalModel.prototype._data = function() {
     var items, storage;
     storage = localStorage.getItem(this.table_name);
     try {
@@ -383,14 +371,14 @@
     }
     return items;
   };
-  Model.prototype._commit = function(table) {
+  LocalModel.prototype._commit = function(table) {
     return localStorage.setItem(this.table_name, JSON.stringify(table));
   };
-  Model.prototype._increment = function() {
+  LocalModel.prototype._increment = function() {
     localStorage.setItem(("" + (this.table_name) + "_idx"), this._index() + 1);
     return this._index();
   };
-  Model.prototype._index = function() {
+  LocalModel.prototype._index = function() {
     var index;
     index = localStorage.getItem(("" + (this.table_name) + "_idx"));
     if (!(typeof index !== "undefined" && index !== null)) {
@@ -399,28 +387,83 @@
     }
     return parseInt(index);
   };
-
+  Model = function(params) {
+    var _a, attribute, default_value;
+    this.type = "model";
+    if (!(typeof params !== "undefined" && params !== null)) {
+      params = {};
+    }
+    this.attributes = jQuery.extend({
+      idx: null
+    }, this.attributes);
+    _a = this.attributes;
+    for (attribute in _a) {
+      if (!__hasProp.call(_a, attribute)) continue;
+      default_value = _a[attribute];
+      this[attribute] = params[attribute] || default_value;
+    }
+    return this;
+  };
+  Model.prototype.belongs_to = function(model) {
+    if (model.type === "model") {
+      this.parent_model = model;
+      this.parent_model_class_name = model.class_name;
+      this.parent_model_table_name = model.table_name;
+      return this.parent_model_table_name;
+    }
+  };
   WebModel = function(params) {
     WebModel.__superClass__.constructor.call(this, params);
     return this;
   };
   __extends(WebModel, Model);
-  WebModel.prototype.save = function(parent) {
-    return null;
+  WebModel.prototype.send_as = function(member) {
+    var path, post_data;
+    path = ("" + (this.path()) + "/" + (this.member));
+    post_data = this.attributes;
+    return $.post(path, post_data, (function(data) {
+      return alert(data);
+    }), "json");
   };
   WebModel.prototype.destroy = function(parent) {
     return null;
   };
-  WebModel.prototype.find = function(query) {
+  WebModel.prototype.find = function(id) {
     var results;
     results = null;
-    jQuery.getJSON(("/" + (this.table_name) + "/" + (query)), function(data) {
-      results = data;
-      return results;
-    });
     return results;
   };
-
+  WebModel.prototype.path = function() {
+    return "/" + (this.table_name) + "/" + (this.attributes.id);
+  };
+  WebModel.prototype.send_deprecated_message = function() {
+    console.log("Not utilized by web model.");
+    return null;
+  };
+  WebModel.prototype.all = function() {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype.save = function() {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype.destroy = function() {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype.find = function(query) {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype._data = function() {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype._commit = function(table) {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype._increment = function() {
+    return this.send_deprecated_message();
+  };
+  WebModel.prototype._index = function() {
+    return this.send_deprecated_message();
+  };
   EditNavigationController = function(params) {
     this.attributes = {
       edit_form_controller: null
@@ -443,7 +486,6 @@
       return true;
     }
   };
-
   ModifyFormController = function(params) {
     var _a, _b, _c;
     this.attributes = {
@@ -496,7 +538,6 @@
     this.set_mode_selector();
     return this.set_count_selector();
   };
-
   TodoFormController = function(params) {
     this.item = new Todo();
     TodoFormController.__superClass__.constructor.call(this, params);
@@ -512,7 +553,6 @@
     }
     return false;
   };
-
   TodosListController = function(params) {
     this.item = new Todo();
     this.attributes = {
@@ -579,7 +619,6 @@
       })(this));
     }
   };
-
   Category = function(params) {
     this.class_name = 'Category';
     this.table_name = 'categories';
@@ -590,10 +629,9 @@
     return this;
   };
   __extends(Category, Model);
-
   Todo = function(params) {
-    this.class_name = 'Todo';
-    this.table_name = 'todos';
+    this.class_name = 'Task';
+    this.table_name = 'tasks';
     this.attributes = {
       name: '',
       status: 'normal',
@@ -605,13 +643,11 @@
     Todo.__superClass__.constructor.call(this, params);
     return this;
   };
-  __extends(Todo, Model);
+  __extends(Todo, WebModel);
   Todo.prototype.complete = function() {
-    !this.completed ? (this.completed = true) : (this.completed = false);
-    this.save();
+    !this.completed ? this.send_as('completed') : this.send_as('undo');
     return this.completed;
   };
-
   jQuery.fn.clickable = function(options) {
     var defaults, settings;
     defaults = {
@@ -704,7 +740,6 @@
         return this.active.click();
       }
     };
-
     if (typeof window !== "undefined" && window !== null) {
       if ((typeof (_a = window.keyboard_navigation) !== "undefined" && _a !== null)) {
         keyboard_navigation = window.keyboard_navigation;
