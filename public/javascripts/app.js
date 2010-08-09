@@ -750,29 +750,5 @@
     }
     return this;
   };
-  $(document).ready(function() {
-    var modify_todos_list_form, todo_edit_nav, todo_form, todos_list;
-    todos_list = new TodosListController({
-      list_selector: "ul.tasks",
-      cell_selector: "li.todo"
-    });
-    todo_form = new TodoFormController({
-      form_selector: "#task_form",
-      list_controller: todos_list
-    });
-    todo_edit_nav = new EditNavigationController({
-      navigation_selector: "section#edit",
-      target_selector: "body, ul.tasks",
-      list_controller: todos_list,
-      default_item: "do"
-    });
-    modify_todos_list_form = new ModifyFormController({
-      form_selector: "#modification_form",
-      navigation_controller: todo_edit_nav,
-      list_controller: todos_list,
-      mode_selector: ".mode",
-      count_selector: ".count"
-    });
-    return modify_todos_list_form;
-  });
+  $(document).ready(function() {  });
 })();

@@ -9,19 +9,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100803061434) do
+ActiveRecord::Schema.define(:version => 20100809072657) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "focus_count", :default => 0
+    t.integer  "task_count",  :default => 0
+  end
+
+  add_index "categories", ["focus_count"], :name => "index_categories_on_focus_count"
+  add_index "categories", ["task_count"], :name => "index_categories_on_task_count"
+  add_index "categories", ["user_id"], :name => "index_categories_on_user_id"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.string   "aasm_state"
-    t.integer  "user_id"
-    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
+    t.integer  "focus",       :default => 0
   end
 
-  add_index "tasks", ["project_id"], :name => "index_todos_on_project_id"
-  add_index "tasks", ["user_id"], :name => "index_todos_on_user_id"
+  add_index "tasks", ["category_id"], :name => "index_tasks_on_category_id"
+  add_index "tasks", ["focus"], :name => "index_tasks_on_focus"
 
   create_table "users", :force => true do |t|
     t.string   "login",                              :null => false

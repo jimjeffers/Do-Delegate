@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title>do/delegate - Performable (12)</title>
+  <%= render :partial => 'layouts/head' %>
+</head>
+<body>
+  <div id="header" class="column-full">
+    
+    <section id="nav">
+      <ul>
+        <li><a href="#"><img src="images/settings.svg" height="20" /></a></li>
+      </ul>
+    </section>
+  
+    <section id="edit">
+    
+      <ul>
+        <li class="active"><a href="#" class="tasks"><img src="images/done.svg" height="20" /></a></li>
+        <li><a href="#" class="delete"><img src="images/delete.svg" height="20" /></a></li>
+      </ul>
+    
+    </section>
+  
+    <section id="edit-area">
+    
+      <%= yield :edit_area %>
+    
+    </section>
+  
+  </div>
+
+  <div id="content" class="column-full">
+
+    <section id="content-main">
+      
+      <%= yield :layout %>
+    
+    </section>
+  
+  </div>
+   
+   <%= render :partial => 'layouts/scripts' %>
+</body>
+</html>

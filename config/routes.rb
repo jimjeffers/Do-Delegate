@@ -1,16 +1,26 @@
 ActionController::Routing::Routes.draw do |map|
   
   # --------------------------------------------------------------
-  # Tasks
+  # Categories
   #
-  # Tasks our treated as a simple resource with several member
-  # and collection methods to make it easy to filter or change
-  # the state of certain tasks.
+  # Categories are treated as a simple resource.
   
-  map.resources :tasks, 
-    :member       => { :complete => [:get, :post],
-                       :undo     => [:get, :post]},
-    :collection   => { :focus    => :get }
+  map.resources :categories do |category|
+    
+    # --------------------------------------------------------------
+    # Tasks
+    #
+    # Tasks are treated as a simple resource with several member
+    # and collection methods to make it easy to filter or change
+    # the state of certain tasks.
+
+    category.resources  :tasks, 
+                        :member       => { :complete      => [:get, :post],
+                                           :undo          => [:get, :post],
+                                           :apply_focus   => [:get, :post],
+                                           :remove_focus  => [:get, :post]},
+                        :collection   => { :focus         => :get }
+  end
   
   # --------------------------------------------------------------
   # Users

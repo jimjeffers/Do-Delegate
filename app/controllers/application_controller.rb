@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
       if current_user
         store_location
         flash[:notice] = "You must be logged out to access this page"
-        redirect_to tasks_url
+        redirect_to categories_url
         return false
       end
     end

@@ -1,24 +1,19 @@
+<% content_for(:edit_area) do %>
+  <%= render :partial => 'task_form', :locals => {:category => @category, :task => @task, :id => 'task_form' } %>
+<% end %>
 <section id="content-main">
-  <div class="edit-area">
-    <form action="" method="get" accept-charset="utf-8" id="task_form">
-      <label>Task Title:</label>
-      <input type="text"     name="name" value="" id="">
-      <input type="submit"   value="Add Task">
-    </form>
-    
-    <form action="" method="get" accept-charset="utf-8" id="modification_form">
-      <label>You are <span class="mode">deleting</span> <strong class="count">4</strong> tasks</label>
-      <input type="submit" value="Delete Tasks">
-    </form>
-  </div>
-  
+  <p class="cat-title"><strong><%= @category.name %></strong></p>
   <ul class="tasks">
     <% if !@tasks.blank? %>
       <% for task in @tasks %>
-        <li class="todo"><a href="<%= complete_task_path(task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+        <% if task.completed? %>
+          <li class="task selected"><a href="<%= undo_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+        <% else %>
+          <li class="task"><a href="<%= complete_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+        <% end %>
       <% end %>
     <% else %>
-      <li class="todo"><a href="#" class="name" data-bindings="link:href"></a></li>
+      <li class="todo" style="display:none;"><a href="#" class="name" data-bindings="link:href"></a></li>
     <% end %>
   </ul>
 </section>
