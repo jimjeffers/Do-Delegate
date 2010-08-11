@@ -75,7 +75,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @category and @category.tasks << @task
-        format.html { redirect_back_or_to(category_tasks_path(@category), :notice => 'Task was successfully created.') }
+        format.html { redirect_to(category_tasks_path(@category), :notice => 'Task was successfully created.') }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
         format.html { render :action => "new" }
