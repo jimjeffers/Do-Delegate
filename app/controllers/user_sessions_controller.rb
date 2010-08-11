@@ -6,7 +6,6 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new
   end
   
-  # user_sessions_controller.rb
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
