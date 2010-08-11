@@ -61,4 +61,12 @@ class ApplicationController < ActionController::Base
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
+    
+    def redirect_back_or_to(path)
+      begin
+        redirect_to :back
+      rescue
+        redirect_to path
+      end
+    end
 end

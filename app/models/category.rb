@@ -23,6 +23,8 @@ class Category < ActiveRecord::Base
   # --------------------------------------------------------------
   # Scopes
   
+  default_scope :order => "categories.created_at ASC"
+  
   # --------------------------------------------------------------
   # Callbacks
   

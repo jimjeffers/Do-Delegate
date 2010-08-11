@@ -15,9 +15,9 @@ class Task < ActiveRecord::Base
   # Validations
   #
   # In order to be valid, a Task, at the very least,
-  # must have a name.
+  # must have a name and belong to a category.
   
-  validates_presence_of :name
+  validates_presence_of :name, :category
   
   # --------------------------------------------------------------
   # States and Transitions
@@ -45,9 +45,15 @@ class Task < ActiveRecord::Base
   # NOTE: Be sure to include the table name in conditions to ensure
   # scopes will work when chained to relationships.
   
+  default_scope :order => "tasks.created_at ASC"
+  
   # Only returns tasks that are presently in an incomplete state.
   named_scope :incomplete, 
     :conditions => ["tasks.aasm_state=?",'incomplete']
+  
+  # Only returns tasks that are presently in a complete state.
+  named_scope :complete, 
+    :conditions => ["tasks.aasm_state=?",'complete']
     
   # Listable returns any tasks that should be shown on a task list.
   # Current qualifications require that the task must either be incomplete
@@ -59,13 +65,20 @@ class Task < ActiveRecord::Base
   named_scope :focused, 
     :conditions => ["tasks.focus=?",1]
   
+  # Returns any todo's that belong to the present user.
+  named_scope :for_user, lambda { |user| {
+      :conditions => ['tasks.category_id=categories.id AND categories.user_id=?',user.id],
+      :include => :category
+    }
+  }
+  
   # --------------------------------------------------------------
   # Callbacks 
   
   # After a task is created or saved we'll update the task counts
   # for its parent category.
   def after_save
-    self.category.update_task_counts!
+    self.category.update_task_counts! unless self.category.nil?
   end
   
   # --------------------------------------------------------------
@@ -82,15 +95,15 @@ class Task < ActiveRecord::Base
     (self.focus > 0) ? true : false
   end
   
-  # add_focus
+  # focus!
   # Sets the focus attribute to 1 to signify true.
-  def add_focus
+  def focus!
     self.update_attribute :focus, 1
   end
   
-  # remove_focus
+  # blur!
   # Sets the focus attribute to 0 to signify false.
-  def remove_focus
+  def blur!
     self.update_attribute :focus, 0
   end
   

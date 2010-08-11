@@ -5,7 +5,9 @@ ActionController::Routing::Routes.draw do |map|
   #
   # Categories are treated as a simple resource.
   
-  map.resources :categories do |category|
+  map.resources :categories,
+                :collection   => { :everything  => [:get, :post],
+                                   :focus       => [:get, :post] } do |category|
     
     # --------------------------------------------------------------
     # Tasks

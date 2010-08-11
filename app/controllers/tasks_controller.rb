@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.xml
   def index
-    @tasks = @category.tasks
+    @tasks = @category.tasks.listable
     @task = Task.new
 
     respond_to do |format|
@@ -48,7 +48,8 @@ class TasksController < ApplicationController
     if @task
       @task.check! unless @task.completed?
       respond_to do |format|
-        format.html { redirect_to category_tasks_path(@category) }
+        
+        format.html { redirect_back_or_to category_tasks_path(@category) }
         format.xml  { render :xml => @task }
       end
     end
@@ -61,7 +62,7 @@ class TasksController < ApplicationController
     if @task
       @task.uncheck! if @task.completed?
       respond_to do |format|
-        format.html { redirect_to category_tasks_path(@category) }
+        format.html { redirect_back_or_to category_tasks_path(@category) }
         format.xml  { render :xml => @task }
       end
     end
@@ -74,7 +75,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @category and @category.tasks << @task
-        format.html { redirect_to(category_tasks_path(@category), :notice => 'Task was successfully created.') }
+        format.html { redirect_back_or_to(category_tasks_path(@category), :notice => 'Task was successfully created.') }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
       else
         format.html { render :action => "new" }

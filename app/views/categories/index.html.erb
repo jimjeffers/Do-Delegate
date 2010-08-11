@@ -3,16 +3,16 @@
 <% end %>
 
 <ul class="system">
-  <li><a href="focus.html">Focus <span class="focus">6</span></a></li>
-  <li><a href="everything.html">Everything <span class="total">72</span></a></li>
-  <li><a href="inbox.html">Inbox <span class="move">9</span></a></li>
-  <li><a href="outbox.html">Outbox <span class="send">8</span></a></li>
+  <li><a href="#">Focus <span class="focus"><%= @focus_count %></span></a></li>
+  <li><a href="<%= everything_categories_path %>">Everything <span class="total"><%= @everything_count %></span></a></li>
+  <li><a href="#">Inbox <span class="move">9</span></a></li>
+  <li><a href="#">Outbox <span class="send">8</span></a></li>
 </ul>
 
 <ul class="projects">
   <% if !@categories.blank? %>
     <% for category in @categories %>
-      <li><%= link_to "#{category.name} <span class=\"focus\">#{category.focus_count}</span> <span class=\"total\">#{category.task_count}</span>", category %></li>
+      <li><a href="<%= category_path(category) %>" id="<%= category.id %>"><%= category.name %> <span class="focus"><%= category.focus_count %></span> <span class="total"><%= category.task_count %></span></a></li>
     <% end %>
   <% else %>
     <li><a href="#"> <span class="focus focus_count"></span> <span class="total tasks_count"></span></a></li>

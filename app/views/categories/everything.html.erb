@@ -1,0 +1,22 @@
+<% if !@everything.blank? %>
+  <% for category,tasks in @everything %>
+    <section id="content-main">
+      <p class="cat-title"><strong><%= category.name %></strong></p>
+      <ul class="tasks">
+        <% if !tasks.blank? %>
+          <% for task in tasks %>
+            <% if task.completed? %>
+              <li class="task selected"><a href="<%= undo_category_task_path(task.category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+            <% else %>
+              <li class="task"><a href="<%= complete_category_task_path(task.category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+            <% end %>
+          <% end %>
+        <% else %>
+          <li class="todo" style="display:none;"><a href="#" class="name" data-bindings="link:href"></a></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+<% else %>
+  <p>Nothing to see here.</p>
+<% end %>

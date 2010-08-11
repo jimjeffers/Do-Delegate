@@ -4,12 +4,26 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   def index
-    @categories = current_user.categories
-    @category = Category.new
+    @categories         = current_user.categories
+    @category           = Category.new
+    @everything_count   = current_user.categories.sum(:task_count)
+    @focus_count        = current_user.categories.sum(:focus_count)
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @categories }
+    end
+  end
+  
+  # GET /everything
+  # GET /everything.xml
+  def everything
+    @everything = Task.for_user(current_user).listable.group_by{|t| t.category}
+    @task = Task.new
+
+    respond_to do |format|
+      format.html { render :layout => 'tasks'} # everything.html.erb
+      format.xml  { render :xml => @everything }
     end
   end
 
