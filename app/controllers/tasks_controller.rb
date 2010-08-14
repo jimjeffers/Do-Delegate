@@ -51,6 +51,7 @@ class TasksController < ApplicationController
         
         format.html { redirect_back_or_to category_tasks_path(@category) }
         format.xml  { render :xml => @task }
+        format.json { render :json => { :object => @task, :new_path => undo_category_task_path(@category,@task) } }
       end
     end
   end
@@ -64,6 +65,7 @@ class TasksController < ApplicationController
       respond_to do |format|
         format.html { redirect_back_or_to category_tasks_path(@category) }
         format.xml  { render :xml => @task }
+        format.json { render :json => { :object => @task, :new_path => complete_category_task_path(@category,@task) } }
       end
     end
   end

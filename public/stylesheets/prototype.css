@@ -171,26 +171,26 @@ label {
 	opacity: .5;
 }
 
-#header ul li.active a.tasks {
+#header .do #do {
 	background-color: rgb(255,255,255);
 }
 
-#header ul li.active a.delete {
+#header .delete #delete {
 	background-color: rgb(200,0,0);
 	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
 }
 
-#header ul li.active a.move {
+#header .move #move {
 	background-color: rgb(50,100,255);
 	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
 }
 
-#header ul li.active a.send {
+#header .send #send {
 	background-color: rgb(50,155,0);
 	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
 }
 
-#header ul li.active a.focus {
+#header .focus #focus {
 	background-color: rgb(255,225,0);
 	-webkit-box-shadow: 0 0 2px rgb(150,150,150);
 }
@@ -387,9 +387,37 @@ label {
 	background: url(../images/done-focus.svg) no-repeat 12px 50%;
 }
 
+#content ul.tasks li {
+   display: block;
+   opacity: 1;
+   height: auto;
+   transition: all 0.5s ease;
+     -webkit-transition: all 0.5s ease;
+     -o-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+}
+
+#content ul.tasks li.completed,
+#content ul.tasks li.deleted {
+   transform: scale(0.1);
+     -moz-transform: scale(0.1);
+     -webkit-transform: scale(0.1);
+   opacity: 0;
+}
+
+#content ul.tasks li.active {
+   opacity: 0.9;
+   transform: scale(0.975);
+     -moz-transform: scale(0.975);
+     -webkit-transform: scale(0.975);
+}
+
+#content ul.tasks.do li.selected {
+   opacity: 0.25;
+}
+
 #content ul.tasks li.selected a {
-	background: rgb(230,230,230) url(../images/done-on.svg) no-repeat 12px 50%;
-	color: rgb(150,150,150);
+	background: url(../images/done-on.svg) no-repeat 12px 50%;
 }
 
 #content ul.delete li a,

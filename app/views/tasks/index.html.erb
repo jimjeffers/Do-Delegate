@@ -3,7 +3,7 @@
 <% end %>
 <section id="content-main">
   <p class="cat-title"><strong><%= @category.name %></strong></p>
-  <ul class="tasks">
+  <ul class="tasks do" id="tasks_list">
     <% if !@tasks.blank? %>
       <% for task in @tasks %>
         <% if task.completed? %>
