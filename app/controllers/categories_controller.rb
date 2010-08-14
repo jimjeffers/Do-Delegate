@@ -18,7 +18,10 @@ class CategoriesController < ApplicationController
   # GET /everything
   # GET /everything.xml
   def everything
-    @everything = Task.for_user(current_user).listable.group_by{|t| t.category}
+    tasks = Task.for_user(current_user).listable
+    @tasks_count = tasks.count
+    @incomplete_tasks_count = Task.for_user(current_user).incomplete.count
+    @everything = tasks.group_by{|t| t.category}
     @task = Task.new
 
     respond_to do |format|

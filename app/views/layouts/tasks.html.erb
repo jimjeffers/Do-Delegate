@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <% if !@category.nil? %>
   <title>do/delegate - <%= @category.name %> (<%= @category.task_count %>/<%= @tasks.count %>)</title>
+  <% else %>
+  <title>do/delegate - Everything (<%= @incomplete_tasks_count %>/<%= @tasks_count %>)</title>
+  <% end %>
   <%= render :partial => 'layouts/head' %>
 </head>
 <body>
