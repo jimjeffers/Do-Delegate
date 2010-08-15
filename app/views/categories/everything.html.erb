@@ -1,8 +1,11 @@
+<% content_for(:edit_area) do %>
+  <%= render :partial => 'category_task_form', :locals => {:categories => @categories, :task => @task, :id => 'task_form' } %>
+<% end %>
 <% if !@everything.blank? %>
   <% for category,tasks in @everything %>
     <section id="content-main">
       <p class="cat-title"><strong><%= category.name %></strong></p>
-      <ul class="tasks">
+      <ul class="tasks do" id="category_<%= category.id %>">
         <% if !tasks.blank? %>
           <% for task in tasks %>
             <% if task.completed? %>

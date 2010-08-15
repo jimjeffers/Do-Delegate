@@ -3,18 +3,23 @@ jQuery.fn.selectable: (options) ->
    # ------------------------------------------------
    # *   selected_class: Determines if elements are selected on the list.
    # *   completed_mode: The mode that actually handles completion.
+   # *   completed_mode: The mode that denotes that selections incur a
+   #     a state change for the selected tasks.
+   # *   modifier_element_class: A CSS class used to select the list element(s)
+   #     on the page. This is used to determine the current modifier mode for
+   #     selected actions.
    defaults: {
-      selected_class:         "selected"
-      active_class:           "active"
-      completed_mode:         "do"
-      modifier_element_id:    false
+      selected_class:            "selected"
+      active_class:              "active"
+      completed_mode:            "do"
+      modifier_element_class:    "tasks"
    }
    settings: jQuery.extend(defaults,options)
    
    $(this).each( ->
       item: $(this)
-      if settings.modifier_element_id
-         modifier_element: $("#${settings.modifier_element_id}")
+      if settings.modifier_element_class
+         modifier_element: $(".${settings.modifier_element_class}")
       item.click( (event) ->
          selected_item: $(this)
          if modifier_element and modifier_element.hasClass(settings.completed_mode)

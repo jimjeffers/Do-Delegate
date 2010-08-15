@@ -12,10 +12,10 @@
 <ul class="projects">
   <% if !@categories.blank? %>
     <% for category in @categories %>
-      <li><a href="<%= category_path(category) %>" id="<%= category.id %>"><%= category.name %> <span class="focus"><%= category.focus_count %></span> <span class="total"><%= category.task_count %></span></a></li>
+      <li class="category"><a href="<%= category_path(category) %>" id="<%= category.id %>"><%= category.name %> <span class="focus"><%= category.focus_count %></span> <span class="total"><%= category.task_count %></span></a></li>
     <% end %>
   <% else %>
-    <li><a href="#"> <span class="focus focus_count"></span> <span class="total tasks_count"></span></a></li>
+    <li class="category"><a href="#" id=""> <span class="focus"></span> <span class="total"></span></a></li>
   <% end %>
 </ul>
 

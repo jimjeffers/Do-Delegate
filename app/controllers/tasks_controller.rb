@@ -79,6 +79,7 @@ class TasksController < ApplicationController
       if @category and @category.tasks << @task
         format.html { redirect_to(category_tasks_path(@category), :notice => 'Task was successfully created.') }
         format.xml  { render :xml => @task, :status => :created, :location => @task }
+        format.json { render :json => @task }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }

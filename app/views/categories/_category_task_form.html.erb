@@ -1,0 +1,6 @@
+<% form_for [categories.first,task], :html => {:id => id} do |f| -%>
+  <%= f.label :name, "Task Title:" %>
+  <%= f.text_field :name %>
+  <%= select_tag :category, options_for_select(categories.map{|c| [c.name,c.id]}) %>
+  <%= f.submit "Add Task" %>
+<% end -%>

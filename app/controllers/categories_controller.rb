@@ -22,6 +22,7 @@ class CategoriesController < ApplicationController
     @tasks_count = tasks.count
     @incomplete_tasks_count = Task.for_user(current_user).incomplete.count
     @everything = tasks.group_by{|t| t.category}
+    @categories = current_user.categories
     @task = Task.new
 
     respond_to do |format|
@@ -67,6 +68,7 @@ class CategoriesController < ApplicationController
       if current_user.categories << @category
         format.html { redirect_to(categories_path, :notice => 'Category was successfully created.') }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
+        format.json { render :json => @category }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }

@@ -1,4 +1,30 @@
 (function(){
+  jQuery.fn.category_form = function(options) {
+    var defaults, settings;
+    defaults = {
+      category_class: "category",
+      list_selector: ".categories"
+    };
+    settings = jQuery.extend(defaults, options);
+    return $(this).each(function() {
+      var form;
+      form = $(this);
+      return form.submit(function(event) {
+        $.post("/categories", form.serialize(), (function(data) {
+          var list, new_category;
+          alert("data");
+          if (data.category) {
+            $("#category_name").val("");
+            list = $(settings.list_selector);
+            new_category = list.find(("." + (settings.category_class) + ":last-child")).clone();
+            new_category.find("a").html(("" + (data.category.name) + " <span class=\"focus\">0</span> <span class=\"total\">0</span>")).attr("href", ("/categories/" + (data.category.id) + "/tasks"));
+            return list.append(new_category);
+          }
+        }), "json");
+        return false;
+      });
+    });
+  };
   jQuery.fn.edit_navigation = function(options) {
     var defaults, settings;
     defaults = {
@@ -56,13 +82,13 @@
       selected_class: "selected",
       active_class: "active",
       completed_mode: "do",
-      modifier_element_id: false
+      modifier_element_class: "tasks"
     };
     settings = jQuery.extend(defaults, options);
     return $(this).each(function() {
       var item, modifier_element;
       item = $(this);
-      settings.modifier_element_id ? (modifier_element = $(("#" + (settings.modifier_element_id)))) : null;
+      settings.modifier_element_class ? (modifier_element = $(("." + (settings.modifier_element_class)))) : null;
       return item.click(function(event) {
         var selected_item;
         selected_item = $(this);
@@ -82,12 +108,43 @@
       });
     });
   };
+  jQuery.fn.task_form = function(options) {
+    var defaults, settings;
+    defaults = {
+      task_class: "task"
+    };
+    settings = jQuery.extend(defaults, options);
+    return $(this).each(function() {
+      var category_id, form;
+      form = $(this);
+      category_id = form.find("#category").val();
+      return form.submit(function(event) {
+        $.post(("/categories/" + (category_id) + "/tasks/"), form.serialize(), (function(data) {
+          var list, new_task;
+          if (data.task) {
+            $("#task_name").val("");
+            list = $(("#category_" + (category_id)));
+            new_task = list.find(("." + (settings.task_class) + ":last-child")).clone();
+            new_task.find("a").html(data.task.name).attr("href", ("/categories/" + (data.task.category_id) + "/tasks/" + (data.task.id) + "/complete")).selectable();
+            new_task.addClass("completed").attr("style", "").removeClass("selected");
+            list.append(new_task);
+            return setTimeout((function() {
+              return new_task.removeClass("completed");
+            }), 100);
+          }
+        }), "json");
+        return false;
+      });
+    });
+  };
   $(document).ready(function() {
     $("#edit").edit_navigation({
       list_selector: '.tasks'
     });
-    return $("ul.tasks > li.task a").selectable({
-      modifier_element_id: 'tasks_list'
+    $("ul.tasks > li.task a").selectable();
+    $("#task_form").task_form();
+    return $("#new_category").category_form({
+      list_selector: "ul.projects"
     });
   });
 })();
