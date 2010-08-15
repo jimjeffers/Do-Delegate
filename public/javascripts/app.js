@@ -10,11 +10,13 @@
       var form;
       form = $(this);
       return form.submit(function(event) {
-        $.post("/categories", form.serialize(), (function(data) {
+        var form_contents;
+        form_contents = form.serialize();
+        form.find("input").attr("disabled", true);
+        $.post("/categories", form_contents, (function(data) {
           var list, new_category;
-          alert("data");
+          form.find("input").attr("disabled", false);
           if (data.category) {
-            $("#category_name").val("");
             list = $(settings.list_selector);
             new_category = list.find(("." + (settings.category_class) + ":last-child")).clone();
             new_category.find("a").html(("" + (data.category.name) + " <span class=\"focus\">0</span> <span class=\"total\">0</span>")).attr("href", ("/categories/" + (data.category.id) + "/tasks"));
@@ -119,7 +121,10 @@
       form = $(this);
       category_id = form.find("#category").val();
       return form.submit(function(event) {
-        $.post(("/categories/" + (category_id) + "/tasks/"), form.serialize(), (function(data) {
+        var form_contents;
+        form_contents = form.serialize();
+        form.find("input").attr("disabled", false);
+        $.post(("/categories/" + (category_id) + "/tasks/"), form_contents, (function(data) {
           var list, new_task;
           if (data.task) {
             $("#task_name").val("");
@@ -128,9 +133,10 @@
             new_task.find("a").html(data.task.name).attr("href", ("/categories/" + (data.task.category_id) + "/tasks/" + (data.task.id) + "/complete")).selectable();
             new_task.addClass("completed").attr("style", "").removeClass("selected");
             list.append(new_task);
-            return setTimeout((function() {
+            setTimeout((function() {
               return new_task.removeClass("completed");
             }), 100);
+            return form.find("input").attr("disabled", false);
           }
         }), "json");
         return false;

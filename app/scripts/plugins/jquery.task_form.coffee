@@ -11,7 +11,9 @@ jQuery.fn.task_form: (options) ->
       form: $(this)
       category_id: form.find("#category").val()
       form.submit( (event) ->
-         $.post("/categories/${category_id}/tasks/", form.serialize(), ((data) ->
+         form_contents: form.serialize()
+         form.find("input").attr("disabled",false)
+         $.post("/categories/${category_id}/tasks/",form_contents , ((data) ->
                if data.task
                   $("#task_name").val("")
                   list:       $("#category_${category_id}")
@@ -22,6 +24,7 @@ jQuery.fn.task_form: (options) ->
                   setTimeout(( -> 
                      new_task.removeClass("completed")
                   ), 100)
+                  form.find("input").attr("disabled",false)
          ), "json")
          false
       )
