@@ -70,6 +70,7 @@ body {
 	font-size: 14px;
 	line-height: 20px;
 	color: rgb(100,100,100);
+	-webkit-text-size-adjust: none;
 }
 
 a:link,
