@@ -7,7 +7,7 @@
     <% if !@tasks.blank? %>
       <% for task in @tasks %>
         <% if task.completed? %>
-          <li class="task selected"><a href="<%= undo_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+          <li class="task completed"><a href="<%= undo_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
         <% else %>
           <li class="task"><a href="<%= complete_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
         <% end %>
