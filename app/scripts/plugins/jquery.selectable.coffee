@@ -23,12 +23,14 @@ jQuery.fn.selectable = (options) ->
    # Define the SelectableEvent object to the global namespace.
    window.SelectableEvent = class SelectableEvent
       # Create static types to keep event listeners DRY.
-      @SELECTED: "selectable_selected"
-      @DESELECTED: "selectable_deselected"
-      constructor: (element, selected) ->
+      @SELECTED:     "selectable_selected"
+      @DESELECTED:   "selectable_deselected"
+      @COMPLETED:    "selectable_completed"
+      @UNDONE:       "selectable_undone"
+      constructor: (element, type) ->
          @element    = element
          @id         = element.attr("id")
-         @selected   = selected
+         @type       = type
       
    
    # Implementation
@@ -47,16 +49,18 @@ jQuery.fn.selectable = (options) ->
                if data['object']
                   if data.object.task.aasm_state == "completed"
                      selected_item.parent().addClass(settings.completed_class)
+                     item.trigger(SelectableEvent.COMPLETED, new SelectableEvent(item,SelectableEvent.COMPLETED))
                   else
                      selected_item.parent().removeClass(settings.completed_class)
+                     item.trigger(SelectableEvent.UNDONE, new SelectableEvent(item,SelectableEvent.UNDONE))
                   selected_item.parent().removeClass(settings.active_class)
             ))
          else
             if selected_item.parent().hasClass(settings.selected_class)
-               item.trigger(SelectableEvent.DESELECTED, new SelectableEvent(item,false))
+               item.trigger(SelectableEvent.DESELECTED, new SelectableEvent(item,SelectableEvent.DESELECTED))
                selected_item.parent().removeClass(settings.selected_class)
             else
-               item.trigger(SelectableEvent.SELECTED, new SelectableEvent(item,true))
+               item.trigger(SelectableEvent.SELECTED, new SelectableEvent(item,SelectableEvent.SELECTED))
                selected_item.parent().addClass(settings.selected_class)
          false
       )
