@@ -29,7 +29,7 @@ jQuery.fn.selectable = (options) ->
       @UNDONE:       "selectable_undone"
       constructor: (element, type) ->
          @element    = element
-         @id         = element.attr("id")
+         @id         = element.attr("data-id")
          @type       = type
       
    

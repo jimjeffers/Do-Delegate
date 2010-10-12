@@ -5,8 +5,9 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.xml
   def index
-    @tasks = @category.tasks.listable
-    @task = Task.new
+    @categories = current_user.categories 
+    @tasks      = @category.tasks.listable
+    @task       = Task.new
 
     respond_to do |format|
       format.html # index.html.erb

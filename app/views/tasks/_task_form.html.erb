@@ -1,4 +1,4 @@
-<% form_for [category,task], :html => {:id => id} do |f| -%>
+<% form_for [category,task], :html => {:id => id, :class => "do"} do |f| -%>
   <%= f.label :name, "Task Title:" %>
   <%= f.text_field :name %>
   <%= f.submit "Add Task" %>

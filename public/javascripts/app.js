@@ -1,5 +1,5 @@
 (function() {
-  var List, Navigation, NavigationEvent;
+  var EditArea, EditEvent, List, Mode, Navigation, NavigationEvent;
   var __bind = function(func, context) {
     return function(){ return func.apply(context, arguments); };
   };
@@ -31,6 +31,111 @@
       });
     });
   };
+  window.Mode = (function() {
+    Mode = function() {};
+    Mode.DO = "do";
+    Mode.MOVE = "move";
+    Mode.SEND = "send";
+    Mode.DELETE = "delete";
+    Mode.FOCUS = "focus";
+    return Mode;
+  }).call(this);
+  window.EditEvent = (function() {
+    EditEvent = function(tasks) {
+      this.tasks = tasks;
+      return this;
+    };
+    EditEvent.DELETED = "edit_deleted";
+    EditEvent.SENT = "edit_sent";
+    EditEvent.MOVED = "edit_moved";
+    EditEvent.CREATED = "edit_created";
+    return EditEvent;
+  }).call(this);
+  window.EditArea = (function() {
+    EditArea = function(element, settings) {
+      this.area = $(element);
+      this.settings = jQuery.extend(EditArea.DEFAULTS, settings);
+      this.forms = this.area.find(this.settings.form_selector);
+      this.count = 0;
+      this.items = [];
+      this.do_form = this.area.find(this.settings.do_form);
+      this.delete_form = this.area.find(this.settings.delete_form);
+      this.focus_form = this.area.find(this.settings.focus_form);
+      this.move_form = this.area.find(this.settings.move_form);
+      this.send_form = this.area.find(this.settings.send_form);
+      this.forms.hide();
+      this.mode = this.settings.default_mode;
+      this.default_form = this[this.settings.default_form];
+      this.set_current_form(this.default_form);
+      this.forms.submit(__bind(function(event) {}, this));
+      return this;
+    };
+    EditArea.DEFAULTS = {
+      form_selector: "form",
+      do_form: "form.do",
+      delete_form: "form.delete",
+      focus_form: "form.focus",
+      move_form: "form.move",
+      send_form: "form.send",
+      default_form: "do_form",
+      default_mode: Mode.DO,
+      count_selector: ".count"
+    };
+    EditArea.prototype.change = function(mode) {
+      if (mode !== this.mode) {
+        if (this.count < 1) {
+          this.adjust_form_mode(mode);
+          return true;
+        }
+        if (this.count > 0 && confirm("You currently have pending changes. Are you sure you want to lose them?")) {
+          this.adjust_form_mode(mode);
+          return true;
+        } else {
+          return false;
+        }
+      }
+    };
+    EditArea.prototype.adjust_form_mode = function(mode) {
+      if (mode === Mode.DO) {
+        this.set_current_form(this.do_form);
+      } else if (mode === Mode.MOVE) {
+        this.set_current_form(this.move_form);
+      } else if (mode === Mode.SEND) {
+        this.set_current_form(this.send_form);
+      } else if (mode === Mode.DELETE) {
+        this.set_current_form(this.delete_form);
+      } else if (mode === Mode.FOCUS) {
+        this.set_current_form(this.focus_form);
+      }
+      return (this.mode = mode);
+    };
+    EditArea.prototype.set_current_form = function(form) {
+      if (this.current_form) {
+        this.current_form.hide();
+      }
+      this.current_form = form;
+      this.current_form.show();
+      this.current_form_count = this.current_form.find(this.settings.count_selector);
+      this.count = 0;
+      this.items = [];
+      return this.current_form_count.length > 0 ? this.current_form_count.html(this.count) : null;
+    };
+    EditArea.prototype.add_item = function(id) {
+      this.items.push(id);
+      this.count = this.items.length;
+      return this.current_form_count.html(this.count);
+    };
+    EditArea.prototype.remove_item = function(id) {
+      var index;
+      index = this.items.indexOf(id);
+      if (index !== -1) {
+        this.items.splice(index, 1);
+        this.count = this.items.length;
+        return this.current_form_count.html(this.count);
+      }
+    };
+    return EditArea;
+  }).call(this);
   window.List = (function() {
     List = function(element, settings) {
       var _a, _b, _c;
@@ -47,28 +152,28 @@
           }, this));
         }).call(this);
       }
-      ({
-        change: function(mode, previous_mode) {
-          if (mode !== this.mode) {
-            this.mode = mode;
-            if (previous_mode) {
-              this.list.removeClass(previous_mode);
-            }
-            return this.list.addClass(this.mode);
-          }
-        }
-      });
       return this;
     };
     List.DEFAULTS = {
       link_selector: "a",
-      completed_selector: ".completed"
+      completed_class: "completed",
+      selected_class: "selected"
+    };
+    List.prototype.change = function(mode, previous_mode) {
+      if (mode !== this.mode) {
+        this.mode = mode;
+        if (previous_mode) {
+          this.list.removeClass(previous_mode);
+        }
+        this.list.addClass(this.mode);
+        return this.list.find("." + (this.settings.selected_class)).removeClass(this.settings.selected_class);
+      }
     };
     List.prototype.total = function() {
       return this.links.length;
     };
     List.prototype.remaining = function() {
-      return this.total() - this.list.find(this.settings.completed_selector).length;
+      return this.total() - this.list.find("." + (this.settings.completed_selector)).length;
     };
     List.prototype.dispatch = function(selectable_event) {
       return $([this]).trigger(selectable_event.type, selectable_event);
@@ -110,7 +215,9 @@
     };
     Navigation.prototype.revert = function() {
       if (this.previous_mode) {
-        change(this.previous_mode);
+        this.nav.removeClass(this.mode);
+        this.nav.addClass(this.previous_mode);
+        this.mode = this.previous_mode;
         return (this.previous_mode = null);
       }
     };
@@ -129,7 +236,7 @@
     window.SelectableEvent = (function() {
       SelectableEvent = function(element, type) {
         this.element = element;
-        this.id = element.attr("id");
+        this.id = element.attr("data-id");
         this.type = type;
         return this;
       };
@@ -213,21 +320,28 @@
     });
   };
   $(document).ready(function() {
-    var edit_navigation, list_change_handler, navigation_change_handler, todo_list;
-    edit_navigation = new Navigation("#edit");
+    var deselection_handler, edit_area, edit_nav, list_change_handler, navigation_change_handler, selection_handler, todo_list;
+    edit_nav = new Navigation("#edit");
     todo_list = new List("ul.tasks");
+    edit_area = new EditArea("section#edit-area");
     navigation_change_handler = function(event, navigation_event) {
-      return todo_list.change(navigation_event.mode, navigation_event.previous_mode);
+      return edit_area.change(navigation_event.mode) ? todo_list.change(navigation_event.mode, navigation_event.previous_mode) : edit_nav.revert();
     };
     list_change_handler = function(event, selectable_event) {
       var title;
       title = $("title").html();
       return $("title").html(title.replace(/\d\/\d/, "" + (todo_list.remaining()) + "/" + (todo_list.total())));
     };
-    $(edit_navigation).bind(NavigationEvent.CHANGED, navigation_change_handler);
+    selection_handler = function(event, selectable_event) {
+      return edit_area.add_item(selectable_event.id);
+    };
+    deselection_handler = function(event, selectable_event) {
+      return edit_area.remove_item(selectable_event.id);
+    };
+    $(edit_nav).bind(NavigationEvent.CHANGED, navigation_change_handler);
     $(todo_list).bind(SelectableEvent.COMPLETED, list_change_handler);
     $(todo_list).bind(SelectableEvent.UNDONE, list_change_handler);
-    $(todo_list).bind(SelectableEvent.SELECTED, list_change_handler);
-    return $(todo_list).bind(SelectableEvent.DESELECTED, list_change_handler);
+    $(todo_list).bind(SelectableEvent.SELECTED, selection_handler);
+    return $(todo_list).bind(SelectableEvent.DESELECTED, deselection_handler);
   });
 })();

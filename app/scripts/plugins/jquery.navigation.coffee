@@ -49,5 +49,7 @@ window.Navigation = class Navigation
    # Reverts the navigation back to it's prior state.
    revert: ->
       if @previous_mode
-         change(@previous_mode)
+         @nav.removeClass(@mode)
+         @nav.addClass(@previous_mode)
+         @mode = @previous_mode
          @previous_mode = null

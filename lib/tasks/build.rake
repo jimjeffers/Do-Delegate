@@ -17,7 +17,7 @@ namespace :build do
       javascript = %x(coffee -p #{coffee_path})
       puts "\n[DOCCO]  Regenerating documentation in:\n        ./docs"
       `docco #{RAILS_ROOT}/app/scripts/**/*`
-      File.delete(coffee_path)
+      #File.delete(coffee_path)
       #File.open(javascript_path,'w') {|f| f.write YUI::JavaScriptCompressor.new().compress(javascript) }
       File.open(javascript_path,'w') {|f| f.write javascript }
       

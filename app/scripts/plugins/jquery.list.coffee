@@ -7,10 +7,11 @@ window.List = class List
    # Defaults
    # ---------------------------------------------
    # * link_selector: CSS selector used to find the link elements in the list.
-   # * completed_selector: CSS selector used to find completed link elements.
+   # * completed_class: CSS class used to find completed link elements.
    @DEFAULTS: {
-      link_selector:          "a"
-      completed_selector:     ".completed"
+      link_selector:       "a"
+      completed_class:     "completed"
+      selected_class:      "selected"
    }
    
    constructor: (element,settings) ->
@@ -25,12 +26,14 @@ window.List = class List
             this.dispatch(selectable_event)
          ))
    
-      # Change method updates the internal state of the list.
-      change: (mode,previous_mode) ->
-         if mode != @mode
-            @mode = mode
-            @list.removeClass(previous_mode) if previous_mode
-            @list.addClass(@mode)
+   # Change method updates the internal state of the list.
+   change: (mode,previous_mode) ->
+      if mode != @mode
+         @mode = mode
+         @list.removeClass(previous_mode) if previous_mode
+         @list.addClass(@mode)
+         @list.find(".#{@settings.selected_class}").removeClass(@settings.selected_class)
+         
    
    # Returns the length of the list.
    total: ->
@@ -38,7 +41,7 @@ window.List = class List
    
    # Returns the count of incomplete items.
    remaining: ->
-      this.total() - @list.find(@settings.completed_selector).length
+      this.total() - @list.find(".#{@settings.completed_selector}").length
    
    dispatch: (selectable_event) ->
       $([this]).trigger(selectable_event.type, selectable_event)

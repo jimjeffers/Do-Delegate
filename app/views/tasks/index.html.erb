@@ -1,5 +1,27 @@
 <% content_for(:edit_area) do %>
   <%= render :partial => 'task_form', :locals => {:category => @category, :task => @task, :id => 'task_form' } %>
+  <form action="<%= delete_category_tasks_path(@category) %>" method="get" accept-charset="utf-8" class="delete">
+    <label>Deleting <strong class="count">4</strong> tasks</label>
+    <input type="submit" value="Delete Tasks">
+  </form>
+  <form action="<%= move_category_tasks_path(@category) %>" method="get" accept-charset="utf-8" class="move">
+    <label>Moving <strong class="count">4</strong> tasks to:</label>
+    <%= select_tag :category, options_for_select(@categories.map{|c| [c.name,c.id]}) %>
+    <input type="submit" value="Move Tasks">
+  </form>
+  <form action="<%= delegate_category_tasks_path(@category) %>" method="get" accept-charset="utf-8" class="send">
+    <label>Delegate <strong class="count">4</strong> tasks to:</label>
+    <select name="some_name" id="some_name">
+      <option value="option1">Jim Jeffers</option>
+      <option value="option2">Jack Sparrow</option>
+      <option value="option3">Jason Bourne</option>
+    </select>
+    <input type="submit" value="Send Tasks">
+  </form>
+  <form action="<%= focus_category_tasks_path(@category) %>" method="get" accept-charset="utf-8" class="focus">
+    <label>Adding <strong class="count">4</strong> tasks to your focus list</label>
+    <input type="submit" value="Add Tasks">
+  </form>
 <% end %>
 <section id="content-main">
   <p class="cat-title"><strong><%= @category.name %></strong></p>
@@ -7,9 +29,9 @@
     <% if !@tasks.blank? %>
       <% for task in @tasks %>
         <% if task.completed? %>
-          <li class="task completed"><a href="<%= undo_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+          <li class="task completed"><a href="<%= undo_category_task_path(@category,task) %>" class="name" data-bindings="link:href" data-id="<%= task.id %>"><%= task.name %></a></li>
         <% else %>
-          <li class="task"><a href="<%= complete_category_task_path(@category,task) %>" class="name" data-bindings="link:href"><%= task.name %></a></li>
+          <li class="task"><a href="<%= complete_category_task_path(@category,task) %>" class="name" data-bindings="link:href" data-id="<%= task.id %>"><%= task.name %></a></li>
         <% end %>
       <% end %>
     <% else %>

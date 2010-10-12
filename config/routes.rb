@@ -20,8 +20,11 @@ ActionController::Routing::Routes.draw do |map|
                         :member       => { :complete      => [:get, :post],
                                            :undo          => [:get, :post],
                                            :apply_focus   => [:get, :post],
-                                           :remove_focus  => [:get, :post]},
-                        :collection   => { :focus         => :get }
+                                           :remove_focus  => [:get, :post] },
+                        :collection   => { :focus         => :get,
+                                           :delete        => :post,
+                                           :delegate      => :post,
+                                           :move          => :post }
   end
   
   # --------------------------------------------------------------
