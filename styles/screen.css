@@ -66,10 +66,10 @@ section {
 
 body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	background-color: rgb(220,220,220);
+	background-color: rgb(200,200,200);
 	font-size: 14px;
 	line-height: 20px;
-	color: rgb(100,100,100);
+	color: rgb(80,80,80);
 	-webkit-text-size-adjust: none;
 }
 
@@ -132,15 +132,18 @@ label {
 	clear: both;
 }
 
+.hide {
+  opacity: .5;
+}
+
 
 /* Style
 ================================================================================ */
 
 
 #header {
-	position: fixed;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
-	-webkit-box-shadow: 0 0 5px rgb(50,50,50);
+	background-color: rgb(255,255,255);
+	-webkit-box-shadow: 0 1px 2px rgb(140,140,140);
 }
 
 #header ul {
@@ -155,45 +158,25 @@ label {
 #header ul li a {
 	-webkit-border-radius: 3px;
 	display: block;
-	padding: 10px;
-	-webkit-box-shadow: 0 0 2px rgb(200,200,200);
-}
-
-#header ul li a:hover {
-	background-color: rgb(255,255,255);
-}
-
-#header ul li a:active {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(235,235,235)), color-stop(1, rgb(255,255,255)));
+	padding: 0;
 }
 
 #header ul li a img {
 	display: block;
+	opacity: .25;
+	height: 20px;
+}
+
+#header ul li a:hover img {
+  opacity: 1;
+}
+
+#header ul li a:active {
 	opacity: .5;
 }
 
-#header ul li.active a.tasks {
-	background-color: rgb(255,255,255);
-}
-
-#header ul li.active a.delete {
-	background-color: rgb(200,0,0);
-	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
-}
-
-#header ul li.active a.move {
-	background-color: rgb(50,100,255);
-	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
-}
-
-#header ul li.active a.send {
-	background-color: rgb(50,155,0);
-	-webkit-box-shadow: 0 0 2px rgb(50,50,50);
-}
-
-#header ul li.active a.focus {
-	background-color: rgb(255,225,0);
-	-webkit-box-shadow: 0 0 2px rgb(150,150,150);
+#header ul li.current a img {
+	opacity: 1;
 }
 
 #header #nav {
@@ -205,18 +188,18 @@ label {
 }
 
 #header #edit-area {
+  background-color: rgb(240,240,240);
 	padding: 0 0 0 0;
 	clear: both;
 }
 
 #header #edit-area form {
-	border-top: 1px solid rgb(230,230,230);
 	padding: 10px;
 	margin: 0;
 }
 
 #header #edit-area form.delete { 
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(200,0,0)), color-stop(1, rgb(180,0,0)));
+	background-color: rgb(200,0,0);
 	color: rgb(255,200,200);
 }
 
@@ -225,7 +208,6 @@ label {
 }
 
 #header #edit-area form.move {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(50,100,255)), color-stop(1, rgb(30,80,235)));
 	background-color: rgb(50,100,255);
 	color: rgb(200,215,255);
 }
@@ -235,7 +217,7 @@ label {
 }
 
 #header #edit-area form.send {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(0,155,0)), color-stop(1, rgb(0,135,0)));
+	background-color: rgb(0,155,0);
 	color: rgb(205,230,190);
 }
 
@@ -244,8 +226,8 @@ label {
 }
 
 #header #edit-area form.focus {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(255,225,0)), color-stop(1, rgb(235,205,0)));
-	color: rgb(155,125,0);
+	background-color: rgb(245,205,0);
+	color: rgb(145,105,0);
 }
 
 #header #edit-area form.focus strong {
@@ -254,8 +236,8 @@ label {
 
 #header #edit-area form label {
 	display: inline;
-	padding: 0;
-	margin: 0 5px 0 0;
+	padding: 0 5px;
+	margin: 0;
 }
 
 #header #edit-area form input,
@@ -264,100 +246,77 @@ label {
 }
 
 #content {
-	padding: 102px 0 0 0;
+  padding: 10px 0 0 0;
 }
 
 #content h2 {
-	border-top: 1px solid rgb(175,175,175);
+	border-top: 1px solid rgb(160,160,160);
 	margin: 0 20px;
 	padding: 10px 0;
 }
 
 #content p.cat-title {
-	padding: 20px 20px 20px 20px;
+	padding: 5px 20px 10px 20px;
 	text-align: center;
-	text-shadow: 0 1px 0 rgb(245,245,245);
+	text-shadow: 0 1px 0 rgb(230,230,230);
 }
 
 #content ul {
-	margin: 0 0 10px 0;
-	padding: 0 10px;
-}
-
-#content ul li {
-	display: block;
-	margin: 0 0 1px 0;
+	padding: 5px 10px;
 }
 
 #content ul li a {
 	display: block;
-	padding: 10px 10px 10px 10px;
-	background: rgb(255,255,255);
+	padding: 8px 8px 8px 35px;
+	background-color: rgb(255,255,255);
+	background-repeat: no-repeat;
+	background-position: 5px 50%;
+	background-position: 10px 50%;
 }
 
 #content ul li a span {
 	font-size: 11px;
 	color: rgb(150,150,150);
-}
-
-#content ul li a span.focus,
-#content ul li a span.total,
-#content ul li a span.send,
-#content ul li a span.move {
 	float: right;
-	-webkit-border-radius: 3px;
 	display: inline-block;
 	padding: 0 5px;
-	margin: 0 0 0 5px;
-}
-
-#content ul li a span.focus {
-	background-color: rgb(255,225,0);
-	-webkit-box-shadow: inset 0 0 3px rgb(205,205,0);
-}
-
-#content ul li a span.move {
-	background-color: rgb(50,100,255);
-	color: rgb(255,255,255);
-	-webkit-box-shadow: inset 0 0 3px rgb(0,50,205);
-}
-
-#content ul li a span.send {
-	background-color: rgb(0,155,0);
-	color: rgb(255,255,255);
-	-webkit-box-shadow: inset 0 0 3px rgb(0,105,0);
-}
-
-#content ul li a span.total {
 	background-color: rgb(240,240,240);
 	-webkit-box-shadow: inset 0 0 3px rgb(200,200,200);
+	-webkit-border-radius: 3px;
+}
+
+#content ul li.complete a {
+	background-color: rgb(220,220,220);
+	color: rgb(120,120,120);
+}
+
+#content ul.system.main {
+  padding: 0px 10px 5px 10px;
+}
+
+#content ul.system li,
+#content ul.projects li {
+  margin-bottom: 1px;
+  -webkit-box-shadow: 0 1px 2px rgb(140,140,140);
+}
+
+#content ul.system li a,
+#content ul.projects li a {
+  background-image: url(../images/go.svg);
+  background-position: 14px 50%;
 }
 
 #content ul.system li:first-child a,
-#content ul.projects li:first-child a,
-#content ul.projects-delete li:first-child a {
+#content ul.projects li:first-child a {
 	-webkit-border-top-left-radius: 3px;
 	-webkit-border-top-right-radius: 3px;
 }
 
 #content ul.system li:last-child a,
-#content ul.projects li:last-child a,
-#content ul.projects-delete li:last-child a {
+#content ul.projects li:last-child a {
 	-webkit-border-bottom-left-radius: 3px;
 	-webkit-border-bottom-right-radius: 3px;
-}
-
-#content ul.projects-delete a {
-	background: rgb(255,255,255) url(../images/edit-off.svg) no-repeat 12px 50%;
-	padding: 10px 10px 10px 40px;
-}
-
-#content ul.projects-delete li.selected a {
-	background: rgb(255,255,255) url(../images/edit-delete.svg) no-repeat 12px 50%;
-}
-
-#content ul.system {
-	padding: 10px 10px 0 10px;
+	margin-bottom: 0;
 }
 
 #content ul.tasks li,
@@ -365,10 +324,7 @@ label {
 #content ul.move li,
 #content ul.send li,
 #content ul.focus li {
-	margin: 0 0 5px 0;
-	background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(235,235,235)));
-	-webkit-box-shadow: 0 1px 2px rgb(150,150,150);
-	-webkit-border-radius: 3px;
+	padding: 0 0 5px 0;
 }
 
 #content ul.tasks li a,
@@ -376,65 +332,41 @@ label {
 #content ul.move li a,
 #content ul.send li a,
 #content ul.focus li a {
+	-webkit-box-shadow: 0 1px 2px rgb(140,140,140);
 	-webkit-border-radius: 3px;
+}
+
+#content ul.remove li a {
+	background-image: url(../images/edit-delete.svg);
+	background-position: 10px 50%;
+}
+
+#content ul.remove li.selected a {
+  background-image: url(../images/edit-delete-full.svg);
+  background-position: 10px 50%;
 }
 
 #content ul.tasks li a {
-	background: url(../images/done-off.svg) no-repeat 12px 50%;
-	padding: 10px 10px 10px 40px;
+	background-image: url(../images/done-off.svg);
 }
 
-#content ul.tasks li.focus a {
-	background: url(../images/done-focus.svg) no-repeat 12px 50%;
+#content ul.tasks li.complete a {
+	background-image: url(../images/done-on.svg);
+	color: rgb(120,120,120);
+	background-position: 8px 50%;
 }
 
-#content ul.tasks li.selected a {
-	background: rgb(230,230,230) url(../images/done-on.svg) no-repeat 12px 50%;
-	color: rgb(150,150,150);
-}
+#content ul.delete li a { background-image: url(../images/edit-delete.svg); }
+#content ul.delete li.selected a { background-image: url(../images/edit-delete-full.svg); }
 
-#content ul.delete li a,
-#content ul.move li a,
-#content ul.send li a,
-#content ul.focus li a {
-	padding: 10px 10px 10px 40px;
-}
+#content ul.move li a { background-image: url(../images/edit-move.svg); }
+#content ul.move li.selected a { background-image: url(../images/edit-move-full.svg); }
 
-#content ul.delete li a {
-	background: url(../images/edit-off.svg) no-repeat 12px 50%;
-}
+#content ul.send li a { background-image: url(../images/edit-send.svg); }
+#content ul.send li.selected a { background-image: url(../images/edit-send-full.svg); }
 
-#content ul.delete li.selected a {
-	background: url(../images/edit-delete.svg) no-repeat 12px 50%;
-}
-
-#content ul.move li a {
-	background: url(../images/edit-off.svg) no-repeat 12px 50%;
-}
-
-#content ul.move li.selected a {
-	background: url(../images/edit-move.svg) no-repeat 12px 50%;
-}
-
-#content ul.send li a {
-	background: url(../images/edit-off.svg) no-repeat 12px 50%;
-}
-
-#content ul.send li.selected a {
-	background: url(../images/edit-send.svg) no-repeat 12px 50%;
-}
-
-#content ul.focus li a {
-	background: url(../images/edit-off.svg) no-repeat 12px 50%;
-}
-
-#content ul.focus li.selected a {
-	background: url(../images/edit-focus.svg) no-repeat 12px 50%;
-}
-
-#content ul.archive li a {
-	-webkit-border-radius: 3px;
-}
+#content ul.focus li a { background-image: url(../images/edit-focus.svg); }
+#content ul.focus li.selected a { background-image: url(../images/edit-focus-full.svg); }
 
 #content ul.connections {
 	margin: 0 20px 10px 20px;
@@ -443,13 +375,13 @@ label {
 
 #content ul.connections li {
 	margin: 0;
-	border-top: 1px solid rgb(200,200,200);
+	border-top: 1px solid rgb(180,180,180);
 	padding: 5px 0;
 }
 
 #content ul.connections li span {
-	font-size: 11px;
-	color: rgb(150,150,150);
+	font-size: 12px;
+	color: rgb(120,120,120);
 }
 
 #content ul.connections li a {
