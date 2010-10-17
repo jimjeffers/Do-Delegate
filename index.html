@@ -3,11 +3,14 @@
   
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   
-  <title>do/delegate</title>
+  <title>d/d</title>
   
   <link rel="Shortcut Icon" type="images/ico" href="/favicon.ico" />
+  <link rel="apple-touch-icon" media="screen and (resolution: 326dpi)" href="/touch-icon.png" />
   
   <link rel="stylesheet" type="text/css" href="styles/screen.css" media="screen" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
 </head>
 <body>
@@ -18,7 +21,8 @@
     <section id="nav">
       
       <ul>
-        <li><a href="settings.html"><img src="images/settings.svg" height="20" /></a></li>
+        <li class=""><a href="settings.html"><img src="images/settings.svg" /></a></li>
+        <li class=""><a href="connections.html"><img src="images/connections.svg" /></a></li>
       </ul>
       
     </section>
@@ -26,8 +30,8 @@
     <section id="edit">
       
       <ul>
-        <li class="active"><a href="index.html" class="tasks"><img src="images/done.svg" height="20" /></a></li>
-        <li><a href="index-delete.html" class="delete"><img src="images/delete.svg" height="20" /></a></li>
+        <li class="current"><a href="index.html" class="tasks"><img src="images/done.svg" /></a></li>
+        <li class=""><a href="index-delete.html" class="delete"><img src="images/delete.svg" /></a></li>
       </ul>
       
     </section>
@@ -36,7 +40,7 @@
       
       <form action="index.html" method="get" accept-charset="utf-8">
         <input type="text" name="" value="" id="" size="30">
-        <input type="submit" value="Add Project">
+        <input type="submit" value="Add Group">
       </form>
       
     </section>
@@ -48,24 +52,24 @@
   
     <section id="content-main">
       
-      <ul class="system">
-        <li><a href="focus.html">Focus <span class="focus">6</span></a></li>
-        <li><a href="everything.html">Everything <span class="total">72</span></a></li>
-        <li><a href="inbox.html">Inbox <span class="move">9</span></a></li>
-        <li><a href="outbox.html">Outbox <span class="send">8</span></a></li>
+      <ul class="system main">
+        <li class=""><a href="everything.html">Everything <span>72</span></a></li>
+        <li class=""><a href="focus.html">Focus <span>6</span></a></li>
+        <li class=""><a href="inbox.html">Inbox <span>9</span></a></li>
+        <li class=""><a href="outbox.html">Outbox <span>8</span></a></li>
       </ul>
       
       <ul class="projects">
-        <li><a href="tasks.html">Personal <span class="focus">4</span> <span class="total">21</span></a></li>
-        <li><a href="tasks.html">Business <span class="focus">2</span> <span class="total">12</span></a></li>
-        <li><a href="tasks.html">Travel <span class="total">12</span></a></li>
-        <li><a href="tasks.html">Performable <span class="total">9</span></a></li>
-        <li><a href="tasks.html">Calendar Cruncher <span class="focus">3</span> <span class="total">6</span></a></li>
-        <li><a href="tasks.html">X-Team <span class="focus">3</span> <span class="total">12</span></a></li>
+        <li class=""><a href="tasks.html">Personal <span>21</span></a></li>
+        <li class=""><a href="tasks.html">Business <span>12</span></a></li>
+        <li class=""><a href="tasks.html">Travel <span>12</span></a></li>
+        <li class=""><a href="tasks.html">Performable <span>9</span></a></li>
+        <li class=""><a href="tasks.html">Calendar Cruncher <span>6</span></a></li>
+        <li class=""><a href="tasks.html">X-Team <span>12</span></a></li>
       </ul>
       
-      <ul class="archive">
-        <li><a href="archive.html">Archive <span class="total">1,248</span></a></li>
+      <ul class="system">
+        <li class=""><a href="archive.html">Archive <span>32</span></a></li>
       </ul>
       
     </section>
