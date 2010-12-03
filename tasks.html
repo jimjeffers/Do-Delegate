@@ -3,10 +3,9 @@
   
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   
-  <title>d/d - Performable: 9</title>
+  <title>Do Delegate</title>
   
   <link rel="Shortcut Icon" type="images/ico" href="/favicon.ico" />
-  <link rel="apple-touch-icon" media="screen and (resolution: 326dpi)" href="/touch-icon.png" />
   
   <link rel="stylesheet" type="text/css" href="styles/screen.css" media="screen" />
   
@@ -14,64 +13,97 @@
   
 </head>
 <body>
-  
-  
-  <div id="header" class="column-full">
+
+
+  <div id="navigation" class="column-full">
     
-    <section id="nav">
-      
       <ul>
-        <li class=""><a href="index.html"><img src="images/home.svg" /></a></li>
+        <li><a href="stars.html">Stars</a></li>
+        <li class="active"><a href="tasks.html">Tasks</a></li>
+        <li><a href="groups.html">Groups</a></li>
+        <li class="settings"><a href="groups.html"><img src="images/settings.svg" height="20"></a></li>
       </ul>
-      
-    </section>
+  
+  </div>
+
+
+  <div id="tools" class="column-full">
     
-    <section id="edit">
-      
-      <ul>
-        <li class="current"><a href="tasks.html" class="tasks"><img src="images/done.svg" /></a></li>
-        <li class=""><a href="tasks-delete.html" class="delete"><img src="images/delete.svg" /></a></li>
-        <li class=""><a href="tasks-move.html" class="move"><img src="images/move.svg" /></a></li>
-        <li class=""><a href="tasks-send.html" class="send"><img src="images/send.svg" /></a></li>
-        <li class=""><a href="tasks-focus.html" class=""><img src="images/focus.svg" /></a></li>
-      </ul>
-      
-    </section>
-    
-    <section id="edit-area">
-      
-      <form action="index.html" method="get" accept-charset="utf-8" class="">
-        <input type="text" name="" value="" id="" size="30">
+      <form action="index_submit" method="get" accept-charset="utf-8">
+        <input type="text" name="some_name" value="" id="some_name" size="15">
+        <select name="some_name" id="some_name">
+          <option value="option1">Group 1</option>
+          <option value="option2">Group 2</option>
+          <option value="option3">Group 3</option>
+          <option value="option4">Group 4</option>
+          <option value="option5">Group 5</option>
+        </select>
         <input type="submit" value="Add Task">
       </form>
-      
-    </section>
-    
+  
   </div>
-  
-  
+
+
   <div id="content" class="column-full">
-  
-    <section id="content-main">
-      
-      <p class="cat-title"><strong>Performable</strong></p>
-      
-      <ul class="tasks">
-        <li class=""><a href="">Add graphics explanations</a></li>
-        <li class=""><a href="">Add secondary graphics explanations</a></li>
-        <li class="complete"><a href="">Work video into plain theme</a></li>
-        <li class=""><a href="">Create 'Coffee' Theme</a></li>
-        <li class=""><a href="">Create 'Baby' Theme</a></li>
-        <li class="complete"><a href="">Create 'Cloud' Theme</a></li>
-        <li class=""><a href="">Setup custom form</a></li>
-        <li class=""><a href="">Fix PNG problems</a></li>
-        <li class="complete"><a href="">Rework theme HTML/CSS</a></li>
+    
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 1</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-yes.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 4</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 5</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 6</a></li>
       </ul>
       
-    </section>
-    
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 2</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 4</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 5</a></li>
+      </ul>
+      
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 3</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 4</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 5</a></li>
+      </ul>
+      
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 4</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+      </ul>
+      
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 5</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-on.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+      </ul>
+      
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 6</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+      </ul>
+      
+      <h1><a href="tasks-group.html" class="move"><img src="images/move-right.svg" height="20"></a><a href="edit-group.html">Group 7</a></h1>
+      <ul>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 1</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 2</a></li>
+        <li><a href="#" class="star"><img src="images/star-off.svg" height="20"></a><a href="#" class="checkbox"><img src="images/done-no.svg" height="20"></a><a href="edit-task.html">Task 3</a></li>
+      </ul>
+  
   </div>
-  
-  
+
+
 </body>
 </html>

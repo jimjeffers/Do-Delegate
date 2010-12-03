@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+  
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  
+  <title>Do Delegate</title>
+  
+  <link rel="Shortcut Icon" type="images/ico" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="styles/screen.css" media="screen" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+</head>
+<body>
+
+
+  <div id="navigation" class="column-full">
+    
+      <ul>
+        <li><a href="stars.html">Stars</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="groups.html">Groups</a></li>
+        <li class="settings"><a href="groups.html"><img src="images/settings.svg" height="20"></a></li>
+      </ul>
+  
+  </div>
+
+
+  <div id="tools" class="column-full">
+    
+      <form action="index_submit" method="get" accept-charset="utf-8">
+        <input type="submit" value="Save Group">
+        <input type="submit" value="Delete Group" class="delete">
+      </form>
+  
+  </div>
+
+
+  <div id="content" class="column-full">
+    
+      <form action="edit-task_submit" method="get" accept-charset="utf-8">
+        <label for="task_title">Group Title</label>
+        <input type="text" name="task_title" value="" id="task_title">
+        <label for="task_notes">Group Notes</label>
+        <textarea name="task_notes" id="task_notes" rows="6" cols="30"></textarea>
+      </form>
+  
+  </div>
+
+
+</body>
+</html>

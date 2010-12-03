@@ -1,391 +1,169 @@
-/*
-
-	KEEP CSS CLEAN
-	
-	1. Only put one selector per line for a block of rules that apply to 
-	   multiple selectors.
-	2. Indent your rules and only use one rule per line.
-	3. Indent proprietary properties twice. Keep these properties directly 
-	   below the proposed property.
-	4. Place a space between a property and it's value.
-	
-	(exceptions for large blocks of repetetive and easily identifiable CSS)
-	
-	EXAMPLE:
-	
-	element#id,
-	element.class {
-		rule1: value;
-			-webkit-rule1: value;
-			-moz-rule1: value;
-		rule2: value;
-		rule3: value;
-	}
-	
-	TABLE OF CONTENTS:
-	
-	Reset
-	Common
-	Style
-	
-*/
-
-
-/* Reset
-================================================================================ */
-
-
 html,
 body,
+h1,
 ul,
 li,
 form,
-fieldset,
-legend {
-	margin: 0;
-	padding: 0;
+fieldset {
+  margin: 0;
+  padding: 0;
 }
-
-fieldset,
-img {
-	border: 0;
-}
-
-article,
-footer,
-header,
-nav,
-section { 
-	display:block;
-}
-
-
-/* Common
-================================================================================ */
-
 
 body {
-	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	background-color: rgb(200,200,200);
-	font-size: 14px;
-	line-height: 20px;
-	color: rgb(80,80,80);
-	-webkit-text-size-adjust: none;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #eee;
+  -webkit-text-size-adjust: none;
+  color: #444;
 }
 
 a:link,
 a:visited {
-	text-decoration: none;
-	color: rgb(100,100,100);
+  text-decoration: none;
+  color: #444;
 }
 
 a:hover,
 a:active {
-	text-decoration: none;
-	color: rgb(100,100,100);
-}
-
-p {
-	padding: 0;
-	margin: 0;
-}
-
-ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-h1,
-h2,
-h3 {
-	padding: 0 20px;
-	font-size: 14px;
-	line-height: 20px;
-	text-shadow: 0 1px 0 rgb(245,245,245);
+  text-decoration: underline;
+  color: #444;
 }
 
 form {
-	padding: 0 20px 0 20px;
-	margin: 0 0 20px 0;
+  padding: 15px;
 }
 
-input,
-select,
-textarea {
-	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	margin: 0 0 10px 0;
-}
-
-input[type="submit"] {
-	margin: 0;
-}
-
-label {
-	display: block;
-	padding: 0 0 5px 0;
+fieldset,
+img {
+  border: 0;
 }
 
 .column-full {
-	float: left;
-	width: 100%;
-	clear: both;
+  float: left;
+  width: 100%;
+  clear: both;
 }
 
-.hide {
-  opacity: .5;
+#navigation {
+  background-color: #aaa;
 }
 
-
-/* Style
-================================================================================ */
-
-
-#header {
-	background-color: rgb(255,255,255);
-	-webkit-box-shadow: 0 1px 2px rgb(140,140,140);
+#navigation ul {
+  padding: 15px 0 0 15px;
 }
 
-#header ul {
-	padding: 10px 10px 0 0;
+#navigation ul li {
+  list-style: none;
+  display: block;
+  float: left;
+  padding: 0 5px 0 0;
 }
 
-#header ul li {
-	float: left;
-	padding: 0 0 10px 10px;
+#navigation ul li a {
+  display: block;
+  float: left;
+  padding: 10px 15px;
+  background-color: #ddd;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-#header ul li a {
-	-webkit-border-radius: 3px;
-	display: block;
-	padding: 0;
+#navigation ul li.settings a {
+  background-color: #aaa;
 }
 
-#header ul li a img {
-	display: block;
-	opacity: .25;
-	height: 20px;
+#navigation ul li a img {
+  display: block;
 }
 
-#header ul li a:hover img {
-  opacity: 1;
+#navigation ul li.active a {
+  background-color: #fff;
 }
 
-#header ul li a:active {
-	opacity: .5;
+#tools {
+  background-color: #fff;
 }
 
-#header ul li.current a img {
-	opacity: 1;
-}
-
-#header #nav {
-	float: left;
-}
-
-#header #edit {
-	float: right;
-}
-
-#header #edit-area {
-  background-color: rgb(240,240,240);
-	padding: 0 0 0 0;
-	clear: both;
-}
-
-#header #edit-area form {
-	padding: 10px;
-	margin: 0;
-}
-
-#header #edit-area form.delete { 
-	background-color: rgb(200,0,0);
-	color: rgb(255,200,200);
-}
-
-#header #edit-area form.delete strong {
-	color: rgb(255,255,255);
-}
-
-#header #edit-area form.move {
-	background-color: rgb(50,100,255);
-	color: rgb(200,215,255);
-}
-
-#header #edit-area form.move strong {
-	color: rgb(255,255,255);
-}
-
-#header #edit-area form.send {
-	background-color: rgb(0,155,0);
-	color: rgb(205,230,190);
-}
-
-#header #edit-area form.send strong {
-	color: rgb(255,255,255);
-}
-
-#header #edit-area form.focus {
-	background-color: rgb(245,205,0);
-	color: rgb(145,105,0);
-}
-
-#header #edit-area form.focus strong {
-	color: rgb(0,0,0);
-}
-
-#header #edit-area form label {
-	display: inline;
-	padding: 0 5px;
-	margin: 0;
-}
-
-#header #edit-area form input,
-#header #edit-area form select {
-	margin: 0;
+#tools .delete {
+  float: right;
 }
 
 #content {
-  padding: 10px 0 0 0;
+  
 }
 
-#content h2 {
-	border-top: 1px solid rgb(160,160,160);
-	margin: 0 20px;
-	padding: 10px 0;
+#content h1 {
+  font-size: 14px;
+  line-height: 20px;
+  border-top: 1px solid #aaa;
+  clear: both;
 }
 
-#content p.cat-title {
-	padding: 5px 20px 10px 20px;
-	text-align: center;
-	text-shadow: 0 1px 0 rgb(230,230,230);
+#content h1 a {
+  padding: 15px;
+  display: block;
 }
 
-#content ul {
-	padding: 5px 10px;
+#content h1 a.move {
+  float: right;
+}
+
+#content h1 a img {
+  display: block;
+}
+
+#content ul li {
+  list-style: none;
+  border-top: 1px solid #ddd;
+  float: left;
+  width: 100%;
+  clear: both;
 }
 
 #content ul li a {
-	display: block;
-	padding: 8px 8px 8px 35px;
-	background-color: rgb(255,255,255);
-	background-repeat: no-repeat;
-	background-position: 5px 50%;
-	background-position: 10px 50%;
+  display: block;
+  padding: 15px;
+  line-height: 20px;
 }
 
-#content ul li a span {
-	font-size: 11px;
-	color: rgb(150,150,150);
-	float: right;
-	display: inline-block;
-	padding: 0 5px;
-	background-color: rgb(240,240,240);
-	-webkit-box-shadow: inset 0 0 3px rgb(200,200,200);
-	-webkit-border-radius: 3px;
+#content ul li a img {
+  display: block;
 }
 
-#content ul li.complete a {
-	background-color: rgb(220,220,220);
-	color: rgb(120,120,120);
+#content ul li a.checkbox {
+  float: left;
 }
 
-#content ul.system.main {
-  padding: 0px 10px 5px 10px;
+#content ul li a.star {
+  float: right;
 }
 
-#content ul.system li,
-#content ul.projects li {
-  margin-bottom: 1px;
-  -webkit-box-shadow: 0 1px 2px rgb(140,140,140);
+#content form {
+  border-top: 1px solid #aaa;
 }
 
-#content ul.system li a,
-#content ul.projects li a {
-  background-image: url(../images/go.svg);
-  background-position: 14px 50%;
+#content form label {
+  display: block;
+  font-weight: bold;
+  padding: 0 0 5px 0;
 }
 
-#content ul.system li:first-child a,
-#content ul.projects li:first-child a {
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
+#content form input,
+#content form textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0 0 10px 0;
 }
 
-#content ul.system li:last-child a,
-#content ul.projects li:last-child a {
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	margin-bottom: 0;
+#content form select {
+  margin: 0 0 10px 0;
 }
 
-#content ul.tasks li,
-#content ul.delete li,
-#content ul.move li,
-#content ul.send li,
-#content ul.focus li {
-	padding: 0 0 5px 0;
-}
 
-#content ul.tasks li a,
-#content ul.delete li a,
-#content ul.move li a,
-#content ul.send li a,
-#content ul.focus li a {
-	-webkit-box-shadow: 0 1px 2px rgb(140,140,140);
-	-webkit-border-radius: 3px;
-}
 
-#content ul.remove li a {
-	background-image: url(../images/edit-delete.svg);
-	background-position: 10px 50%;
-}
 
-#content ul.remove li.selected a {
-  background-image: url(../images/edit-delete-full.svg);
-  background-position: 10px 50%;
-}
-
-#content ul.tasks li a {
-	background-image: url(../images/done-off.svg);
-}
-
-#content ul.tasks li.complete a {
-	background-image: url(../images/done-on.svg);
-	color: rgb(120,120,120);
-	background-position: 8px 50%;
-}
-
-#content ul.delete li a { background-image: url(../images/edit-delete.svg); }
-#content ul.delete li.selected a { background-image: url(../images/edit-delete-full.svg); }
-
-#content ul.move li a { background-image: url(../images/edit-move.svg); }
-#content ul.move li.selected a { background-image: url(../images/edit-move-full.svg); }
-
-#content ul.send li a { background-image: url(../images/edit-send.svg); }
-#content ul.send li.selected a { background-image: url(../images/edit-send-full.svg); }
-
-#content ul.focus li a { background-image: url(../images/edit-focus.svg); }
-#content ul.focus li.selected a { background-image: url(../images/edit-focus-full.svg); }
-
-#content ul.connections {
-	margin: 0 20px 10px 20px;
-	padding: 0;
-}
-
-#content ul.connections li {
-	margin: 0;
-	border-top: 1px solid rgb(180,180,180);
-	padding: 5px 0;
-}
-
-#content ul.connections li span {
-	font-size: 12px;
-	color: rgb(120,120,120);
-}
-
-#content ul.connections li a {
-	display: inline;
-	padding: 0;
-	background-color: transparent;
-}
