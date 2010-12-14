@@ -31,7 +31,7 @@ a:active {
 }
 
 form {
-  padding: 15px;
+  padding: 10px;
 }
 
 fieldset,
@@ -47,10 +47,11 @@ img {
 
 #navigation {
   background-color: #aaa;
+  border-bottom: 1px solid #777;
 }
 
 #navigation ul {
-  padding: 15px 0 0 15px;
+  padding: 10px 0 0 10px;
 }
 
 #navigation ul li {
@@ -63,18 +64,17 @@ img {
 #navigation ul li a {
   display: block;
   float: left;
-  padding: 10px 15px;
-  background-color: #ddd;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-#navigation ul li.settings a {
-  background-color: #aaa;
+  padding: 10px 12px;
+  background-color: #999;
+  border-top: 1px solid #888;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 #navigation ul li a img {
@@ -83,10 +83,13 @@ img {
 
 #navigation ul li.active a {
   background-color: #fff;
+  padding: 10px 12px 11px 12px;
+  margin-bottom: -1px;
 }
 
 #tools {
   background-color: #fff;
+  border-bottom: 1px solid #ddd;
 }
 
 #tools .delete {
@@ -100,12 +103,13 @@ img {
 #content h1 {
   font-size: 14px;
   line-height: 20px;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #ddd;
   clear: both;
 }
 
 #content h1 a {
-  padding: 15px;
+  padding: 10px;
   display: block;
 }
 
@@ -119,7 +123,8 @@ img {
 
 #content ul li {
   list-style: none;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #ddd;
   float: left;
   width: 100%;
   clear: both;
@@ -127,7 +132,7 @@ img {
 
 #content ul li a {
   display: block;
-  padding: 15px;
+  padding: 10px;
   line-height: 20px;
 }
 
@@ -144,7 +149,7 @@ img {
 }
 
 #content form {
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #fff;
 }
 
 #content form label {

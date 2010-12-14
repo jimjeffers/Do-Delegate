@@ -4,9 +4,9 @@
 	<!ENTITY ns_svg "http://www.w3.org/2000/svg">
 	<!ENTITY ns_xlink "http://www.w3.org/1999/xlink">
 ]>
-<svg  version="1.1" id="Layer_1" xmlns="&ns_svg;" xmlns:xlink="&ns_xlink;" width="20.001" height="20" viewBox="0 0 20.001 20"
-	 overflow="visible" enable-background="new 0 0 20.001 20" xml:space="preserve">
-<rect fill="#EEEEEE" width="20.001" height="20"/>
+<svg  version="1.1" id="Layer_1" xmlns="&ns_svg;" xmlns:xlink="&ns_xlink;" width="20" height="20" viewBox="0 0 20 20"
+	 overflow="visible" enable-background="new 0 0 20 20" xml:space="preserve">
+<rect fill="none" width="20" height="20"/>
 <path fill="none" stroke="#666666" d="M16.081,0.5H3.921c-1.881,0-3.42,1.539-3.42,3.42v12.16c0,1.881,1.539,3.42,3.42,3.42h12.16
-	c1.88,0,3.42-1.539,3.42-3.42V3.92C19.501,2.039,17.962,0.5,16.081,0.5z"/>
+	c1.881,0,3.42-1.539,3.42-3.42V3.92C19.5,2.039,17.961,0.5,16.081,0.5z"/>
 </svg>
